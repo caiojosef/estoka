@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estoka — Criar conta</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/auth.css">
+    <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <main class="auth-shell">
+        <header class="brand">
+            <img class="brand__logo" src="./assets/images/logo.png" alt="Estoka" />
+            <p class="brand__subtitle">Gestão de estoque simples, rápida e confiável.</p>
+        </header>
+
+        <section class="card">
+            <form id="formCadastro" novalidate>
+                <div id="formMsg" class="alert" hidden></div>
+
+                <div class="grid">
+                    <div class="field">
+                        <label for="email">E-mail</label>
+                        <input id="email" name="email" type="email" autocomplete="email" required>
+                        <small class="error" data-error-for="email"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="cpf">CPF</label>
+                        <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00"
+                            required>
+                        <small class="error" data-error-for="cpf"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Senha</label>
+                        <div class="pw-input">
+                            <input id="password" name="password" type="password" autocomplete="new-password" required>
+                            <button type="button" class="pw-toggle" aria-label="Mostrar/ocultar senha"
+                                tabindex="-1">👁️</button>
+                        </div>
+
+                        <!-- Checklist bonito e responsivo -->
+                        <ul class="pw-req" id="pwReq">
+                            <li class="pw-req__item" data-req="len">Mínimo 6 caracteres</li>
+                            <li class="pw-req__item" data-req="upper">1 letra maiúscula</li>
+                            <li class="pw-req__item" data-req="lower">1 letra minúscula</li>
+                            <li class="pw-req__item" data-req="special">1 caractere especial (!@#$*)</li>
+                        </ul>
+
+                        <small class="error" data-error-for="password"></small>
+                    </div>
+
+
+                    <div class="field">
+                        <label for="password2">Confirmar senha</label>
+                        <input id="password2" name="password2" type="password" autocomplete="new-password" minlength="6"
+                            required>
+                        <small class="error" data-error-for="password2"></small>
+                    </div>
+
+
+
+                    <div class="field">
+                        <label for="cep">CEP</label>
+                        <div class="input-with-addon">
+                            <input id="cep" name="cep" inputmode="numeric" placeholder="00000-000" required>
+                            <span id="cepLoader" class="loader" hidden></span>
+                        </div>
+                        <small class="error" data-error-for="cep"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="logradouro">Logradouro</label>
+                        <input id="logradouro" name="logradouro" required>
+                        <small class="error" data-error-for="logradouro"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="numero">Número</label>
+                        <input id="numero" name="numero" maxlength="10" required>
+                        <small class="error" data-error-for="numero"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="bairro">Bairro</label>
+                        <input id="bairro" name="bairro" required>
+                        <small class="error" data-error-for="bairro"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="cidade">Cidade</label>
+                        <input id="cidade" name="cidade" required>
+                        <small class="error" data-error-for="cidade"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="estado">UF</label>
+                        <select id="estado" name="estado" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option>AC</option>
+                            <option>AL</option>
+                            <option>AP</option>
+                            <option>AM</option>
+                            <option>BA</option>
+                            <option>CE</option>
+                            <option>DF</option>
+                            <option>ES</option>
+                            <option>GO</option>
+                            <option>MA</option>
+                            <option>MT</option>
+                            <option>MS</option>
+                            <option>MG</option>
+                            <option>PA</option>
+                            <option>PB</option>
+                            <option>PR</option>
+                            <option>PE</option>
+                            <option>PI</option>
+                            <option>RJ</option>
+                            <option>RN</option>
+                            <option>RS</option>
+                            <option>RO</option>
+                            <option>RR</option>
+                            <option>SC</option>
+                            <option>SP</option>
+                            <option>SE</option>
+                            <option>TO</option>
+                        </select>
+                        <small class="error" data-error-for="estado"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="complemento">Complemento <span class="muted">(opcional)</span></label>
+                        <input id="complemento" name="complemento" maxlength="40"
+                            placeholder="Apto, bloco... (até 40 caracteres)">
+                        <small class="counter" id="complementoCounter">0/40</small>
+                        <small class="error" data-error-for="complemento"></small>
+                    </div>
+                </div>
+
+                <button class="btn" id="btnSubmit" type="submit">Criar conta</button>
+                <p class="terms">Ao continuar você concorda com os termos de uso e política de privacidade.</p>
+            </form>
+        </section>
+
+        <footer class="footer">
+            <p>© <span id="year"></span> Estoka • Gestão de Estoque</p>
+        </footer>
+    </main>
+    <!-- Overlay de redirecionamento -->
+    <div id="redirectOverlay" class="redirect" hidden>
+        <div class="redirect__card">
+            <img class="redirect__logo" src="/public/assets/images/logo.png" alt="Estoka">
+            <h2>Conta criada com sucesso!</h2>
+            <p>Vamos te levar ao login em <strong><span id="redirCount">4</span>s</strong>…</p>
+
+            <div class="progress">
+                <div class="progress__bar" id="redirBar"></div>
+            </div>
+            <br>
+            <br>
+
+            <a class="btn btn--ghost" href="/public/login.html">Ir agora</a>
+        </div>
+    </div>
+
+
+    <script type="module" src="./assets/js/register.js"></script>
+</body>
+
+</html>

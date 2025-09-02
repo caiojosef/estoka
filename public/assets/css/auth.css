@@ -1,0 +1,541 @@
+:root {
+    --brand-dark: #0f365a;
+    /* azul-escuro Estoka */
+    --brand-accent: #17c9c3;
+    /* turquesa do check */
+    --text-1: #0f2430;
+    --text-2: #4b5a66;
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --line: #E5ECF2;
+    --error: #e5484d;
+    --focus: #17c9c330;
+    /* acento translúcido */
+    --radius: 8px;
+    /* pouco arredondado */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-1);
+    font: 400 16px/1.5 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.auth-shell {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100dvh;
+    padding: clamp(16px, 3vw, 32px);
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.brand__logo {
+    height: 44px;
+    object-fit: contain;
+}
+
+.brand__title {
+    margin: 8px 0 0;
+    font-weight: 600;
+    font-size: clamp(22px, 3vw, 28px);
+}
+
+.brand__title span {
+    color: var(--brand-accent);
+}
+
+.brand__subtitle {
+    margin: 4px 0 0;
+    color: var(--text-2);
+    font-size: 14px;
+}
+
+.card {
+    width: min(920px, 100%);
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 20px rgba(15, 54, 90, .06);
+    padding: clamp(16px, 3vw, 28px);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 720px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.hint {
+    color: var(--text-2);
+    font-size: 12px;
+    margin-top: -4px;
+}
+
+.muted {
+    color: var(--text-2);
+    font-weight: 500;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px 12px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--text-1);
+    border-radius: 6px;
+    /* quadrado, leve */
+    outline: none;
+    transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 4px var(--focus);
+}
+
+.input-with-addon {
+    position: relative;
+}
+
+.loader {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--brand-accent);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+.error {
+    color: var(--error);
+    font-size: 12px;
+    min-height: 14px;
+}
+
+.alert {
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: #f1f7ff;
+    color: var(--brand-dark);
+}
+
+.alert.error {
+    background: #ffeef0;
+    color: #8b1215;
+    border-color: #ffd5d8;
+}
+
+.alert.success {
+    background: #e9fbf9;
+    color: #0a3b3a;
+    border-color: #b7f2ec;
+}
+
+.counter {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-top: -4px;
+}
+
+.btn {
+    width: 100%;
+    background: linear-gradient(90deg, var(--brand-accent), #26e0d9);
+    color: #05222a;
+    font-weight: 700;
+    padding: 14px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 8px;
+    box-shadow: 0 6px 14px rgba(23, 201, 195, 0.25);
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.footer {
+    text-align: center;
+    color: var(--text-2);
+    font-size: 13px;
+    margin-top: 16px;
+}
+
+/* Campo de senha com botão de mostrar/ocultar */
+.pw-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pw-input input {
+    padding-right: 44px;
+}
+
+.pw-toggle {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Checklist de regras */
+.pw-req {
+    margin: 6px 0 0;
+    padding: 8px 10px;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    background: #fafcff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+    list-style: none;
+}
+
+@media (max-width: 520px) {
+    .pw-req {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pw-req__item {
+    position: relative;
+    padding-left: 20px;
+    color: var(--text-2);
+    font-size: 11px;
+}
+
+.pw-req__item::before {
+    content: '•';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    color: #9fb3c7;
+}
+
+.pw-req__item.ok {
+    color: #0a3b3a;
+    font-weight: 600;
+}
+
+.pw-req__item.ok::before {
+    content: '✓';
+    color: var(--brand-accent);
+}
+
+/* Overlay de redirecionamento */
+.redirect {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 16, 26, .45);
+    display: grid;
+    place-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+}
+
+.redirect[hidden] {
+    display: none !important;
+}
+
+.redirect__card {
+    width: min(460px, 92vw);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: 0 14px 40px rgba(15, 54, 90, .25);
+    text-align: center;
+}
+
+.redirect__logo {
+    height: 40px;
+    margin-bottom: 8px;
+}
+
+.progress {
+    height: 10px;
+    background: #eef4f9;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    margin: 12px 0 8px;
+}
+
+.progress__bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--brand-accent), #26e0d9);
+    transition: width .2s linear;
+}
+
+.btn--ghost {
+    background: transparent;
+    color: var(--brand-dark);
+    border: 1px solid var(--line);
+    box-shadow: none;
+    margin-top: 8px;
+}
+
+
+/* PÁGINA DE LOGIN */
+
+/* Header mais compacto no login */
+.brand.brand--sm {
+    margin-bottom: 10px;
+}
+
+.brand.brand--sm .brand__title {
+    font-size: clamp(20px, 2.6vw, 24px);
+}
+
+/* Card menor e mais enxuto */
+.card--sm {
+    width: min(420px, 94vw);
+    padding: 16px 16px 18px;
+}
+
+/* Força 1 coluna no formulário */
+.grid--single {
+    grid-template-columns: 1fr !important;
+}
+
+/* Linha com lembrete/esqueci senha */
+.field--row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.field--row.between {
+    justify-content: space-between;
+}
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-2);
+}
+
+.checkbox input {
+    width: 16px;
+    height: 16px;
+}
+
+/* Link sutil */
+.muted-link {
+    color: var(--text-2);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--line);
+}
+
+.muted-link:hover {
+    color: var(--brand-dark);
+    border-bottom-color: var(--brand-accent);
+}
+
+/* Bloco "sobre o Estoka" curtinho */
+.about.about--sm {
+    width: min(520px, 96vw);
+    margin: 10px auto 0;
+    color: var(--text-2);
+}
+
+.about__list {
+    margin: 0;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: grid;
+    gap: 6px 16px;
+    grid-template-columns: 1fr 1fr;
+    list-style: none;
+}
+
+@media (max-width: 560px) {
+    .about__list {
+        grid-template-columns: 1fr;
+    }
+}
+
+.about__list li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 13px;
+}
+
+.about__list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--brand-accent);
+    font-weight: 700;
+}
+
+/* ====== LAYOUT CENTRALIZADO DO LOGIN ====== */
+.auth-shell--center {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    /* conteúdo + footer */
+}
+
+/* Duas colunas centralizadas na tela */
+.login-layout {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    gap: 28px 40px;
+    min-height: calc(100dvh - 80px);
+    /* deixa tudo no centro visual */
+    grid-template-columns: minmax(320px, 420px) minmax(300px, 380px);
+}
+
+/* Em tablets estreitos e mobile, empilha (benefícios vão pra baixo) */
+@media (max-width: 900px) {
+    .login-layout {
+        grid-template-columns: minmax(320px, 520px);
+        gap: 16px;
+    }
+
+    .login-info {
+        grid-row: 2;
+    }
+}
+
+/* Cabeçalho interno do card de login */
+.login-card .login-brand {
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.login-card .login-brand img {
+    height: 36px;
+    object-fit: contain;
+    margin-bottom: 4px;
+}
+
+.login-card .login-brand h1 {
+    margin: 0;
+    font-size: clamp(18px, 2.4vw, 22px);
+}
+
+.login-card .login-brand h1 span {
+    color: var(--brand-accent);
+}
+
+.login-card .login-brand p {
+    margin: 2px 0 8px;
+    color: var(--text-2);
+    font-size: 13px;
+}
+
+/* Caixa lateral com benefícios */
+.login-info {
+    align-self: center;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 10px 24px rgba(15, 54, 90, .08);
+    padding: 18px;
+    width: min(360px, 92vw);
+}
+
+.login-info h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: var(--brand-dark);
+}
+
+.login-info__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.login-info__list li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--text-2);
+    font-size: 14px;
+}
+
+.login-info__list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--brand-accent);
+    font-weight: 700;
+}
+
+/* Ajustes do card mais compacto (já tinha, mas reforçamos) */
+.card--sm {
+    width: min(420px, 94vw);
+    padding: 16px 16px 18px;
+}
+
+.grid--single {
+    grid-template-columns: 1fr !important;
+}

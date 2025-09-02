@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estoka — Entrar</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/auth.css">
+    <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+    <main class="auth-shell auth-shell--center">
+        <section class="login-layout">
+
+            <!-- CARD DE LOGIN (compacto) -->
+            <section class="card card--sm login-card">
+                <div class="login-brand">
+                    <img src="/public/assets/images/logo.png" alt="Estoka">
+                    <h1>Acessar o <span>Estoka</span></h1>
+                    <p>Faça login para continuar.</p>
+                </div>
+
+                <form id="formLogin" novalidate>
+                    <div id="loginMsg" class="alert" hidden></div>
+
+                    <div class="grid grid--single">
+                        <div class="field">
+                            <label for="lemail">E-mail</label>
+                            <input id="lemail" name="email" type="email" autocomplete="email" required>
+                            
+                        </div>
+
+                        <div class="field">
+                            <label for="lpassword">Senha</label>
+                            <input id="lpassword" name="password" type="password" autocomplete="current-password"
+                                required>
+                            </div>
+                            
+
+                        <div class="field field--row between">
+                            <label class="checkbox">
+                                <input type="checkbox" id="remember" name="remember">
+                                <span>Lembrar de mim</span>
+                            </label>
+                            <a class="muted-link" href="#">Esqueci minha senha</a>
+                        </div>
+                    </div>
+
+                    <button class="btn" id="btnLogin" type="submit">Entrar</button>
+
+                    <p class="terms" style="margin-top:10px;">
+                        Ainda não tem conta? <a href="/public/cadastro.html">Crie agora</a>.
+                    </p>
+                </form>
+            </section>
+
+            <!-- BENEFÍCIOS NA LATERAL (vai para baixo no mobile) -->
+            <aside class="login-info">
+                <h3>Por que usar o Estoka?</h3>
+                <ul class="login-info__list">
+                    <li><strong>Cadastro rápido</strong> de produtos e categorias</li>
+                    <li><strong>Alertas</strong> de baixo estoque</li>
+                    <li><strong>Entradas/Saídas</strong> com histórico detalhado</li>
+                    <li><strong>Relatórios</strong> para decisões rápidas</li>
+                </ul>
+            </aside>
+
+        </section>
+
+        <footer class="footer">
+            <p>© <span id="year"></span> Estoka • Gestão de Estoque</p>
+        </footer>
+    </main>
+
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    <script type="module" src="./assets/js/login.js"></script>
+</body>
+
+</html>
