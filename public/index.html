@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estoka — Gestão de estoque</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" href="./assets/images/favicon.png">
+</head>
+
+<body>
+    <!-- Topbar -->
+    <header class="site-header">
+        <div class="container header__row">
+            <a class="brand" href="/public/index.html" aria-label="Estoka — início">
+                <img src="/public/assets/images/logo.png" alt="">
+            </a>
+
+            <!-- botão hambúrguer (mostra só no mobile) -->
+            <button class="menu-toggle" id="menuToggle" aria-controls="siteMenu" aria-expanded="false"
+                aria-label="Abrir menu">☰</button>
+
+            <!-- menu (nav + actions) -->
+            <div class="site-menu" id="siteMenu">
+                <nav class="nav">
+                    <a href="#recursos">Recursos</a>
+                    <a href="#para-quem">Para quem é</a>
+                    <a href="#preco">Preço</a>
+                </nav>
+                <div class="actions">
+                    <a class="btn btn--ghost" href="/public/login.html">Entrar</a>
+                    <a class="btn" href="/public/cadastro.html">Criar conta</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container hero__grid">
+            <div class="hero__text">
+                <h1>Gerencie seu estoque com <span>clareza</span> e <span>controle</span>.</h1>
+                <p>O Estoka foi feito para quem está começando agora <strong>e</strong> para quem opera grandes volumes.
+                    Cadastre produtos, registre entradas/saídas, receba alertas de baixo estoque e tome decisões com
+                    relatórios diretos.</p>
+                <div class="hero__cta">
+                    <a class="btn" href="./public/cadastro.html">Começar agora</a>
+                    <a class="btn btn--ghost" href="#recursos">Ver recursos</a>
+                </div>
+                <div class="hero__badges">
+                    <span>✔️ Para MEIs e pequenos negócios</span>
+                    <span>✔️ Escala para grandes estoques</span>
+                    <span>✔️ Sem complicação</span>
+                </div>
+            </div>
+
+            <!-- Ilustração do hero -->
+            <div class="hero__art" aria-hidden="true">
+                <picture>
+                    <!-- Se gerar em WebP, mantenha esta fonte -->
+                    <!-- <source srcset="/public/assets/images/hero-estoka.webp" type="image/webp"> -->
+                    <img class="hero-img" src="./assets/images/hero-estoka1.png" alt="" role="presentation"
+                        loading="eager" fetchpriority="high" decoding="async" width="1200" height="1200">
+                </picture>
+            </div>
+        </div>
+    </section>
+
+    <!-- Para quem é -->
+    <section id="para-quem" class="who">
+        <div class="container">
+            <h2>Para quem é o Estoka?</h2>
+            <div class="cards">
+                <article class="card">
+                    <h3>Quem está começando</h3>
+                    <p>Configuração rápida, cadastro intuitivo e controle de itens sem planilhas confusas.</p>
+                </article>
+                <article class="card">
+                    <h3>Lojas & e-commerce</h3>
+                    <p>Entradas e saídas ágeis, histórico detalhado e alertas de baixo estoque.</p>
+                </article>
+                <article class="card">
+                    <h3>Estoques maiores</h3>
+                    <p>Organização por categorias, relatórios e base sólida para crescer com segurança.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recursos -->
+    <section id="recursos" class="features">
+        <div class="container">
+            <h2>Recursos que importam</h2>
+            <div class="grid">
+                <div class="feature">
+                    <div class="ico">📦</div>
+                    <h4>Cadastro rápido</h4>
+                    <p>Produtos, categorias e unidades em poucos cliques.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">↔</div>
+                    <h4>Entradas e saídas</h4>
+                    <p>Movimente o estoque e acompanhe o histórico completo.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">🔔</div>
+                    <h4>Alerta de baixo estoque</h4>
+                    <p>Receba avisos a tempo de repor seus itens.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">📊</div>
+                    <h4>Relatórios claros</h4>
+                    <p>Informações práticas para decisões rápidas.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">🧮</div>
+                    <h4>Custo e margem</h4>
+                    <p>Veja a saúde do estoque com visão de custos.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">☁️</div>
+                    <h4>Em qualquer lugar</h4>
+                    <p>Interface leve e responsiva no seu navegador.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preço (placeholder simples) -->
+    <section id="preco" class="pricing">
+        <div class="container">
+            <h2>Comece grátis</h2>
+            <div class="price-card">
+                <div class="price">
+                    <strong>Plano Inicial</strong>
+                    <span>R$ 0/mês</span>
+                </div>
+                <ul>
+                    <li>Cadastro de produtos</li>
+                    <li>Entradas/Saídas</li>
+                    <li>Alertas essenciais</li>
+                </ul>
+                <a class="btn" href="./public/cadastro.html">Criar conta</a>
+                <small class="muted">Planos avançados em breve — com relatórios e automações.</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="cta">
+        <div class="container cta__row">
+            <h3>Pronto para ter controle total do seu estoque?</h3>
+            <div class="cta__actions">
+                <a class="btn" href="./public/cadastro.html">Criar conta</a>
+                <a class="btn btn--ghost" href="./public/login.html">Já tenho conta</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container footer__row">
+            <div class="footer__copy">© <span id="year"></span> Estoka — Gestão de Estoque</div>
+            <nav class="footer__links">
+                <a href="/public/login.html">Login</a>
+                <a href="/public/cadastro.html">Cadastre-se</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('siteMenu');
+
+        toggle.addEventListener('click', () => {
+            const open = menu.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        // fecha quando clicar em um link do menu (mobile)
+        menu.addEventListener('click', (e) => {
+            if (e.target.matches('a')) {
+                menu.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // se redimensionar pra desktop, garante menu fechado como overlay
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) {
+                menu.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

@@ -1,28 +1,36 @@
 <?php
 require_once __DIR__ . '/../app/Controllers/Api/AuthController.php';
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if ($uri === '/api/register' && in_array($method, ['POST', 'OPTIONS'], true)) {
-  (new AuthController())->register();
-  exit;
-}
-if ($uri === '/api/login'    && in_array($method, ['POST', 'OPTIONS'], true)) {
-  (new AuthController())->login();
-  exit;
-}
-if ($uri === '/api/me'       && in_array($method, ['GET', 'OPTIONS'], true)) {
-  (new AuthController())->me();
-  exit;
-}
-if ($uri === '/api/logout'   && in_array($method, ['POST', 'OPTIONS'], true)) {
-  (new AuthController())->logout();
-  exit;
-}
+switch ($path) {
+  case '/api/login':
+    (new AuthController)->login();
+    break;
+  case '/api/register':
+    (new AuthController)->register();
+    break;
+  case '/api/me':
+    (new AuthController)->me();
+    break;
+  case '/api/logout':
+    (new AuthController)->logout();
+    break;
+  case '/api/forgot':
+    (new AuthController)->forgot();
+    break;
+  case '/api/reset':
+    (new AuthController)->reset();
+    break;
 
-// Se quiser servir SPA raiz em /, pode redirecionar para /public/app.html aqui.
-// 404 padrão:
-http_response_code(404);
-header('Content-Type: application/json; charset=utf-8');
-echo json_encode(['ok' => false, 'message' => 'Rota não encontrada']);
+  // FALTANDO: /api/forgot e /api/reset
+
+  default:
+    if (str_starts_with($path, '/api/')) {
+      header('Content-Type: application/json; charset=utf-8');
+      http_response_code(404);
+      echo json_encode(['ok' => false, 'message' => 'Rota não encontrada']);
+      exit;
+    }
+    require __DIR__ . '/public/index.html';
+}

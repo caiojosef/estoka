@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estoka — Esqueci minha senha</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/auth.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <header class="brand brand--sm">
+      <img class="brand__logo" src="./assets/images/logo.png" alt="Estoka" />
+      <h1 class="brand__title">Recuperar acesso</h1>
+      <p class="brand__subtitle">Informe seu e-mail para receber o link.</p>
+    </header>
+
+    <section class="card card--sm">
+      <form id="formForgot" novalidate>
+        <div id="msg" class="alert" hidden></div>
+        <div class="field">
+          <label for="femail">E-mail</label>
+          <input id="femail" name="email" type="email" autocomplete="email" required>
+          <small class="error" data-error-for="email"></small>
+        </div>
+        <button class="btn" id="btnForgot" type="submit">Enviar link</button>
+        <p class="terms" style="margin-top:10px;">
+          Lembrou a senha? <a href="./login.html">Entrar</a>.
+        </p>
+        <div id="devLink" class="terms" hidden></div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module" src="./assets/js/forgot.js"></script>
+</body>
+</html>

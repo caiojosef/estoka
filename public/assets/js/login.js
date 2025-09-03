@@ -24,6 +24,7 @@ form.addEventListener('submit', async (e) => {
 
     const email = $('#lemail').value.trim();
     const password = $('#lpassword').value;
+    const remember = $('#remember').checked; // << NOVO
 
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) { setErr('email', 'E-mail inválido'); return; }
     if (!password) { setErr('password', 'Informe sua senha'); return; }
@@ -33,15 +34,23 @@ form.addEventListener('submit', async (e) => {
         const res = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password, remember }) // << NOVO
         });
 
         let out = null, raw = null;
         try { out = await res.json(); } catch (_) { raw = await res.text(); }
 
         if (res.ok && out?.ok) {
-            localStorage.setItem('estoka_token', out.token);
-            localStorage.setItem('estoka_token_expires', out.expires_at);
+            // limpa qualquer resquício para evitar conflito
+            sessionStorage.removeItem('estoka_token');
+            sessionStorage.removeItem('estoka_token_expires');
+            localStorage.removeItem('estoka_token');
+            localStorage.removeItem('estoka_token_expires');
+
+            const storage = remember ? localStorage : sessionStorage; // << NOVO
+            storage.setItem('estoka_token', out.token);
+            storage.setItem('estoka_token_expires', out.expires_at);
+
             alertMsg('success', 'Login efetuado! Redirecionando…');
             setTimeout(() => window.location.href = './app.html', 600);
         } else {
@@ -55,4 +64,5 @@ form.addEventListener('submit', async (e) => {
         btn.disabled = false; btn.textContent = 'Entrar';
     }
 });
+
 

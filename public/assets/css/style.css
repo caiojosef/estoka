@@ -1,0 +1,589 @@
+:root {
+    --brand-dark: #0f365a;
+    --brand-accent: #17c9c3;
+    --text-1: #0f2430;
+    --text-2: #4b5a66;
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --line: #E5ECF2;
+    --radius: 10px;
+    /* pouco arredondado */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-1);
+    font: 400 16px/1.55 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    width: min(1120px, 92vw);
+    margin: 0 auto;
+}
+
+/* Header */
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header__row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+}
+
+.brand img {
+    height: 28px;
+}
+
+.nav {
+    display: flex;
+    gap: 16px;
+    margin-left: 12px;
+}
+
+.nav a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav a:hover {
+    color: var(--brand-dark);
+}
+
+.actions {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-block;
+    text-align: center;
+    background: linear-gradient(90deg, var(--brand-accent), #26e0d9);
+    color: #05222a;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    text-decoration: none;
+    box-shadow: 0 6px 14px rgba(23, 201, 195, .25);
+}
+
+.btn--ghost {
+    background: #fff;
+    color: var(--brand-dark);
+    border: 1px solid var(--line);
+    box-shadow: none;
+}
+
+/* Hero */
+.hero {
+    padding: clamp(24px, 5vw, 64px) 0;
+    background:
+        radial-gradient(70% 40% at 65% 35%, rgba(23, 201, 195, .12), transparent 60%),
+        linear-gradient(#fff, #f7fafc 60%, #f6f8fb);
+    border-bottom: 1px solid var(--line);
+}
+
+.hero__grid {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: 1.2fr 1fr;
+}
+
+@media (max-width: 920px) {
+    .hero__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hero__text h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 10px;
+}
+
+.hero__text h1 span {
+    color: var(--brand-accent);
+}
+
+.hero__text p {
+    color: var(--text-2);
+    margin: 0 0 14px;
+}
+
+.hero__cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.hero__badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: var(--text-2);
+    font-size: 14px;
+}
+
+/* Ilustração (prateleiras/caixas) */
+.hero__art {
+    display: grid;
+    place-items: center;
+}
+
+.tiles {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 80px);
+    align-items: center;
+    justify-items: center;
+    filter: drop-shadow(0 24px 40px rgba(15, 54, 90, .15));
+}
+
+.tiles>div {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background: #103a5c;
+    opacity: .9;
+    border: 1px solid #0e304a;
+}
+
+.tiles .accent {
+    background: #17c9c3;
+    border-color: #14b6af;
+    box-shadow: 0 8px 20px rgba(23, 201, 195, .35);
+}
+
+.tiles .bar {
+    width: 12px;
+    height: 64px;
+    border-radius: 6px;
+    background: #103a5c;
+    border: 1px solid #0e304a;
+}
+
+/* Seções */
+section h2 {
+    font-size: clamp(22px, 3vw, 28px);
+    margin: 18px 0 12px;
+}
+
+.who {
+    padding: 28px 0;
+}
+
+.cards {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 920px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: 0 10px 24px rgba(15, 54, 90, .06);
+}
+
+.card h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+
+.features {
+    padding: 8px 0 28px;
+}
+
+.grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 920px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.feature {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px;
+    display: grid;
+    gap: 6px;
+}
+
+.feature .ico {
+    font-size: 22px;
+}
+
+.feature h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.feature p {
+    margin: 0;
+    color: var(--text-2);
+}
+
+/* Pricing */
+.pricing {
+    padding: 20px 0 28px;
+}
+
+.price-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+    width: min(420px, 100%);
+    box-shadow: 0 12px 26px rgba(15, 54, 90, .07);
+}
+
+.price {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.price strong {
+    font-size: 18px;
+}
+
+.price span {
+    font-size: 22px;
+    color: var(--brand-dark);
+    font-weight: 700;
+}
+
+.price-card ul {
+    margin: 8px 0 14px;
+    padding-left: 16px;
+}
+
+.price-card .muted {
+    color: var(--text-2);
+    font-size: 13px;
+}
+
+/* CTA */
+.cta {
+    background: linear-gradient(180deg, #f6f8fb, #eef6f8);
+    border-top: 1px solid var(--line);
+    padding: 20px 0;
+}
+
+.cta__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cta__row h3 {
+    margin: 0;
+    font-size: clamp(18px, 2.5vw, 22px);
+}
+
+.cta__actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Footer */
+.site-footer {
+    border-top: 1px solid var(--line);
+    background: #fff;
+    color: var(--text-2);
+    font-size: 14px;
+}
+
+.footer__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 0;
+}
+
+.footer__row a {
+    color: var(--text-2);
+    text-decoration: none;
+    margin-left: 12px;
+}
+
+.footer__row a:hover {
+    color: var(--brand-dark);
+}
+
+/* Hero image */
+.hero__art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    /* leve glow de fundo para integrar à identidade */
+}
+
+.hero__art::before {
+    content: "";
+    position: absolute;
+    width: 88%;
+    height: 88%;
+    border-radius: 999px;
+    background: radial-gradient(60% 50% at 60% 40%, rgba(23, 201, 195, .16), transparent 60%);
+    filter: blur(6px);
+    z-index: 0;
+}
+
+.hero-img {
+    position: relative;
+    z-index: 1;
+    width: min(40vw, 520px);
+    max-width: 100%;
+    height: auto;
+    /* sombra leve coerente com a UI */
+    filter: drop-shadow(0 20px 36px rgba(15, 54, 90, .18));
+}
+
+/* mobile: imagem maior abaixo do texto */
+@media (max-width: 920px) {
+    .hero-img {
+        width: min(72vw, 540px);
+        margin-top: 8px;
+    }
+}
+
+/* ===== Navbar responsiva ===== */
+
+/* linha do header continua igual, só garantia de espaçamento */
+.header__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+/* botão hambúrguer some no desktop */
+.menu-toggle {
+    display: none;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* estrutura do menu no desktop (nav + actions) lado a lado */
+.site-menu {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+}
+
+.nav {
+    display: flex;
+    gap: 16px;
+}
+
+.nav a {
+    color: var(--text-2);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.nav a:hover {
+    color: var(--brand-dark);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* ===== Quebra para mobile ===== */
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: inline-block;
+        margin-left: auto;
+    }
+
+    /* vira um dropdown/overlay abaixo do header */
+    .site-menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: #fff;
+        border-top: 1px solid var(--line);
+        box-shadow: 0 14px 30px rgba(15, 54, 90, .12);
+        padding: 12px;
+        z-index: 50;
+
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr;
+        /* coluna única */
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform .18s ease;
+        pointer-events: none;
+    }
+
+    .site-menu.is-open {
+        transform: scaleY(1);
+        pointer-events: auto;
+    }
+
+    .nav {
+        display: grid;
+        gap: 10px;
+    }
+
+    .actions {
+        display: grid;
+        gap: 10px;
+    }
+
+    .actions .btn,
+    .actions .btn--ghost {
+        width: 100%;
+    }
+}
+
+/* evita “quebra” feia das labels no mobile estreito */
+@media (max-width: 380px) {
+    .nav a {
+        font-size: 14px;
+    }
+}
+
+/* ===== Footer refinado (sem quebra feia) ===== */
+.site-footer {
+    border-top: 1px solid var(--line);
+    background: #fff;
+    color: var(--text-2);
+    font-size: 14px;
+}
+
+.footer__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    flex-wrap: wrap;
+    /* permite quebrar com elegância */
+}
+
+.footer__row>* {
+    min-width: 0;
+}
+
+/* evita overflow */
+
+.footer__copy {
+    white-space: nowrap;
+}
+
+/* não quebra "Gestão de Estoque" */
+.footer__links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    white-space: nowrap;
+    /* mantém os links em uma linha no desktop */
+}
+
+.footer__links a {
+    color: var(--text-2);
+    text-decoration: none;
+}
+
+.footer__links a:hover {
+    color: var(--brand-dark);
+}
+
+/* separador sutil entre links */
+.footer__links a+a {
+    position: relative;
+    padding-left: 12px;
+}
+
+.footer__links a+a::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #BFD3E0;
+}
+
+/* Mobile: centraliza e permite quebra bonita */
+@media (max-width: 600px) {
+    .footer__row {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+
+    .footer__copy {
+        white-space: normal;
+    }
+
+    /* pode quebrar no mobile */
+    .footer__links {
+        white-space: normal;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .footer__links a+a {
+        padding-left: 0;
+    }
+
+    .footer__links a+a::before {
+        content: none;
+    }
+}
