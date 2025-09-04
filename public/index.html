@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Estoka — Gestão de estoque</title>
+    <title>EstoqueDoZap | Gestão de Estoque</title>
+    <meta name="description"
+        content="EstoqueDoZap — gestão de estoque simples com vitrine pública e pedidos via WhatsApp. Cadastre itens, controle entradas/saídas e receba alertas.">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -15,8 +17,9 @@
     <!-- Topbar -->
     <header class="site-header pro-nav">
         <div class="container nav__wrap">
-            <a class="brand" href="/public/index.html" aria-label="Estoka — início">
-                <img src="/public/assets/images/logo.png" alt="Estoka">
+            <a class="brand" href="/public/index.html" aria-label="EstoqueDoZap — início">
+                <!-- TODO: substituir pelo novo logo quando disponível -->
+                <img src="/public/assets/images/logo.png" alt="EstoqueDoZap">
             </a>
 
             <button class="nav__toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false"
@@ -38,13 +41,13 @@
         </div>
     </header>
 
-
     <!-- Hero -->
     <section class="hero">
         <div class="container hero__grid">
             <div class="hero__text">
                 <h1>Gerencie seu estoque com <span>clareza</span> e <span>controle</span>.</h1>
-                <p>O Estoka foi feito para quem está começando agora <strong>e</strong> para quem opera grandes volumes.
+                <p>O <strong>EstoqueDoZap</strong> foi feito para quem está começando agora <strong>e</strong> para quem
+                    opera grandes volumes.
                     Cadastre produtos, registre entradas/saídas, receba alertas de baixo estoque e tome decisões com
                     relatórios diretos.</p>
                 <div class="hero__cta">
@@ -58,26 +61,23 @@
                 </div>
             </div>
 
-
-
             <!-- Ilustração do hero -->
             <div class="hero__art" aria-hidden="true">
                 <picture>
                     <!-- Se gerar em WebP, mantenha esta fonte -->
-                    <!-- <source srcset="/public/assets/images/hero-estoka.webp" type="image/webp"> -->
-                    <img class="hero-img" src="./assets/images/hero-estoka1.png" alt="" role="presentation"
+                    <!-- <source srcset="/public/assets/images/hero-estoquedozap.webp" type="image/webp"> -->
+                    <!-- TODO: substituir imagem abaixo pela arte do EstoqueDoZap -->
+                    <img class="hero-img" src="./assets/images/hero-estoquedozap.png" alt="" role="presentation"
                         loading="eager" fetchpriority="high" decoding="async" width="1200" height="1200">
                 </picture>
             </div>
         </div>
     </section>
 
-
-
     <!-- Para quem é -->
     <section id="para-quem" class="who">
         <div class="container">
-            <h2>Para quem é o Estoka?</h2>
+            <h2>Para quem é o EstoqueDoZap?</h2>
             <div class="cards">
                 <article class="card">
                     <h3>Quem está começando</h3>
@@ -101,12 +101,12 @@
                 <span class="pill">Novidade</span>
                 <h2>Vitrine pública da sua loja + pedidos pelo WhatsApp</h2>
                 <p>
-                    No plano Estoka <strong>R$ 50/mês</strong>, cada conta ganha uma página pública do tipo
-                    <code>estoka.com.br/<strong>seudomínio</strong></code> (ex.:
-                    <em>estoka.com.br/dyannapratas</em>)
+                    No plano <strong>EstoqueDoZap</strong> <strong>R$ 50/mês</strong>, cada conta ganha uma página
+                    pública do tipo
+                    <code>estoquedozap.com.br/<strong>seudomínio</strong></code> (ex.:
+                    <em>estoquedozap.com.br/dyannapratas</em>)
                     com todos os seus produtos. Seus clientes podem escolher itens, montar carrinho e enviar o
-                    pedido
-                    direto pro seu WhatsApp com uma mensagem pronta.
+                    pedido direto pro seu WhatsApp com uma mensagem pronta.
                 </p>
                 <ul class="announce__list">
                     <li>Link público da loja (catálogo + busca)</li>
@@ -125,10 +125,11 @@
 
             <aside class="announce__card" aria-label="Prévia da vitrine">
                 <div class="card__head">
+                    <!-- TODO: substituir pelo novo logo quando disponível -->
                     <img src="/public/assets/images/logo.png" alt="" class="card__logo">
                     <div>
                         <strong>dyannapratas</strong>
-                        <div class="muted">estoka.com.br/dyannapratas</div>
+                        <div class="muted">estoquedozap.com.br/dyannapratas</div>
                     </div>
                 </div>
 
@@ -212,8 +213,8 @@ Total estimado: R$ 199,80</pre>
             <h2>Quem usa recomenda</h2>
             <div class="t__grid">
                 <figure class="t__card">
-                    <blockquote>“Antes eu perdia pedido no WhatsApp. Com a vitrine do Estoka, os clientes já mandam
-                        certinho o carrinho.”</blockquote>
+                    <blockquote>“Antes eu perdia pedido no WhatsApp. Com a vitrine do EstoqueDoZap, os clientes já
+                        mandam certinho o carrinho.”</blockquote>
                     <figcaption>Dayanna • Dyanna Pratas — Araraquara/SP</figcaption>
                 </figure>
                 <figure class="t__card">
@@ -230,12 +231,10 @@ Total estimado: R$ 199,80</pre>
         </div>
     </section>
 
-
-
-    <!-- Preço (placeholder simples) -->
+    <!-- Preço -->
     <section id="preco" class="pricing">
         <div class="container">
-            <h2>Plano Estoka</h2>
+            <h2>Plano EstoqueDoZap</h2>
             <div class="price-card">
                 <div class="price">
                     <strong>Completo</strong>
@@ -254,7 +253,6 @@ Total estimado: R$ 199,80</pre>
         </div>
     </section>
 
-
     <!-- CTA final -->
     <section class="cta">
         <div class="container cta__row">
@@ -270,8 +268,9 @@ Total estimado: R$ 199,80</pre>
         <div class="container footer__grid">
             <!-- Marca -->
             <div class="footer__brand">
-                <a class="footer__logo" href="/public/index.html" aria-label="Estoka — Início">
-                    <img src="/public/assets/images/logo.png" alt="Estoka">
+                <a class="footer__logo" href="/public/index.html" aria-label="EstoqueDoZap — Início">
+                    <!-- TODO: substituir pelo novo logo quando disponível -->
+                    <img src="/public/assets/images/logo.png" alt="EstoqueDoZap">
                 </a>
                 <p class="footer__tagline">
                     Gestão de estoque simples, rápida e confiável. Cadastre produtos, registre entradas/saídas e
@@ -325,7 +324,7 @@ Total estimado: R$ 199,80</pre>
                     <h4 class="footer__title">Suporte</h4>
                     <ul class="footer__list">
                         <li><a href="#">Central de ajuda</a></li>
-                        <li><a href="mailto:contato@estoka.com">contato@estoka.com</a></li>
+                        <li><a href="mailto:contato@estoquedozap.com.br">contato@estoquedozap.com.br</a></li>
                         <li><a href="#">Status do serviço</a></li>
                     </ul>
                 </div>
@@ -334,7 +333,7 @@ Total estimado: R$ 199,80</pre>
 
         <div class="footer__bottom">
             <div class="container footer__bottom-row">
-                <p class="footer__copy">© <span id="year"></span> Estoka • Gestão de Estoque</p>
+                <p class="footer__copy">© <span id="year"></span> EstoqueDoZap • Gestão de Estoque</p>
                 <nav class="footer__legal">
                     <a href="/public/privacidade.html">Privacidade</a>
                     <span aria-hidden="true">•</span>
@@ -342,11 +341,9 @@ Total estimado: R$ 199,80</pre>
                     <span aria-hidden="true">•</span>
                     <a href="/public/cookies.html">Cookies</a>
                 </nav>
-
             </div>
         </div>
     </footer>
-
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
@@ -373,7 +370,6 @@ Total estimado: R$ 199,80</pre>
             }
         });
     </script>
-
 </body>
 
 </html>

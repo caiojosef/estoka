@@ -379,7 +379,7 @@ section h2 {
 .hero-img {
     position: relative;
     z-index: 1;
-    width: min(40vw, 400px);
+    width: min(40vw, 330px);
     max-width: 100%;
     height: auto;
     /* sombra leve coerente com a UI */
@@ -906,7 +906,6 @@ button.btn {
 
     padding: var(--_pY) var(--_pX);
     border-radius: var(--_radius);
-    border: 1px solid transparent;
     font-weight: 700;
     font-size: var(--_fs);
     line-height: 1;
