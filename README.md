@@ -1,30 +1,56 @@
-# Estoka — Cadastro, Login e Recuperação de Senha
+# Estoka — Gestão de Estoque com Login, Cadastro e Vitrine Pública
 
-Projeto simples em **PHP + MySQL** para gerenciar usuários: **cadastro**, **login com “lembrar de mim”**, **esqueci a senha** e **redefinição**. Tentei deixar o código direto e a interface limpa, para qualquer pessoa conseguir usar e entender.
+Projeto completo para gerenciar estoques, com sistema de autenticação (cadastro, login, redefinição de senha), painel administrativo e agora com **vitrine pública personalizada + envio via WhatsApp**.
 
----
-
-## ✅ O que tem aqui
-
-- Cadastro com validações (CPF, CEP, UF) e **checklist da senha** enquanto digita.
-- Login com opção **Lembrar de mim** (2h padrão / 30 dias marcado).
-- Sessão com **token opaco** (o valor real fica só no cliente; no banco eu salvo o **hash HMAC**).
-- **Logout** e **revogação** de tokens.
-- **Esqueci minha senha** com token de 1h e fluxo de redefinição.
-- Interface responsiva (HTML, CSS e JS puro) e **ViaCEP** para buscar endereço.
+Desenvolvido com foco em clareza, simplicidade e usabilidade — ideal para quem está aprendendo ou quer um sistema funcional direto ao ponto.
 
 ---
 
-## 🛠️ Tecnologias
+## ✅ O que está incluído
 
-- PHP 8+
-- MySQL 5.7/8
-- HTML + CSS + JavaScript
-- ViaCEP (consulta CEP)
+- Cadastro com validações (CPF, CEP via API, senha com checklist visual).
+- Login com **Lembrar de mim** (2h padrão ou 30 dias se marcado).
+- Sessão segura com **token opaco** e hash HMAC no backend.
+- **Logout automático** ao revogar token ou redefinir senha.
+- Esqueci minha senha + redefinição com token de 1h.
+- Vitrine pública no formato `estoka.com.br/seunome`, com:
+  - Todos os produtos cadastrados.
+  - Carrinho de compras com múltiplos itens.
+  - Geração de link para envio via **WhatsApp**.
+- Layout responsivo, leve e elegante.
+- Footer profissional e navbar com visual melhorado.
+- Códigos e estilo centralizados para reutilização (CSS e JS).
 
 ---
 
-## 📁 Estrutura resumida
+## 🖼️ Interface visual
+
+- Totalmente responsivo (mobile, tablet e desktop).
+- Design limpo com componentes reutilizáveis.
+- Páginas de login, cadastro, recuperação e redefinição com estilo unificado.
+- Novo visual da **vitrine pública da loja** incluído no `index.html`.
+
+---
+
+## 💡 Novidade: Página da loja + WhatsApp
+
+No plano Estoka (R$ 50/mês), cada lojista tem:
+
+- Link exclusivo: `estoka.com.br/sualoja`
+- Lista de produtos formatados (ícone, preço, botão de adicionar).
+- Carrinho de compras que gera automaticamente uma mensagem:
+  - Exemplo:
+    ```
+    Olá! Tenho interesse nos produtos do meu carrinho:
+    - Pulseira Pérolas (1x)
+    - Anel Prata 925 (1x)
+    Total estimado: R$ 199,80
+    ```
+- Link de envio direto para o número da loja via WhatsApp.
+
+---
+
+## 📁 Estrutura de pastas
 
 ```text
 .
@@ -38,75 +64,20 @@ Projeto simples em **PHP + MySQL** para gerenciar usuários: **cadastro**, **log
 │  ├─ Validator.php
 │  └─ RateLimiter.php
 ├─ public/
-│  ├─ index.html       # landing
-│  ├─ login.html       # login
-│  ├─ cadastro.html    # registro
-│  ├─ forgot.html      # pedir reset
-│  ├─ reset.html       # redefinir senha
-│  └─ assets/          # css, js, images
-├─ index.php           # roteia /api/*
-└─ .htaccess           # envia / → public e /api → index.php
+│  ├─ index.html         # landing + vitrine pública
+│  ├─ login.html         # login
+│  ├─ cadastro.html      # registro
+│  ├─ forgot.html        # pedir reset
+│  ├─ reset.html         # redefinir senha
+│  ├─ assets/            # css, js, imagens
+│  └─ style.css          # principal do layout
+├─ index.php             # roteador principal das APIs
+└─ .htaccess             # envia / → public e roteia /api
 ```
 
 ---
 
-## ⚙️ Como rodar
-
-1. Tenha PHP e MySQL (pode ser XAMPP/Laragon/USBWebserver).
-2. Crie o banco **`estoka`** e rode os **SQLs** abaixo (tem a seção “Banco de dados” com tudo pronto).
-3. Crie `config/config.php` com suas credenciais:
-   ```php
-   <?php
-   return [
-     'db' => [
-       'host' => '127.0.0.1',
-       'dbname' => 'estoka',
-       'user' => 'root',
-       'pass' => '',
-       'charset' => 'utf8mb4',
-     ],
-     'cors_allowed_origin' => 'http://localhost',
-   ];
-   ```
-4. Defina a variável de ambiente `TOKEN_SECRET` (um valor aleatório grande):
-   - **Windows (PowerShell)**  
-     ```powershell
-     [System.Environment]::SetEnvironmentVariable('TOKEN_SECRET','troque-por-um-valor-seguro','User')
-     ```
-   - **Linux/macOS**  
-     ```bash
-     export TOKEN_SECRET="troque-por-um-valor-seguro"
-     ```
-5. Inicie seu servidor e acesse `http://localhost/`.
-
----
-
-## 🔐 Como funciona a segurança (bem simples)
-
-- O login gera um **token opaco** com `random_bytes`.  
-  No navegador fica o token “em claro”.  
-  No banco eu salvo **só o hash** (`HMAC-SHA256(token, TOKEN_SECRET)`).
-- Senha de usuário: `password_hash()` / `password_verify()`.
-- **Reset de senha**: salvo o **hash do token** com validade de 1h; ao usar, **marco usado** e **revogo** sessões antigas.
-- **CORS**: controlado por `config/config.php`.
-
----
-
-## 💻 Front-end (o que a pessoa vê)
-
-- Telas: **cadastro**, **login**, **esqueci senha** e **redefinir**.
-- **Checklist da senha** (fica verde quando a regra passa):  
-  mínimo 6, 1 maiúscula, 1 minúscula, 1 especial (`!@#$*`).
-- Máscara de **CPF** e **CEP** e preenchimento automático pelo **ViaCEP**.
-
----
-
 ## 📦 Banco de dados (SQL)
-
-> Observação: deixei **sem chave estrangeira** por padrão para evitar erro 1215 em ambientes mais antigos.  
-> Se quiser, tem uma versão **opcional** com FKs logo abaixo.
-
-### Tabelas principais
 
 ```sql
 CREATE TABLE IF NOT EXISTS users (
@@ -121,9 +92,10 @@ CREATE TABLE IF NOT EXISTS users (
   cidade VARCHAR(120),
   estado CHAR(2),
   complemento VARCHAR(40),
+  whatsapp VARCHAR(20),
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 CREATE TABLE IF NOT EXISTS auth_tokens (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -134,10 +106,8 @@ CREATE TABLE IF NOT EXISTS auth_tokens (
   expires_at DATETIME NOT NULL,
   last_used_at DATETIME NULL,
   is_revoked TINYINT(1) NOT NULL DEFAULT 0,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_user_id (user_id),
-  INDEX idx_token (token)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE IF NOT EXISTS password_resets (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -145,78 +115,55 @@ CREATE TABLE IF NOT EXISTS password_resets (
   token CHAR(64) NOT NULL,
   expires_at DATETIME NOT NULL,
   used_at DATETIME NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY uk_pw_token (token),
-  INDEX idx_pw_user (user_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS rate_limits (
-  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  key_id VARCHAR(120) NOT NULL,
-  hits INT NOT NULL DEFAULT 0,
-  period_until DATETIME NOT NULL,
-  INDEX idx_key (key_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
-
-### Chaves estrangeiras (opcional)
-
-```sql
-ALTER TABLE auth_tokens
-  ADD CONSTRAINT fk_auth_user
-  FOREIGN KEY (user_id) REFERENCES users(id)
-  ON DELETE CASCADE;
-
-ALTER TABLE password_resets
-  ADD CONSTRAINT fk_pw_user
-  FOREIGN KEY (user_id) REFERENCES users(id)
-  ON DELETE CASCADE;
-```
-
-### Criando um usuário de teste
-
-```bash
-php -r "echo password_hash('Aa@123*', PASSWORD_DEFAULT), PHP_EOL;"
-```
-
-```sql
-INSERT INTO users (email, password_hash, cpf, cep, logradouro, numero, bairro, cidade, estado, complemento)
-VALUES (
-  'teste@estoka.com',
-  '<COLE_AQUI_O_HASH_GERADO>',
-  '00000000000',
-  '00000-000',
-  'Rua Exemplo',
-  '123',
-  'Centro',
-  'Araraquara',
-  'SP',
-  'Apto 1'
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
 ---
 
-## 🧪 Rotas principais (API)
+## 🔒 Segurança e tokens
 
-- **POST `/api/register`** — cria usuário
-- **POST `/api/login`** — autentica e retorna token
-- **GET `/api/me`** — retorna dados do usuário autenticado
-- **POST `/api/logout`** — faz logout e revoga token
-- **POST `/api/forgot`** — inicia processo de redefinir senha
-- **POST `/api/reset`** — redefine senha com token
+- **Tokens opacos** gerados com `random_bytes()`.
+- Salvos com **hash HMAC-SHA256** no backend.
+- `password_hash` e `password_verify` para senhas.
+- Tokens de redefinição de senha são descartados após o uso.
 
 ---
 
-## 🚧 Ideias para próximas versões
+## 📨 API e rotas
 
-- Envio real de e-mail (SMTP/serviço de e-mail).
-- Migrations e seeds.
-- Testes (PHPUnit).
-- Docker Compose para subir ambiente rápido.
-- Algumas melhorias de segurança de headers e CSRF em rotas de formulário.
+| Método | Rota           | Descrição                       |
+|--------|----------------|----------------------------------|
+| POST   | /api/register  | Cadastra um novo usuário         |
+| POST   | /api/login     | Login + geração de token         |
+| GET    | /api/me        | Retorna dados do usuário logado  |
+| POST   | /api/logout    | Revoga o token atual             |
+| POST   | /api/forgot    | Inicia recuperação de senha      |
+| POST   | /api/reset     | Redefine a senha com token       |
 
 ---
 
-Feito com dedicação ❤️  
-Se algo não rodar no seu PC, abre uma issue que eu tento ajudar!
+## 📑 Páginas legais (LGPD e afins)
+
+- **Política de Privacidade**
+- **Termos de Uso**
+- **Política de Cookies**
+
+Essas páginas estão disponíveis com layout unificado e responsivo.
+
+---
+
+## 💡 Ideias futuras
+
+- Editor visual da vitrine
+- Pagamento integrado (via Pix)
+- Upload de imagem por produto
+- Integração com Instagram Shopping
+- Estatísticas de visualização de catálogo
+- Envio automático de lembretes de carrinho
+
+---
+
+## 🙌 Créditos
+
+Feito com ❤️ por um dev júnior apaixonado por organização e usabilidade.

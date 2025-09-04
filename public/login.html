@@ -18,7 +18,11 @@
             <!-- CARD DE LOGIN (compacto) -->
             <section class="card card--sm login-card">
                 <div class="login-brand">
-                    <img src="/public/assets/images/logo.png" alt="Estoka">
+
+                    <a class="brand__logo-link logo-back" href="/public/index.html">
+                        <img class="brand__logo" src="/public/assets/images/logo.png" alt="Estoka">
+                    </a>
+
                     <h1>Acessar o <span>Estoka</span></h1>
                     <p>Faça login para continuar.</p>
                 </div>
@@ -30,29 +34,29 @@
                         <div class="field">
                             <label for="lemail">E-mail</label>
                             <input id="lemail" name="email" type="email" autocomplete="email" required>
-                            
+
                         </div>
 
                         <div class="field">
                             <label for="lpassword">Senha</label>
                             <input id="lpassword" name="password" type="password" autocomplete="current-password"
                                 required>
-                            </div>
-                            
+                        </div>
+
 
                         <div class="field field--row between">
                             <label class="checkbox">
                                 <input type="checkbox" id="remember" name="remember">
                                 <span>Lembrar de mim</span>
                             </label>
-                            <a class="muted-link" href="/public/forgot.html">Esqueci minha senha</a>
+                            <a class="muted-link" href="/public/forgot.html?from=login">Esqueci a senha</a>
                         </div>
                     </div>
 
                     <button class="btn" id="btnLogin" type="submit">Entrar</button>
 
                     <p class="terms" style="margin-top:10px;">
-                        Ainda não tem conta? <a href="/public/cadastro.html">Crie agora</a>.
+                        Ainda não tem conta? <a href="/public/cadastro.html?from=login">Criar conta</a>
                     </p>
                 </form>
             </section>

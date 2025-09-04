@@ -13,30 +13,31 @@
 
 <body>
     <!-- Topbar -->
-    <header class="site-header">
-        <div class="container header__row">
+    <header class="site-header pro-nav">
+        <div class="container nav__wrap">
             <a class="brand" href="/public/index.html" aria-label="Estoka — início">
-                <img src="/public/assets/images/logo.png" alt="">
+                <img src="/public/assets/images/logo.png" alt="Estoka">
             </a>
 
-            <!-- botão hambúrguer (mostra só no mobile) -->
-            <button class="menu-toggle" id="menuToggle" aria-controls="siteMenu" aria-expanded="false"
-                aria-label="Abrir menu">☰</button>
+            <button class="nav__toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false"
+                aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
 
-            <!-- menu (nav + actions) -->
-            <div class="site-menu" id="siteMenu">
-                <nav class="nav">
-                    <a href="#recursos">Recursos</a>
-                    <a href="#para-quem">Para quem é</a>
-                    <a href="#preco">Preço</a>
+            <div class="nav__menu" id="navMenu">
+                <nav class="nav__links">
+                    <a href="#recursos" class="nav__link">Recursos</a>
+                    <a href="#para-quem" class="nav__link">Para quem é</a>
+                    <a href="#preco" class="nav__link">Preço</a>
                 </nav>
-                <div class="actions">
-                    <a class="btn btn--ghost" href="/public/login.html">Entrar</a>
-                    <a class="btn" href="/public/cadastro.html">Criar conta</a>
+                <div class="nav__actions">
+                    <a class="btn btn--nav btn--secondary" href="/public/login.html">Entrar</a>
+                    <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Criar conta</a>
                 </div>
             </div>
         </div>
     </header>
+
 
     <!-- Hero -->
     <section class="hero">
@@ -47,8 +48,8 @@
                     Cadastre produtos, registre entradas/saídas, receba alertas de baixo estoque e tome decisões com
                     relatórios diretos.</p>
                 <div class="hero__cta">
-                    <a class="btn" href="./public/cadastro.html">Começar agora</a>
-                    <a class="btn btn--ghost" href="#recursos">Ver recursos</a>
+                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Começar agora</a>
+                    <a class="btn btn--lg btn--secondary" href="#recursos">Ver recursos</a>
                 </div>
                 <div class="hero__badges">
                     <span>✔️ Para MEIs e pequenos negócios</span>
@@ -56,6 +57,8 @@
                     <span>✔️ Sem complicação</span>
                 </div>
             </div>
+
+
 
             <!-- Ilustração do hero -->
             <div class="hero__art" aria-hidden="true">
@@ -68,6 +71,8 @@
             </div>
         </div>
     </section>
+
+
 
     <!-- Para quem é -->
     <section id="para-quem" class="who">
@@ -87,6 +92,79 @@
                     <p>Organização por categorias, relatórios e base sólida para crescer com segurança.</p>
                 </article>
             </div>
+        </div>
+    </section>
+
+    <section class="announce">
+        <div class="container announce__grid">
+            <div class="announce__text">
+                <span class="pill">Novidade</span>
+                <h2>Vitrine pública da sua loja + pedidos pelo WhatsApp</h2>
+                <p>
+                    No plano Estoka <strong>R$ 50/mês</strong>, cada conta ganha uma página pública do tipo
+                    <code>estoka.com.br/<strong>seudomínio</strong></code> (ex.:
+                    <em>estoka.com.br/dyannapratas</em>)
+                    com todos os seus produtos. Seus clientes podem escolher itens, montar carrinho e enviar o
+                    pedido
+                    direto pro seu WhatsApp com uma mensagem pronta.
+                </p>
+                <ul class="announce__list">
+                    <li>Link público da loja (catálogo + busca)</li>
+                    <li>Carrinho de compras com seleção de múltiplos itens</li>
+                    <li>Envio no WhatsApp da loja (mensagem automática)</li>
+                    <li>Gestão de estoque, entradas/saídas e alertas</li>
+                </ul>
+                <div class="announce__cta">
+                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Assinar por R$
+                        50/mês</a>
+                    <a class="btn btn--lg btn--ghost" href="#preco">Ver detalhes do plano</a>
+                </div>
+                <small class="muted">* A vitrine pública está em desenvolvimento contínuo; recursos podem
+                    evoluir.</small>
+            </div>
+
+            <aside class="announce__card" aria-label="Prévia da vitrine">
+                <div class="card__head">
+                    <img src="/public/assets/images/logo.png" alt="" class="card__logo">
+                    <div>
+                        <strong>dyannapratas</strong>
+                        <div class="muted">estoka.com.br/dyannapratas</div>
+                    </div>
+                </div>
+
+                <div class="card__body">
+                    <div class="catalog__item">
+                        <div class="catalog__thumb">📿</div>
+                        <div class="catalog__info">
+                            <div class="catalog__title">Pulseira Pérolas</div>
+                            <div class="catalog__price">R$ 79,90</div>
+                        </div>
+                        <button class="btn btn--sm btn--secondary">Adicionar</button>
+                    </div>
+                    <div class="catalog__item">
+                        <div class="catalog__thumb">💍</div>
+                        <div class="catalog__info">
+                            <div class="catalog__title">Anel Prata 925</div>
+                            <div class="catalog__price">R$ 119,90</div>
+                        </div>
+                        <button class="btn btn--sm btn--secondary">Adicionar</button>
+                    </div>
+
+                    <div class="cart__row">
+                        <div class="muted">2 itens no carrinho</div>
+                        <a class="btn btn--sm btn--primary" href="#" aria-label="Enviar no WhatsApp">Enviar no
+                            WhatsApp</a>
+                    </div>
+
+                    <div class="whats__preview">
+                        <div class="muted">Mensagem gerada:</div>
+                        <pre>Olá! Tenho interesse nos produtos do meu carrinho:
+- Pulseira Pérolas (1x)
+- Anel Prata 925 (1x)
+Total estimado: R$ 199,80</pre>
+                    </div>
+                </div>
+            </aside>
         </div>
     </section>
 
@@ -129,76 +207,173 @@
         </div>
     </section>
 
-    <!-- Preço (placeholder simples) -->
-    <section id="preco" class="pricing">
+    <section class="testimonials">
         <div class="container">
-            <h2>Comece grátis</h2>
-            <div class="price-card">
-                <div class="price">
-                    <strong>Plano Inicial</strong>
-                    <span>R$ 0/mês</span>
-                </div>
-                <ul>
-                    <li>Cadastro de produtos</li>
-                    <li>Entradas/Saídas</li>
-                    <li>Alertas essenciais</li>
-                </ul>
-                <a class="btn" href="./public/cadastro.html">Criar conta</a>
-                <small class="muted">Planos avançados em breve — com relatórios e automações.</small>
+            <h2>Quem usa recomenda</h2>
+            <div class="t__grid">
+                <figure class="t__card">
+                    <blockquote>“Antes eu perdia pedido no WhatsApp. Com a vitrine do Estoka, os clientes já mandam
+                        certinho o carrinho.”</blockquote>
+                    <figcaption>Dayanna • Dyanna Pratas — Araraquara/SP</figcaption>
+                </figure>
+                <figure class="t__card">
+                    <blockquote>“Demorou 15 minutos para subir meus produtos e já saí com link pra divulgar no
+                        Instagram.”</blockquote>
+                    <figcaption>Lucas • Brechó do Lu — Ribeirão Preto/SP</figcaption>
+                </figure>
+                <figure class="t__card">
+                    <blockquote>“O valor compensa pela simplicidade: carrinho + WhatsApp, sem taxas por pedido.”
+                    </blockquote>
+                    <figcaption>Marcela • Ateliê da Ma — Curitiba/PR</figcaption>
+                </figure>
             </div>
         </div>
     </section>
+
+
+
+    <!-- Preço (placeholder simples) -->
+    <section id="preco" class="pricing">
+        <div class="container">
+            <h2>Plano Estoka</h2>
+            <div class="price-card">
+                <div class="price">
+                    <strong>Completo</strong>
+                    <span>R$ 50/mês</span>
+                </div>
+                <ul>
+                    <li>Vitrine pública do seu negócio (link personalizado)</li>
+                    <li>Carrinho + envio pelo WhatsApp do lojista</li>
+                    <li>Cadastro de produtos e categorias</li>
+                    <li>Entradas/Saídas + alertas de baixo estoque</li>
+                    <li>Relatórios essenciais</li>
+                </ul>
+                <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Assinar agora</a>
+                <small class="muted">Cancele quando quiser. Futuras automações e integrações virão como add-ons.</small>
+            </div>
+        </div>
+    </section>
+
 
     <!-- CTA final -->
     <section class="cta">
         <div class="container cta__row">
             <h3>Pronto para ter controle total do seu estoque?</h3>
             <div class="cta__actions">
-                <a class="btn" href="./public/cadastro.html">Criar conta</a>
-                <a class="btn btn--ghost" href="./public/login.html">Já tenho conta</a>
+                <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Criar conta</a>
+                <a class="btn btn--ghost" href="./public/login.html">Entrar Agora</a>
             </div>
         </div>
     </section>
 
     <footer class="site-footer">
-        <div class="container footer__row">
-            <div class="footer__copy">© <span id="year"></span> Estoka — Gestão de Estoque</div>
-            <nav class="footer__links">
-                <a href="/public/login.html">Login</a>
-                <a href="/public/cadastro.html">Cadastre-se</a>
+        <div class="container footer__grid">
+            <!-- Marca -->
+            <div class="footer__brand">
+                <a class="footer__logo" href="/public/index.html" aria-label="Estoka — Início">
+                    <img src="/public/assets/images/logo.png" alt="Estoka">
+                </a>
+                <p class="footer__tagline">
+                    Gestão de estoque simples, rápida e confiável. Cadastre produtos, registre entradas/saídas e
+                    acompanhe alertas de baixo estoque.
+                </p>
+
+                <div class="footer__social">
+                    <a href="#" aria-label="Instagram" class="social">
+                        <!-- ícone IG -->
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3a6 6 0 110 12 6 6 0 010-12zm0 2.2a3.8 3.8 0 100 7.6 3.8 3.8 0 000-7.6zM18 6.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social">
+                        <!-- ícone IN -->
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M20.45 20.45h-3.55v-5.6c0-1.34-.02-3.06-1.86-3.06-1.86 0-2.14 1.45-2.14 2.96v5.7H9.35V9h3.4v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.33zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.11 20.45H3.57V9h3.54v11.45z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="GitHub" class="social">
+                        <!-- ícone GH -->
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M12 .5a12 12 0 00-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.54-1.37-1.32-1.74-1.32-1.74-1.08-.74.08-.73.08-.73 1.2.09 1.84 1.23 1.84 1.23 1.06 1.82 2.77 1.29 3.44.99.11-.77.42-1.29.77-1.59-2.66-.31-5.46-1.33-5.46-5.92 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.55.12-3.23 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 016 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.68.25 2.93.12 3.23.77.84 1.24 1.91 1.24 3.22 0 4.6-2.8 5.6-5.47 5.91.43.37.82 1.1.82 2.23v3.3c0 .32.21.7.83.58A12 12 0 0012 .5z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Colunas de links -->
+            <nav class="footer__cols">
+                <div class="footer__col">
+                    <h4 class="footer__title">Produto</h4>
+                    <ul class="footer__list">
+                        <li><a href="/#recursos">Recursos</a></li>
+                        <li><a href="/#para-quem">Para quem é</a></li>
+                        <li><a href="/#preco">Preço</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Conta</h4>
+                    <ul class="footer__list">
+                        <li><a href="/public/login.html">Login</a></li>
+                        <li><a href="/public/cadastro.html">Criar conta</a></li>
+                        <li><a href="/public/forgot.html">Esqueci a senha</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Suporte</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Central de ajuda</a></li>
+                        <li><a href="mailto:contato@estoka.com">contato@estoka.com</a></li>
+                        <li><a href="#">Status do serviço</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
+
+        <div class="footer__bottom">
+            <div class="container footer__bottom-row">
+                <p class="footer__copy">© <span id="year"></span> Estoka • Gestão de Estoque</p>
+                <nav class="footer__legal">
+                    <a href="/public/privacidade.html">Privacidade</a>
+                    <span aria-hidden="true">•</span>
+                    <a href="/public/termos.html">Termos</a>
+                    <span aria-hidden="true">•</span>
+                    <a href="/public/cookies.html">Cookies</a>
+                </nav>
+
+            </div>
+        </div>
     </footer>
+
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        const toggle = document.getElementById('menuToggle');
-        const menu = document.getElementById('siteMenu');
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
 
-        toggle.addEventListener('click', () => {
-            const open = menu.classList.toggle('is-open');
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        navToggle.addEventListener('click', () => {
+            const open = navMenu.classList.toggle('is-open');
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
 
-        // fecha quando clicar em um link do menu (mobile)
-        menu.addEventListener('click', (e) => {
+        navMenu.addEventListener('click', (e) => {
             if (e.target.matches('a')) {
-                menu.classList.remove('is-open');
-                toggle.setAttribute('aria-expanded', 'false');
+                navMenu.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
             }
         });
 
-        // se redimensionar pra desktop, garante menu fechado como overlay
         window.addEventListener('resize', () => {
             if (window.innerWidth > 900) {
-                menu.classList.remove('is-open');
-                toggle.setAttribute('aria-expanded', 'false');
+                navMenu.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
             }
         });
-
-
     </script>
+
 </body>
 
 </html>

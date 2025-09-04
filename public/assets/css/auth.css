@@ -539,3 +539,19 @@ select:focus {
 .grid--single {
     grid-template-columns: 1fr !important;
 }
+
+.back-hint {
+    margin: -6px 0 8px;
+    font-size: 14px;
+}
+
+.back-hint a {
+    color: var(--text-2);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--line);
+}
+
+.back-hint a:hover {
+    color: var(--brand-dark);
+    border-bottom-color: var(--brand-accent);
+}

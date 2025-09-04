@@ -8,17 +8,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/auth.css">
+    
     <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
 </head>
 
 <body>
     <main class="auth-shell">
         <header class="brand">
-            <img class="brand__logo" src="./assets/images/logo.png" alt="Estoka" />
+            <a class="brand__logo-link logo-back" href="/public/index.html">
+                <img class="brand__logo" src="/public/assets/images/logo.png" alt="Estoka">
+            </a>
             <p class="brand__subtitle">Gestão de estoque simples, rápida e confiável.</p>
         </header>
-
         <section class="card">
+            <p class="back-hint" hidden>
+                <a id="contextBackLink" href="#"></a>
+            </p>
             <form id="formCadastro" novalidate>
                 <div id="formMsg" class="alert" hidden></div>
 
@@ -167,7 +172,11 @@
             <a class="btn btn--ghost" href="/public/login.html">Ir agora</a>
         </div>
     </div>
-
+    <script src="./assets/js/nav.js"></script>
+    <script>
+        NavHelpers.wireLogoBack();
+        NavHelpers.setContextBackLink('#contextBackLink'); // define o texto/href com base no from/referrer
+    </script>
 
     <script type="module" src="./assets/js/register.js"></script>
 </body>

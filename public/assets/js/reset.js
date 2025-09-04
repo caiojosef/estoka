@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const out = await res.json().catch(() => ({}));
 
             if (res.ok && out.ok) {
-                show('success', 'Senha redefinida com sucesso! Redirecionando…');
+                show('success', 'Senha redefinida com sucesso! Redirecionando...');
                 setTimeout(() => location.href = '/public/login.html', 1000);
             } else {
                 show('error', out.message || out.detail || 'Erro ao redefinir senha.');

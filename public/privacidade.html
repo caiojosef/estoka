@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Privacidade — Estoka</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" href="./assets/images/favicon.png">
+</head>
+
+<body>
+    <!-- Header (mesma navbar do index) -->
+    <header class="site-header pro-nav">
+        <div class="container nav__wrap">
+            <a class="brand" href="/public/index.html" aria-label="Estoka — início">
+                <img src="/public/assets/images/logo.png" alt="Estoka">
+            </a>
+            <button class="nav__toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false"
+                aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav__menu" id="navMenu">
+                <nav class="nav__links">
+                    <a href="/public/index.html#recursos" class="nav__link">Recursos</a>
+                    <a href="/public/index.html#para-quem" class="nav__link">Para quem é</a>
+                    <a href="/public/index.html#preco" class="nav__link">Preço</a>
+                </nav>
+                <div class="nav__actions">
+                    <a class="btn btn--nav btn--secondary" href="/public/login.html">Entrar</a>
+                    <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=legal">Criar conta</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="legal container">
+        <header class="legal__header">
+            <h1>Política de Privacidade</h1>
+            <p class="muted">Última atualização: <time datetime="2025-09-03">03/09/2025</time></p>
+            <p>Esta Política explica como o <strong>Estoka</strong> trata dados pessoais em conformidade com a
+                <strong>LGPD (Lei 13.709/2018)</strong>. Recomendamos a leitura atenta.
+            </p>
+
+            <nav class="legal__toc" aria-label="Sumário">
+                <a href="#quem-somos">Quem somos</a>
+                <a href="#dados-coletados">Dados que coletamos</a>
+                <a href="#finalidades-bases">Finalidades e bases legais</a>
+                <a href="#compartilhamento">Compartilhamento</a>
+                <a href="#cookies">Cookies</a>
+                <a href="#retencao">Retenção</a>
+                <a href="#seguranca">Segurança</a>
+                <a href="#direitos">Direitos do titular</a>
+                <a href="#transferencias">Transferências internacionais</a>
+                <a href="#criancas">Crianças e adolescentes</a>
+                <a href="#contato">Contato do Encarregado (DPO)</a>
+                <a href="#alteracoes">Alterações desta política</a>
+            </nav>
+        </header>
+
+        <section id="quem-somos" class="legal__section">
+            <h2>1) Quem somos</h2>
+            <p><strong>Estoka</strong> — plataforma de gestão de estoque e vitrine pública para lojistas.
+                Contato geral: <a href="mailto:contato@estoka.com">contato@estoka.com</a>.</p>
+        </section>
+
+        <section id="dados-coletados" class="legal__section">
+            <h2>2) Dados que coletamos</h2>
+            <ul>
+                <li><strong>Cadastro:</strong> nome, e-mail, senha (hash), CPF, endereço, telefone.</li>
+                <li><strong>Uso da plataforma:</strong> produtos, categorias, movimentações de estoque, domínios
+                    públicos da vitrine.</li>
+                <li><strong>Dados técnicos:</strong> IP, user-agent, logs de acesso, tokens de sessão “remember me”.
+                </li>
+                <li><strong>Comunicação:</strong> mensagens de suporte/contato.</li>
+                <li><strong>Cookies e similares:</strong> ver <a href="/public/cookies.html">Política de Cookies</a>.
+                </li>
+            </ul>
+        </section>
+
+        <section id="finalidades-bases" class="legal__section">
+            <h2>3) Finalidades e bases legais</h2>
+            <ul>
+                <li><strong>Executar o contrato</strong> (art. 7º, V): login, gestão de estoque, vitrine pública,
+                    emissão de cobranças do plano.</li>
+                <li><strong>Cumprir obrigações legais</strong> (art. 7º, II): registros fiscais e contábeis.</li>
+                <li><strong>Legítimo interesse</strong> (art. 7º, IX): segurança, prevenção a fraudes, melhorias de
+                    produto. Usamos avaliações de necessidade e impacto.</li>
+                <li><strong>Consentimento</strong> (art. 7º, I): preferências de cookies não essenciais, comunicações de
+                    marketing (quando aplicável).</li>
+            </ul>
+        </section>
+
+        <section id="compartilhamento" class="legal__section">
+            <h2>4) Compartilhamento</h2>
+            <p>Podemos compartilhar dados com <strong>operadores</strong> (provedores de nuvem, e-mail, analytics, meios
+                de pagamento)
+                sob contratos com cláusulas de proteção de dados. Não vendemos dados pessoais.</p>
+        </section>
+
+        <section id="cookies" class="legal__section">
+            <h2>5) Cookies</h2>
+            <p>Usamos cookies necessários para login e segurança, e opcionais para métricas/experiência.
+                Você pode gerenciar preferências na <a href="/public/cookies.html">Política de Cookies</a>.</p>
+        </section>
+
+        <section id="retencao" class="legal__section">
+            <h2>6) Retenção</h2>
+            <p>Guardamos dados pelo período necessário para prestação do serviço e cumprimento de obrigações legais.
+                Logs de acesso e tokens têm prazos menores; pedidos para exclusão são atendidos conforme a LGPD e
+                limitações legais.</p>
+        </section>
+
+        <section id="seguranca" class="legal__section">
+            <h2>7) Segurança</h2>
+            <p>Medidas administrativas e técnicas (ex.: hash de senha, HMAC para tokens opacos, controles de acesso).
+                Nenhuma plataforma é 100% isenta de riscos; em incidentes relevantes, notificaremos conforme a LGPD.</p>
+        </section>
+
+        <section id="direitos" class="legal__section">
+            <h2>8) Direitos do titular (art. 18)</h2>
+            <ul>
+                <li>Confirmação de tratamento e <strong>acesso</strong> aos dados;</li>
+                <li><strong>Correção</strong> de dados incompletos/inexatos;</li>
+                <li><strong>Portabilidade</strong> (quando aplicável);</li>
+                <li><strong>Anonimização, bloqueio ou eliminação</strong> de dados desnecessários;</li>
+                <li>Informação sobre <strong>compartilhamentos</strong> e possibilidade de <strong>revogar
+                        consentimento</strong>;</li>
+                <li><strong>Revisão</strong> de decisões unicamente automatizadas (se houver).</li>
+            </ul>
+            <p>Para exercer seus direitos, escreva para <a href="mailto:dpo@estoka.com">dpo@estoka.com</a>.
+                Para sua segurança, poderemos solicitar comprovação de identidade.</p>
+        </section>
+
+        <section id="transferencias" class="legal__section">
+            <h2>9) Transferências internacionais</h2>
+            <p>Servidores e provedores podem estar fora do Brasil. Adotamos salvaguardas contratuais e técnicas
+                adequadas.</p>
+        </section>
+
+        <section id="criancas" class="legal__section">
+            <h2>10) Crianças e adolescentes</h2>
+            <p>O Estoka não se destina a menores de 18 anos. Se identificarmos cadastro inadequado, tomaremos medidas
+                para exclusão.</p>
+        </section>
+
+        <section id="contato" class="legal__section">
+            <h2>11) Contato do Encarregado (DPO)</h2>
+            <p>E-mail: <a href="mailto:dpo@estoka.com">dpo@estoka.com</a></p>
+        </section>
+
+        <section id="alteracoes" class="legal__section">
+            <h2>12) Alterações desta política</h2>
+            <p>Podemos atualizar esta política para refletir melhorias ou exigências legais. Avisaremos mudanças
+                relevantes nos canais oficiais.</p>
+            <p class="muted">Veja também: <a href="/public/termos.html">Termos de Uso</a> • <a
+                    href="/public/cookies.html">Cookies</a></p>
+        </section>
+
+        <p class="legal__disclaimer muted">Este documento tem caráter informativo e não substitui aconselhamento
+            jurídico. Revise com seu jurídico antes de publicação.</p>
+    </main>
+
+    <!-- Footer (igual do site) -->
+    <footer class="site-footer">
+        <div class="container footer__grid">
+            <div class="footer__brand">
+                <a class="footer__logo" href="/public/index.html" aria-label="Estoka — Início">
+                    <img src="/public/assets/images/logo.png" alt="Estoka">
+                </a>
+                <p class="footer__tagline">Gestão de estoque simples, rápida e confiável.</p>
+            </div>
+            <nav class="footer__cols">
+                <div class="footer__col">
+                    <h4 class="footer__title">Produto</h4>
+                    <ul class="footer__list">
+                        <li><a href="/public/index.html#recursos">Recursos</a></li>
+                        <li><a href="/public/index.html#para-quem">Para quem é</a></li>
+                        <li><a href="/public/index.html#preco">Preço</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Conta</h4>
+                    <ul class="footer__list">
+                        <li><a href="/public/login.html">Login</a></li>
+                        <li><a href="/public/cadastro.html">Criar conta</a></li>
+                        <li><a href="/public/forgot.html">Esqueci a senha</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Legal</h4>
+                    <ul class="footer__list">
+                        <li><a href="/public/privacidade.html">Privacidade</a></li>
+                        <li><a href="/public/termos.html">Termos</a></li>
+                        <li><a href="/public/cookies.html">Cookies</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="footer__bottom">
+            <div class="container footer__bottom-row">
+                <p class="footer__copy">© <span id="year"></span> Estoka • Gestão de Estoque</p>
+                <nav class="footer__legal">
+                    <a href="/public/privacidade.html">Privacidade</a>
+                    <span aria-hidden="true">•</span>
+                    <a href="/public/termos.html">Termos</a>
+                    <span aria-hidden="true">•</span>
+                    <a href="/public/cookies.html">Cookies</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        navToggle.addEventListener('click', () => {
+            const open = navMenu.classList.toggle('is-open');
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        navMenu.addEventListener('click', (e) => {
+            if (e.target.matches('a')) {
+                navMenu.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
+</body>
+
+</html>

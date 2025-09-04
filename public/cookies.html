@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cookies — Estoka</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="icon" href="./assets/images/favicon.png">
+</head>
+<body>
+  <header class="site-header pro-nav">
+    <div class="container nav__wrap">
+      <a class="brand" href="/public/index.html" aria-label="Estoka — início">
+        <img src="/public/assets/images/logo.png" alt="Estoka">
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__menu" id="navMenu">
+        <nav class="nav__links">
+          <a href="/public/index.html#recursos" class="nav__link">Recursos</a>
+          <a href="/public/index.html#para-quem" class="nav__link">Para quem é</a>
+          <a href="/public/index.html#preco" class="nav__link">Preço</a>
+        </nav>
+        <div class="nav__actions">
+          <a class="btn btn--nav btn--secondary" href="/public/login.html">Entrar</a>
+          <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=legal">Criar conta</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal container">
+    <header class="legal__header">
+      <h1>Política de Cookies</h1>
+      <p class="muted">Última atualização: <time datetime="2025-09-03">03/09/2025</time></p>
+      <p>Esta política explica o que são cookies, como o Estoka os utiliza e como você pode gerenciá-los.</p>
+    </header>
+
+    <section class="legal__section">
+      <h2>1) O que são cookies?</h2>
+      <p>Cookies são pequenos arquivos armazenados no navegador que ajudam a lembrar preferências, manter sessões e medir uso do site.</p>
+    </section>
+
+    <section class="legal__section">
+      <h2>2) Como usamos</h2>
+      <ul>
+        <li><strong>Necessários</strong> — login, segurança e prevenção a fraudes.</li>
+        <li><strong>Funcionais</strong> — lembrar preferências (ex.: idioma, consentimento).</li>
+        <li><strong>Métricas/Desempenho</strong> — entender navegação para melhorar o produto.</li>
+      </ul>
+    </section>
+
+    <section class="legal__section">
+      <h2>3) Exemplos de cookies</h2>
+      <div class="table">
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>Finalidade</th><th>Categoria</th><th>Duração</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>estoka_session</td><td>Autenticação de sessão</td><td>Necessário</td><td>Sessão</td></tr>
+            <tr><td>remember_token</td><td>Persistir login (opção “lembrar”)</td><td>Necessário</td><td>Até 30 dias</td></tr>
+            <tr><td>cookie_prefs</td><td>Salvar preferências de cookies</td><td>Funcional</td><td>6 meses</td></tr>
+            <tr><td>analytics_id</td><td>Métricas de uso do site</td><td>Métricas</td><td>13 meses</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted">Observação: a lista pode variar conforme evoluímos o produto.</p>
+    </section>
+
+    <section class="legal__section">
+      <h2>4) Gerenciar cookies</h2>
+      <p>Você pode controlar cookies pelo navegador e também ajustar as preferências abaixo:</p>
+
+      <form class="cookie-prefs" id="cookieForm">
+        <label class="switch">
+          <input type="checkbox" id="allowFunctional">
+          <span>Permitir cookies funcionais</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" id="allowMetrics">
+          <span>Permitir cookies de métricas</span>
+        </label>
+        <div class="cookie-actions">
+          <button type="button" class="btn btn--secondary" id="rejectAll">Recusar todos</button>
+          <button type="submit" class="btn btn--primary">Salvar preferências</button>
+        </div>
+        <p class="muted">Cookies necessários não podem ser desativados por motivos de segurança e funcionamento básico.</p>
+      </form>
+    </section>
+
+    <section class="legal__section">
+      <h2>5) Contato</h2>
+      <p>Dúvidas? <a href="mailto:dpo@estoka.com">dpo@estoka.com</a>. Veja também:
+        <a href="/public/privacidade.html">Privacidade</a> e <a href="/public/termos.html">Termos</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="footer__logo" href="/public/index.html" aria-label="Estoka — Início">
+          <img src="/public/assets/images/logo.png" alt="Estoka">
+        </a>
+        <p class="footer__tagline">Gestão de estoque simples, rápida e confiável.</p>
+      </div>
+      <nav class="footer__cols">
+        <div class="footer__col">
+          <h4 class="footer__title">Legal</h4>
+          <ul class="footer__list">
+            <li><a href="/public/privacidade.html">Privacidade</a></li>
+            <li><a href="/public/termos.html">Termos</a></li>
+            <li><a href="/public/cookies.html">Cookies</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="container footer__bottom-row">
+        <p class="footer__copy">© <span id="year"></span> Estoka • Gestão de Estoque</p>
+        <nav class="footer__legal">
+          <a href="/public/privacidade.html">Privacidade</a>
+          <span aria-hidden="true">•</span>
+          <a href="/public/termos.html">Termos</a>
+          <span aria-hidden="true">•</span>
+          <a href="/public/cookies.html">Cookies</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    navToggle.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    navMenu.addEventListener('click', (e) => {
+      if (e.target.matches('a')) {
+        navMenu.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Preferências de Cookies (salva em localStorage e marca um cookie simples de exemplo)
+    const form = document.getElementById('cookieForm');
+    const allowFunctional = document.getElementById('allowFunctional');
+    const allowMetrics = document.getElementById('allowMetrics');
+    const key = 'estoka_cookie_prefs';
+
+    // Carrega estado
+    try {
+      const saved = JSON.parse(localStorage.getItem(key)) || {};
+      allowFunctional.checked = !!saved.functional;
+      allowMetrics.checked = !!saved.metrics;
+    } catch (_) {}
+
+    // Recusar todos
+    document.getElementById('rejectAll').addEventListener('click', () => {
+      allowFunctional.checked = false;
+      allowMetrics.checked = false;
+      form.dispatchEvent(new Event('submit', { cancelable: true }));
+    });
+
+    // Salvar prefs
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const prefs = {
+        functional: allowFunctional.checked,
+        metrics: allowMetrics.checked
+      };
+      localStorage.setItem(key, JSON.stringify(prefs));
+      // Cookie de preferência (ilustrativo)
+      document.cookie = "cookie_prefs=" + encodeURIComponent(JSON.stringify(prefs)) + ";path=/;max-age=" + (60*60*24*180);
+      alert('Preferências de cookies salvas.');
+    });
+  </script>
+</body>
+</html>
