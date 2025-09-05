@@ -1,63 +1,64 @@
 <!doctype html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Estoka — Redefinir senha</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/auth.css">
-    <meta name="referrer" content="no-referrer">
-    <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vitrine dos Links — Redefinir senha</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/auth.css">
+  <meta name="referrer" content="no-referrer">
+  <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
+  <meta name="description" content="Crie uma nova senha para sua conta da Vitrine dos Links.">
 </head>
 
 <body>
-    <main class="auth-shell auth-shell--top">
-        <div class="auth-flow">
-            <header class="brand brand--sm">
-                <a class="brand__logo-link logo-back" href="/public/index.html">
-                    <img class="brand__logo" src="/public/assets/images/logo.png" alt="Estoka">
-                </a>
-                <h1 class="brand__title">Redefinir senha</h1>
-                <p class="brand__subtitle">Crie uma nova senha para sua conta.</p>
-            </header>
+  <main class="auth-shell auth-shell--top">
+    <div class="auth-flow">
+      <header class="brand brand--sm">
+        <a class="brand__logo-link logo-back" href="/public/index.html" aria-label="Voltar para início">
+          <img class="brand__logo" src="/public/assets/images/logo.png" alt="Vitrine dos Links">
+        </a>
+        <h1 class="brand__title">Redefinir senha</h1>
+        <p class="brand__subtitle">Crie uma nova senha para sua conta.</p>
+      </header>
 
-            <section class="card card--sm">
-                <form id="formReset" novalidate>
-                    <div id="msg" class="alert" hidden></div>
+      <section class="card card--sm">
+        <form id="formReset" novalidate>
+          <div id="msg" class="alert" hidden></div>
 
-                    <div class="field">
-                        <label for="npw">Nova senha</label>
-                        <input id="npw" name="password" type="password" autocomplete="new-password" required>
+          <div class="field">
+            <label for="npw">Nova senha</label>
+            <input id="npw" name="password" type="password" autocomplete="new-password" required placeholder="••••••••">
 
-                        <!-- mesmo markup do cadastro -->
-                        <ul class="pw-req" id="pwReq">
-                            <li class="pw-req__item" data-req="len">Mínimo 6 caracteres</li>
-                            <li class="pw-req__item" data-req="upper">1 letra maiúscula</li>
-                            <li class="pw-req__item" data-req="lower">1 letra minúscula</li>
-                            <li class="pw-req__item" data-req="special">1 caractere especial (!@#$*)</li>
-                        </ul>
+            <!-- checklist igual ao cadastro -->
+            <ul class="pw-req" id="pwReq">
+              <li class="pw-req__item" data-req="len">Mínimo 6 caracteres</li>
+              <li class="pw-req__item" data-req="upper">1 letra maiúscula</li>
+              <li class="pw-req__item" data-req="lower">1 letra minúscula</li>
+              <li class="pw-req__item" data-req="special">1 caractere especial (!@#$*)</li>
+            </ul>
 
-                        <small class="error" data-error-for="password"></small>
-                    </div>
+            <small class="error" data-error-for="password"></small>
+          </div>
 
-                    <div class="field">
-                        <label for="cpw">Confirmar senha</label>
-                        <input id="cpw" name="confirm" type="password" autocomplete="new-password" required>
-                        <small class="error" data-error-for="confirm"></small>
-                    </div>
+          <div class="field">
+            <label for="cpw">Confirmar senha</label>
+            <input id="cpw" name="confirm" type="password" autocomplete="new-password" required placeholder="Repita sua senha">
+            <small class="error" data-error-for="confirm"></small>
+          </div>
 
-                    <button class="btn" id="btnReset" type="submit">Salvar nova senha</button>
-                    <p class="terms" style="margin-top:10px;">
-                        Lembrou a senha? <a href="./login.html">Entrar</a>.
-                    </p>
-                </form>
-            </section>
-    </main>
+          <button class="btn" id="btnReset" type="submit">Salvar nova senha</button>
 
-    <script type="module" src="./assets/js/reset.js"></script>
+          <p class="terms" style="margin-top:10px;">
+            Lembrou a senha? <a href="./login.html">Entrar</a> ·
+            Novo por aqui? <a href="./cadastro.html">Teste por 10 dias</a>
+          </p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="./assets/js/reset.js"></script>
 </body>
-
 </html>
