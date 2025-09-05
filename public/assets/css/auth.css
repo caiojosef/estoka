@@ -555,3 +555,64 @@ select:focus {
     color: var(--brand-dark);
     border-bottom-color: var(--brand-accent);
 }
+
+/* === Hovers iguais da index (CTA degradê + micro-interações) ============ */
+
+/* Base: transições, foco e “levantar” no hover */
+.btn {
+    transition:
+        transform .18s ease,
+        background .22s ease,
+        box-shadow .22s ease,
+        color .22s ease,
+        border-color .22s ease;
+}
+
+.btn:not(:disabled):hover {
+    transform: translateY(-1px);
+    /* degradê mais claro no hover (turquesa → azul-claro) */
+    background: linear-gradient(90deg, #1fe0d9, #7fd4fb) !important;
+    box-shadow: 0 12px 28px rgba(23, 159, 218, .28) !important;
+    border-color: transparent !important;
+}
+
+.btn:active {
+    transform: translateY(0)
+}
+
+.btn:focus-visible {
+    outline: none;
+    /* mesmo “ring” da index */
+    box-shadow: 0 0 0 4px var(--focus), 0 8px 18px rgba(15, 54, 90, .06);
+}
+
+/* Secundário (quando existir): branco com realce turquesa no hover */
+.btn--secondary {
+    background: #fff;
+    color: var(--brand-dark);
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, .02);
+}
+
+.btn--secondary:not(:disabled):hover {
+    transform: translateY(-1px);
+    background: #fbfffe;
+    border-color: rgba(23, 201, 195, .55) !important;
+    box-shadow: 0 10px 24px rgba(23, 201, 195, .18) !important;
+}
+
+/* Ghost: borda vira sólida e ganha leve “film” */
+.btn--ghost {
+    background: transparent;
+    color: var(--brand-dark);
+    border: 1px dashed var(--line);
+    box-shadow: none;
+}
+
+.btn--ghost:not(:disabled):hover {
+    transform: translateY(-1px);
+    border-style: solid;
+    border-color: var(--brand-accent) !important;
+    background: rgba(23, 201, 195, .06);
+    box-shadow: 0 8px 20px rgba(15, 54, 90, .08);
+}

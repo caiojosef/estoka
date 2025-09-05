@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Estoka — Entrar</title>
+    <title>Vitrine dos Links — Entrar</title>
+    <meta name="description" content="Acesse sua conta da Vitrine dos Links para atualizar seu catálogo e sua página.">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/auth.css">
@@ -18,13 +19,13 @@
             <!-- CARD DE LOGIN (compacto) -->
             <section class="card card--sm login-card">
                 <div class="login-brand">
-
-                    <a class="brand__logo-link logo-back" href="/public/index.html">
-                        <img class="brand__logo" src="/public/assets/images/logo.png" alt="Estoka">
+                    <a class="brand__logo-link logo-back" href="/public/index.html"
+                        aria-label="Voltar para a página inicial">
+                        <img class="brand__logo" src="/public/assets/images/logo.png" alt="Vitrine dos Links">
                     </a>
 
-                    <h1>Acessar o <span>Estoka</span></h1>
-                    <p>Faça login para continuar.</p>
+                    
+                    <p>Faça login para continuar e gerenciar seus produtos.</p>
                 </div>
 
                 <form id="formLogin" novalidate>
@@ -33,16 +34,15 @@
                     <div class="grid grid--single">
                         <div class="field">
                             <label for="lemail">E-mail</label>
-                            <input id="lemail" name="email" type="email" autocomplete="email" required>
-
+                            <input id="lemail" name="email" type="email" autocomplete="email" required
+                                placeholder="voce@email.com">
                         </div>
 
                         <div class="field">
                             <label for="lpassword">Senha</label>
                             <input id="lpassword" name="password" type="password" autocomplete="current-password"
-                                required>
+                                required placeholder="••••••••">
                         </div>
-
 
                         <div class="field field--row between">
                             <label class="checkbox">
@@ -56,29 +56,33 @@
                     <button class="btn" id="btnLogin" type="submit">Entrar</button>
 
                     <p class="terms" style="margin-top:10px;">
-                        Ainda não tem conta? <a href="/public/cadastro.html?from=login">Criar conta</a>
+                        Ainda não tem conta? <a href="/public/cadastro.html?from=login">Criar Conta</a>
                     </p>
                 </form>
             </section>
 
             <!-- BENEFÍCIOS NA LATERAL (vai para baixo no mobile) -->
-            <aside class="login-info">
-                <h3>Por que usar o Estoka?</h3>
+            <aside class="login-info" aria-label="Benefícios">
+                <h3>Por que usar a Vitrine?</h3>
                 <ul class="login-info__list">
-                    <li><strong>Cadastro rápido</strong> de produtos e categorias</li>
-                    <li><strong>Alertas</strong> de baixo estoque</li>
-                    <li><strong>Entradas/Saídas</strong> com histórico detalhado</li>
-                    <li><strong>Relatórios</strong> para decisões rápidas</li>
+                    <li><strong>Catálogo simples</strong> com fotos e preço</li>
+                    <li><strong>Mini carrinho</strong> e pedido direto no WhatsApp</li>
+                    <li><strong>Visual bonito</strong> com seu nome e suas cores</li>
+                    <li><strong>Métricas básicas</strong> para entender os cliques</li>
                 </ul>
             </aside>
 
         </section>
 
         <footer class="footer">
-            <p>© <span id="year"></span> Estoka • Gestão de Estoque</p>
+            <p>© <span id="year"></span> Vitrine dos Links</p>
         </footer>
     </main>
 
+    <noscript>
+        <div class="alert" role="alert" style="max-width:600px;margin:12px auto;">Ative o JavaScript para fazer login.
+        </div>
+    </noscript>
     <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
     <script type="module" src="./assets/js/login.js"></script>
 </body>
