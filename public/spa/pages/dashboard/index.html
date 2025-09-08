@@ -1,0 +1,111 @@
+<section class="card db-section">
+    <header class="db-header">
+        <div>
+            <h1 class="h1">Início</h1>
+            <p class="sub">Resumo de acessos ao seu link público.</p>
+        </div>
+
+        <div class="db-toolbar" role="group" aria-label="Período">
+            <button class="btn btn--secondary btn--sm" data-range="7">7 dias</button>
+            <button class="btn btn--secondary btn--sm" data-range="14">14 dias</button>
+            <button class="btn btn--secondary btn--sm" data-range="30">30 dias</button>
+        </div>
+    </header>
+
+    <!-- KPIs -->
+    <div class="db-kpis">
+        <article class="kpi">
+            <div class="kpi__label">Visitas hoje</div>
+            <div class="kpi__value" id="kpiToday" aria-live="polite">—</div>
+            <div class="kpi__delta kpi__delta--pos" id="kpiTodayDelta">—</div>
+        </article>
+
+        <article class="kpi">
+            <div class="kpi__label">Últimos 7 dias</div>
+            <div class="kpi__value" id="kpi7d">—</div>
+            <div class="kpi__mini" id="spark7d" aria-hidden="true"></div>
+        </article>
+
+        <article class="kpi">
+            <div class="kpi__label">Últimos 30 dias</div>
+            <div class="kpi__value" id="kpi30d">—</div>
+            <div class="kpi__mini" id="spark30d" aria-hidden="true"></div>
+        </article>
+
+        <article class="kpi">
+            <div class="kpi__label">Cliques no WhatsApp</div>
+            <div class="kpi__value" id="kpiWhats">—</div>
+            <div class="kpi__delta" id="kpiWhatsDelta">—</div>
+        </article>
+
+        <article class="kpi">
+            <div class="kpi__label">CTR (visita → clique)</div>
+            <div class="kpi__value" id="kpiCTR">—</div>
+            <div class="kpi__delta" id="kpiCTRDelta">—</div>
+        </article>
+
+        <article class="kpi">
+            <div class="kpi__label">Tempo médio na página</div>
+            <div class="kpi__value" id="kpiTime">—</div>
+            <div class="kpi__delta" id="kpiTimeDelta">—</div>
+        </article>
+    </div>
+</section>
+
+<!-- GRÁFICOS -->
+<section class="db-grid">
+    <article class="card">
+        <header class="db-cardhead">
+            <strong>Acessos por dia</strong>
+            <small class="muted" id="rangeLabel">Últimos 14 dias</small>
+        </header>
+        <div class="chart" id="chartDaily" role="img" aria-label="Acessos por dia"></div>
+    </article>
+
+    <article class="card">
+        <header class="db-cardhead">
+            <strong>Canais de origem</strong>
+            <small class="muted">Distribuição no período</small>
+        </header>
+        <div class="sources">
+            <div class="src-row"><span>Instagram</span>
+                <div class="src-bar"><i id="srcInstagram"></i></div><b id="srcInstagramPct">—</b>
+            </div>
+            <div class="src-row"><span>Link direto</span>
+                <div class="src-bar"><i id="srcDireto"></i></div><b id="srcDiretoPct">—</b>
+            </div>
+            <div class="src-row"><span>WhatsApp</span>
+                <div class="src-bar"><i id="srcWhats"></i></div><b id="srcWhatsPct">—</b>
+            </div>
+            <div class="src-row"><span>Google</span>
+                <div class="src-bar"><i id="srcGoogle"></i></div><b id="srcGooglePct">—</b>
+            </div>
+            <div class="src-row"><span>Outros</span>
+                <div class="src-bar"><i id="srcOutros"></i></div><b id="srcOutrosPct">—</b>
+            </div>
+        </div>
+    </article>
+</section>
+
+<!-- TABELA -->
+<section class="card">
+    <header class="db-cardhead">
+        <strong>Últimos acessos</strong>
+        <small class="muted">Dados fictícios para visualização</small>
+    </header>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Origem</th>
+                    <th>Dispositivo</th>
+                    <th>Local</th>
+                </tr>
+            </thead>
+            <tbody id="lastAccessBody">
+                <!-- preenchido via JS -->
+            </tbody>
+        </table>
+    </div>
+</section>

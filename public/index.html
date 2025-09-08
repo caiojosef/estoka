@@ -4,391 +4,179 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vitrine dos Links | Seu link com seus produtos</title>
+    <title>Vitrine dos Links — Encontre lojas e prestadores perto de você</title>
     <meta name="description"
-        content="Crie sua Vitrine dos Links: link único com seus produtos, catálogo simples e pedido direto no WhatsApp. Bonito, rápido e fácil.">
-
-    <!-- SEO / Social -->
-    <link rel="canonical" href="https://vitrinedoslinks.com.br/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Vitrine dos Links">
-    <meta property="og:description"
-        content="Anuncie seus produtos em um único link. Catálogo simples + pedido no WhatsApp.">
-    <meta property="og:url" content="https://vitrinedoslinks.com.br/">
-    <meta property="og:image" content="/public/assets/images/page-inicial.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vitrine dos Links">
-    <meta name="twitter:description" content="Seu link com seus produtos.">
-    <meta name="twitter:image" content="/public/assets/images/page-inicial.png">
-
+        content="Busque vitrines de produtos e serviços por categoria, cidade e avaliação. Modelo OLX-like, rápido e responsivo.">
+    <link rel="icon" href="./assets/images/favicon.png">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- seu CSS base -->
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="icon" href="./assets/images/favicon.png">
+    <!-- CSS desta página -->
+    <link rel="stylesheet" href="./assets/css/directory.css">
 </head>
 
 <body>
-    <!-- Topbar -->
-    <header class="site-header pro-nav">
-        <div class="container nav__wrap">
-            <a class="brand" href="/public/index.html" aria-label="Vitrine dos Links — início">
-                <img src="/public/assets/images/logo.png" alt="Vitrine dos Links">
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="wrap">
+            <a class="brand" href="/public/index.html" aria-label="Vitrine dos Links — Início">
+                <img src="./assets/images/logo.png" alt="Vitrine dos Links">
             </a>
 
-            <button class="nav__toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false"
-                aria-label="Abrir menu">
-                <span></span><span></span><span></span>
-            </button>
-
-            <div class="nav__menu" id="navMenu">
-                <nav class="nav__links">
-                    <a href="#recursos" class="nav__link">Recursos</a>
-                    <a href="#para-quem" class="nav__link">Para quem é</a>
-                    <a href="#preco" class="nav__link">Preço</a>
-                </nav>
-                <div class="nav__actions">
-                    <a class="btn btn--nav btn--secondary" href="/public/login.html">Entrar</a>
-                    <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Criar Conta</a>
-                </div>
+            <div class="top-actions">
+                <a class="btn btn--ghost" href="/public/login.html">Entrar</a>
+                <a class="btn btn--primary" href="/public/cadastro.html?from=home">Criar conta</a>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container hero__grid">
-            <div class="hero__text">
-                <h1>Um <span>único link</span> com <span>todos os seus produtos</span>.</h1>
-                <p><strong>Vitrine dos Links</strong> é o jeito rápido de mostrar o que você vende, do básico ao mais
-                    vendido,
-                    com um catálogo bonito e pedido que chega pronto no seu WhatsApp.</p>
-                <div class="hero__cta">
-                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Começar agora</a>
-                    <a class="btn btn--lg btn--secondary" href="#preview">Ver uma prévia</a>
-                </div>
-                <div class="hero__badges">
-                    <span>✔️ 100% focado em <b>produtos</b></span>
-                    <span>✔️ Carrinho + WhatsApp</span>
-                    <span>✔️ Visual limpo e rápido</span>
-                </div>
+    <!-- SEARCH PILL -->
+    <section class="searchband" id="explorar">
+        <div class="wrap">
+            <div class="pill" role="search" aria-label="Buscar vitrines">
+                <input id="q" type="search" placeholder="O que você procura? (ex.: eletrônicos, beleza, mecânica…)"
+                    aria-label="Buscar" />
+                <div class="divider"></div>
+                <select id="tipo" aria-label="Tipo">
+                    <option value="all">Produtos e Serviços</option>
+                    <option value="produtos">Produtos</option>
+                    <option value="servicos">Serviços</option>
+                </select>
+                <div class="divider"></div>
+                <select id="estado" aria-label="Estado (UF)">
+                    <option value="all">Todos os estados</option>
+                </select>
+                <select id="cidade" aria-label="Cidade">
+                    <option value="all">Todas as cidades</option>
+                </select>
+                <button id="btnBuscar" class="btn btn--primary">Buscar</button>
             </div>
 
-            <!-- Ilustração do hero -->
-            <div class="hero__art" aria-hidden="true">
-                <picture>
-                    <!-- <source srcset="/public/assets/images/hero-vitrinedoslinks.webp" type="image/webp"> -->
-                    <img class="hero-img" src="./assets/images/hero-vitrinedoslinks.png" alt="" role="presentation"
-                        loading="eager" fetchpriority="high" decoding="async" width="1200" height="1200">
-                </picture>
-            </div>
-        </div>
-    </section>
-
-    <!-- Para quem é -->
-    <section id="para-quem" class="who">
-        <div class="container">
-            <h2>Para quem é a Vitrine?</h2>
-            <div class="cards">
-                <article class="card">
-                    <h3>Vendedores autônomos</h3>
-                    <p>Mostre seu catálogo em um link fácil de divulgar no WhatsApp e nas redes.</p>
-                </article>
-                <article class="card">
-                    <h3>Lojas locais</h3>
-                    <p>Lista clara de produtos, preço e disponibilidade. Pedido cai direto no seu Whats.</p>
-                </article>
-                <article class="card">
-                    <h3>Brechós & eletrônicos</h3>
-                    <p>Fotos, descrição e variações simples (cor/tamanho) sem complicação.</p>
-                </article>
+            <div class="search-tools">
+                <div class="chips" id="chipsSugestoes"></div>
+                <div class="right-tools">
+                    <button id="btnGeo" class="btn btn--ghost btn--sm">📍 Detectar</button>
+                    <label class="toggle">
+                        <input id="onlyUF" type="checkbox">
+                        <span>Somente do meu estado <small id="geoUFLabel"></small></span>
+                    </label>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Prévia autêntica da página -->
-    <section id="preview" class="announce">
-        <div class="container announce__grid">
-            <div class="announce__text">
-                <span class="pill">Prévia</span>
-                <h2>“Oi! Eu sou a Marina — dá uma olhada no que eu tenho hoje 👇”</h2>
-                <p>Na <strong>Vitrine dos Links</strong> sua página parece pessoal e direta. Você escreve do seu jeito,
-                    escolhe os destaques e seus clientes já conseguem montar um mini carrinho.</p>
-                <ul class="announce__list">
-                    <li>Catálogo com fotos, preço e variações (ex.: cor/tamanho)</li>
-                    <li>Botão de adicionar ao carrinho por item</li>
-                    <li>Resumo do carrinho + mensagem pronta pro WhatsApp</li>
-                    <li>Sem taxas por pedido. Você combina tudo direto com o cliente.</li>
-                </ul>
-                <div class="announce__cta">
-                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Criar Conta</a>
-                    <a class="btn btn--lg btn--ghost" href="#preco">Ver detalhes do plano</a>
-                </div>
-                <small class="muted">* Serviços poderão ser adicionados futuramente como um tipo de item.</small>
+    <!-- CATEGORIES -->
+    <section class="section">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Categorias</h2>
+                <a class="link" href="#resultados">Ver resultados</a>
             </div>
+            <div class="cat-grid" id="cats"></div>
+        </div>
+    </section>
 
-            <!-- Card de prévia: produtos comuns -->
-            <aside class="announce__card" aria-label="Prévia da Vitrine dos Links">
-                <div class="card__head">
-                    <img src="/public/assets/images/favicon.png" alt="" class="card__logo">
-                    <div>
-                        <strong>Marina • Vendas do dia</strong>
-                        <div class="muted">vitrinedoslinks.com.br/marinavende</div>
+    <!-- LIST + FILTERS (OLX-LIKE) -->
+    <main class="section" id="resultados">
+        <div class="wrap layout">
+            <!-- Filters (left) -->
+            <aside class="filters" id="filters">
+                <div class="filters__head">
+                    <h3>Filtros</h3>
+                    <button class="filters__close" id="closeFilters" aria-label="Fechar filtros">✕</button>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Tipo</label>
+                    <div class="seg seg--full" id="segTipo">
+                        <button class="seg__btn" data-tipo="all" aria-pressed="true">Todos</button>
+                        <button class="seg__btn" data-tipo="produtos" aria-pressed="false">Produtos</button>
+                        <button class="seg__btn" data-tipo="servicos" aria-pressed="false">Serviços</button>
                     </div>
                 </div>
 
-                <div class="card__body">
-                    <!-- Produto 1 -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">👟</div>
-                        <div class="catalog__info">
-                            <div class="catalog__title">Tênis casual branco</div>
-                            <div class="catalog__price">R$ 159,90</div>
-                        </div>
-                        <button class="btn btn--sm btn--secondary">Adicionar</button>
-                    </div>
-                    <!-- Produto 2 -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">👕</div>
-                        <div class="catalog__info">
-                            <div class="catalog__title">Camiseta básica preta (algodão)</div>
-                            <div class="catalog__price">R$ 49,90</div>
-                        </div>
-                        <button class="btn btn--sm btn--secondary">Adicionar</button>
-                    </div>
-                    <!-- Produto 3 -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">🎧</div>
-                        <div class="catalog__info">
-                            <div class="catalog__title">Fone Bluetooth</div>
-                            <div class="catalog__price">R$ 99,90</div>
-                        </div>
-                        <button class="btn btn--sm btn--secondary">Adicionar</button>
-                    </div>
-                    <!-- Produto 4 -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">🥤</div>
-                        <div class="catalog__info">
-                            <div class="catalog__title">Copo térmico 500 ml</div>
-                            <div class="catalog__price">R$ 39,90</div>
-                        </div>
-                        <button class="btn btn--sm btn--secondary">Adicionar</button>
-                    </div>
+                <div class="f-block">
+                    <label class="f-label">Ordenar por</label>
+                    <select id="sort">
+                        <option value="views">Mais acessados</option>
+                        <option value="rating">Melhores avaliados</option>
+                        <option value="recent">Mais recentes</option>
+                    </select>
+                </div>
 
-                    <div class="cart__row">
-                        <div class="muted">2 itens no carrinho</div>
-                        <a class="btn btn--sm btn--primary" href="#" aria-label="Enviar no WhatsApp">Enviar no
-                            WhatsApp</a>
-                    </div>
+                <div class="f-block">
+                    <label class="f-label">Avaliação mínima</label>
+                    <input id="minRating" type="range" min="0" max="5" step="0.5" value="0">
+                    <div class="muted"><span id="minRatingVal">0.0</span> ★</div>
+                </div>
 
-                    <div class="whats__preview">
-                        <div class="muted">Mensagem gerada:</div>
-                        <pre>Oi, Marina! Quero estes produtos:
-- Tênis casual branco (1x)
-- Camiseta básica preta (1x)
-Total estimado: R$ 209,80</pre>
-                    </div>
+                <div class="f-block">
+                    <label class="f-label">Estado</label>
+                    <select id="estadoSide"></select>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Cidade</label>
+                    <select id="cidadeSide"></select>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Categorias populares</label>
+                    <div class="chips chips--wrap" id="chipsFiltro"></div>
+                </div>
+
+                <div class="f-cta">
+                    <button id="applyFilters" class="btn btn--primary">Aplicar filtros</button>
+                    <button id="clearFilters" class="btn">Limpar</button>
                 </div>
             </aside>
+
+            <!-- Results -->
+            <section class="results">
+                <div class="tools-bar">
+                    <div class="left">
+                        <button class="btn btn--ghost btn--sm" id="openFilters">☰ Filtros</button>
+                        <small class="muted" id="resultInfo">—</small>
+                    </div>
+                    <div class="right">
+                        <div class="seg seg--sm" id="viewSeg">
+                            <button class="seg__btn" data-view="grid" aria-pressed="true" title="Grade">▦</button>
+                            <button class="seg__btn" data-view="list" aria-pressed="false" title="Lista">≣</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destaques -->
+                <div class="promo" id="destaques"></div>
+
+                <!-- Items -->
+                <div id="resultGrid" class="grid"></div>
+
+                <div class="load">
+                    <button id="btnMais" class="btn">Carregar mais</button>
+                </div>
+            </section>
         </div>
-    </section>
+    </main>
 
-    <!-- Recursos -->
-    <section id="recursos" class="features">
-        <div class="container">
-            <h2>Recursos que importam</h2>
-            <div class="grid">
-                <div class="feature">
-                    <div class="ico">🛍️</div>
-                    <h4>Catálogo simples</h4>
-                    <p>Crie sua lista de produtos com foto, preço, estoque e variações.</p>
-                </div>
-                <div class="feature">
-                    <div class="ico">🛒</div>
-                    <h4>Mini carrinho</h4>
-                    <p>Seu cliente adiciona itens e envia o pedido pronto pra você.</p>
-                </div>
-                <div class="feature">
-                    <div class="ico">💬</div>
-                    <h4>WhatsApp direto</h4>
-                    <p>Sem taxas por pedido. Atendimento humano, do seu jeito.</p>
-                </div>
-                <div class="feature">
-                    <div class="ico">🎨</div>
-                    <h4>Temas e branding</h4>
-                    <p>Use suas cores, foto de perfil e destaques pessoais.</p>
-                </div>
-                <div class="feature">
-                    <div class="ico">⚡</div>
-                    <h4>Rápido e leve</h4>
-                    <p>Página otimizada pra abrir bem no 4G e nos celulares mais simples.</p>
-                </div>
-                <div class="feature">
-                    <div class="ico">📈</div>
-                    <h4>UTMs & métricas</h4>
-                    <p>Links rastreados para você entender de onde vêm as vendas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Depoimentos -->
-    <section class="testimonials">
-        <div class="container">
-            <h2>Histórias reais</h2>
-            <div class="t__grid">
-                <figure class="t__card">
-                    <blockquote>“Criei minha Vitrine em 8 minutos. Agora mando um link só com tudo que vendo.”
-                    </blockquote>
-                    <figcaption>Dayanna • Dyanna Pratas — Araraquara/SP</figcaption>
-                </figure>
-                <figure class="t__card">
-                    <blockquote>“Meus clientes já chegam com o carrinho pronto no Whats. Economizei muito tempo.”
-                    </blockquote>
-                    <figcaption>Lucas • Brechó do Lu — Ribeirão Preto/SP</figcaption>
-                </figure>
-                <figure class="t__card">
-                    <blockquote>“Visual bonito e direto. Vendo camiseta, tênis e acessórios sem dor de cabeça.”
-                    </blockquote>
-                    <figcaption>Marcela • Ateliê da Ma — Curitiba/PR</figcaption>
-                </figure>
-            </div>
-        </div>
-    </section>
-
-    <!-- Preço -->
-    <section id="preco" class="pricing">
-        <div class="container">
-            <h2>Plano Vitrine dos Links</h2>
-            <div class="price-card">
-                <div class="price">
-                    <strong>Pro</strong>
-                    <span>R$ 50/mês</span>
-                </div>
-                <ul>
-                    <li>Página pública com seu slug</li>
-                    <li>Catálogo de produtos + mini carrinho</li>
-                    <li>Mensagem automática para WhatsApp</li>
-                    <li>Temas, branding e destaques pessoais</li>
-                    <li>UTMs e métricas básicas</li>
-                </ul>
-                <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Assinar agora</a>
-                <small class="muted">7 dias grátis. Cancele quando quiser.</small>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA final -->
-    <section class="cta">
-        <div class="container cta__row">
-            <h3>Pronto para ter um link bonito com seus produtos?</h3>
-            <div class="cta__actions">
-                <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Criar minha página</a>
-                <a class="btn btn--ghost" href="./public/login.html">Entrar</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Rodapé -->
-    <footer class="site-footer">
-        <div class="container footer__grid">
-            <div class="footer__brand">
-                <a class="footer__logo" href="/public/index.html" aria-label="Vitrine dos Links — Início">
-                    <img src="/public/assets/images/logo.png" alt="Vitrine dos Links">
-                </a>
-                <p class="footer__tagline">
-                    Seu link com seus produtos. Simples, bonito e direto no WhatsApp.
-                </p>
-
-                <div class="footer__social">
-                    <a href="#" aria-label="Instagram" class="social">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-                            <path
-                                d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3a6 6 0 110 12 6 6 0 010-12zm0 2.2a3.8 3.8 0 100 7.6 3.8 3.8 0 000-7.6zM18 6.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" />
-                        </svg>
-                    </a>
-                    <a href="#" aria-label="LinkedIn" class="social">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-                            <path
-                                d="M20.45 20.45h-3.55v-5.6c0-1.34-.02-3.06-1.86-3.06-1.86 0-2.14 1.45-2.14 2.96v5.7H9.35V9h3.4v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.33zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.11 20.45H3.57V9h3.54v11.45z" />
-                        </svg>
-                    </a>
-                    <a href="#" aria-label="GitHub" class="social">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
-                            <path
-                                d="M12 .5a12 12 0 00-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.54-1.37-1.32-1.74-1.32-1.74-1.08-.74.08-.73.08-.73 1.2.09 1.84 1.23 1.84 1.23 1.06 1.82 2.77 1.29 3.44.99.11-.77.42-1.29.77-1.59-2.66-.31-5.46-1.33-5.46-5.92 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.55.12-3.23 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 016 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.68.25 2.93.12 3.23.77.84 1.24 1.91 1.24 3.22 0 4.6-2.8 5.6-5.47 5.91.43.37.82 1.1.82 2.23v3.3c0 .32.21.7.83.58A12 12 0 0012 .5z" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Colunas de links -->
-            <nav class="footer__cols">
-                <div class="footer__col">
-                    <h4 class="footer__title">Produto</h4>
-                    <ul class="footer__list">
-                        <li><a href="/#recursos">Recursos</a></li>
-                        <li><a href="/#para-quem">Para quem é</a></li>
-                        <li><a href="/#preco">Preço</a></li>
-                    </ul>
-                </div>
-                <div class="footer__col">
-                    <h4 class="footer__title">Conta</h4>
-                    <ul class="footer__list">
-                        <li><a href="/public/login.html">Login</a></li>
-                        <li><a href="/public/cadastro.html">Criar conta</a></li>
-                        <li><a href="/public/forgot.html">Esqueci a senha</a></li>
-                    </ul>
-                </div>
-                <div class="footer__col">
-                    <h4 class="footer__title">Suporte</h4>
-                    <ul class="footer__list">
-                        <li><a href="#">Central de ajuda</a></li>
-                        <li><a href="mailto:contato@vitrinedoslinks.com.br">contato@vitrinedoslinks.com.br</a></li>
-                        <li><a href="#">Status do serviço</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-
-        <div class="footer__bottom">
-            <div class="container footer__bottom-row">
-                <p class="footer__copy">© <span id="year"></span> Vitrine dos Links</p>
-                <nav class="footer__legal">
-                    <a href="/public/privacidade.html">Privacidade</a>
-                    <span aria-hidden="true">•</span>
-                    <a href="/public/termos.html">Termos</a>
-                    <span aria-hidden="true">•</span>
-                    <a href="/public/cookies.html">Cookies</a>
-                </nav>
-            </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="wrap">
+            <p>© <span id="year"></span> Vitrine dos Links</p>
+            <p class="muted">
+                <a href="/public/privacidade.html">Privacidade</a> •
+                <a href="/public/termos.html">Termos</a> •
+                <a href="/public/cookies.html">Cookies</a>
+            </p>
         </div>
     </footer>
 
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-
-        navToggle.addEventListener('click', () => {
-            const open = navMenu.classList.toggle('is-open');
-            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-
-        navMenu.addEventListener('click', (e) => {
-            if (e.target.matches('a')) {
-                navMenu.classList.remove('is-open');
-                navToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 900) {
-                navMenu.classList.remove('is-open');
-                navToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-    </script>
+    <noscript>
+        <div class="noscript">Ative o JavaScript para usar busca, filtros e geolocalização.</div>
+    </noscript>
+    <script type="module" src="./assets/js/directory.js"></script>
 </body>
 
 </html>

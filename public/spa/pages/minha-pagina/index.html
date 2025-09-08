@@ -1,0 +1,203 @@
+<section class="card mp-grid">
+
+    <!-- PASSO 1: Escolha do tipo -->
+    <aside id="mpStepChoice" class="mp-choice card">
+        <h1 class="h1">Ei, antes de continuar…</h1>
+        <p class="sub">Você pretende criar sua página para:</p>
+
+        <div class="choice__grid">
+            <button type="button" class="choice__card" data-type="produtos" id="btnChoiceProdutos">
+                <div class="ico">🛍️</div>
+                <h3>Anunciar <b>produtos</b></h3>
+                <p>Ideal para quem vende itens com foto, preço e variações. Catálogo simples + WhatsApp.</p>
+            </button>
+
+            <button type="button" class="choice__card" data-type="servicos" id="btnChoiceServicos">
+                <div class="ico">💼</div>
+                <h3>Anunciar <b>serviços</b></h3>
+                <p>Perfeito para profissionais. Mostre o que você faz, modalidade e contato direto.</p>
+            </button>
+        </div>
+
+        <div class="choice__actions">
+            <span id="choiceMsg" class="hint"></span>
+        </div>
+    </aside>
+
+    <!-- PASSO 2: Formulário (só aparece depois que tiver page_type salvo no servidor) -->
+    <form id="mpStepForm" class="mp-form" hidden novalidate>
+        <header class="mp-head">
+            <h1 class="h1">Minha Página</h1>
+            <p class="sub">Preencha seus dados. Você pode alterar o tipo depois.</p>
+        </header>
+
+        <!-- Seletor de modo (atualiza no servidor ao trocar) -->
+        <div class="seg" role="tablist" aria-label="Tipo de página">
+            <button type="button" class="seg__btn" data-mode="produtos" role="tab" aria-selected="false">Vendo
+                produtos</button>
+            <button type="button" class="seg__btn" data-mode="servicos" role="tab" aria-selected="false">Anuncio
+                serviços</button>
+        </div>
+
+        <!-- COMUM: Nome + Slug -->
+        <div class="row">
+            <div class="field">
+                <label for="mpName">Nome público</label>
+                <input id="mpName" type="text" maxlength="60" placeholder="Ex.: HC Informática">
+            </div>
+            <div class="field">
+                <label for="mpSlug">Seu link</label>
+                <div class="slug-row">
+                    <span class="slug-base">vitrinedoslinks.com.br/</span>
+                    <input id="mpSlug" type="text" maxlength="40" pattern="[a-z0-9\-]+" placeholder="seunome"
+                        inputmode="latin">
+                </div>
+                <small class="hint">Use letras minúsculas, números e hífen. Ex.: <b>hc-informatica</b></small>
+            </div>
+        </div>
+
+        <!-- COMUM: Descrição -->
+        <div class="field">
+            <label for="mpBio">Descrição curta</label>
+            <textarea id="mpBio" maxlength="160"
+                placeholder="Conte em uma ou duas frases o que você vende ou faz."></textarea>
+            <small class="hint"><span id="mpBioCount">0</span>/160</small>
+        </div>
+
+        <!-- COMUM: Avatar + Cor -->
+        <div class="row">
+            <div class="field">
+                <label>Foto / Logo</label>
+                <div class="mp-avatar">
+                    <img id="mpAvatarPreview" alt="" aria-hidden="true">
+                    <div class="mp-avatar__actions">
+                        <label class="btn btn--secondary btn--sm">
+                            Selecionar
+                            <input id="mpAvatar" type="file" accept="image/*" hidden>
+                        </label>
+                        <button type="button" class="btn btn--ghost btn--sm" id="mpAvatarRemove">Remover</button>
+                    </div>
+                    <small class="hint">Use imagem quadrada para melhor resultado.</small>
+                </div>
+            </div>
+            <div class="field">
+                <label for="mpColor">Cor de destaque</label>
+                <input id="mpColor" type="color" value="#179FDA" class="mp-color">
+                <small class="hint">Personalize a cor principal do cartão.</small>
+            </div>
+        </div>
+
+        <!-- ===== MODO: PRODUTOS ===== -->
+        <fieldset class="mp-fieldset mode mode--produtos" id="modeProdutos" hidden>
+            <legend>Informações da loja</legend>
+
+            <div class="row">
+                <div class="field">
+                    <label for="mpStoreName">Nome da loja (opcional)</label>
+                    <input id="mpStoreName" type="text" maxlength="60" placeholder="Ex.: Loja da Ana">
+                </div>
+                <div class="field">
+                    <label for="mpHours">Horário de atendimento (opcional)</label>
+                    <input id="mpHours" type="text" maxlength="60" placeholder="Seg–Sex 9h–18h">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Entrega/retirada (opcional)</label>
+                    <div class="checks">
+                        <label><input type="checkbox" name="op" value="Entrega"> Entrega</label>
+                        <label><input type="checkbox" name="op" value="Retirada"> Retirada</label>
+                        <label><input type="checkbox" name="op" value="Envio"> Envio</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Formas de pagamento (opcional)</label>
+                    <div class="checks">
+                        <label><input type="checkbox" name="pay" value="Pix"> Pix</label>
+                        <label><input type="checkbox" name="pay" value="Cartão"> Cartão</label>
+                        <label><input type="checkbox" name="pay" value="Dinheiro"> Dinheiro</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- ===== MODO: SERVIÇOS ===== -->
+        <fieldset class="mp-fieldset mode mode--servicos" id="modeServicos" hidden>
+            <legend>Informações profissionais</legend>
+
+            <div class="row">
+                <div class="field">
+                    <label for="mpProfession">Profissão / serviço principal</label>
+                    <input id="mpProfession" type="text" maxlength="60"
+                        placeholder="Ex.: Designer, Técnico de Informática, Maquiadora">
+                </div>
+                <div class="field">
+                    <label>Modalidade</label>
+                    <div class="checks">
+                        <label><input type="radio" name="mod" value="Presencial"> Presencial</label>
+                        <label><input type="radio" name="mod" value="Online"> Online</label>
+                        <label><input type="radio" name="mod" value="Ambos"> Ambos</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label for="mpPrice">Preço médio (opcional)</label>
+                    <input id="mpPrice" type="text" maxlength="40" placeholder="Ex.: a partir de R$ 80">
+                </div>
+                <div class="field">
+                    <label for="mpAgenda">Agenda / Observações (opcional)</label>
+                    <input id="mpAgenda" type="text" maxlength="80" placeholder="Atendo com hora marcada">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- COMUM: Contatos -->
+        <fieldset class="mp-fieldset">
+            <legend>Contato e links</legend>
+            <div class="row">
+                <div class="field">
+                    <label for="mpWhats">WhatsApp</label>
+                    <input id="mpWhats" type="text" placeholder="DDD + número">
+                    <small class="hint">O botão “WhatsApp” usa este número.</small>
+                </div>
+                <div class="field">
+                    <label for="mpInstagram">Instagram (opcional)</label>
+                    <input id="mpInstagram" type="url" placeholder="https://instagram.com/seuPerfil">
+                </div>
+            </div>
+            <div class="row">
+                <div class="field">
+                    <label for="mpSite">Site / portfólio (opcional)</label>
+                    <input id="mpSite" type="url" placeholder="https://…">
+                </div>
+                <div class="field">
+                    <label for="mpEmail">E-mail (opcional)</label>
+                    <input id="mpEmail" type="email" placeholder="voce@exemplo.com">
+                </div>
+            </div>
+            <div class="row">
+                <div class="field">
+                    <label for="mpCity">Cidade/UF</label>
+                    <input id="mpCity" type="text" maxlength="40" placeholder="Ribeirão Preto/SP">
+                </div>
+                <div class="field">
+                    <label for="mpCategory">Categoria (ex.: Roupas, Eletrônicos, Beleza)</label>
+                    <input id="mpCategory" type="text" maxlength="30" placeholder="Ex.: Eletrônicos">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Ações -->
+        <div class="mp-actions">
+            <button class="btn btn--primary" type="submit" id="mpSave">Salvar informações</button>
+            <button class="btn btn--secondary" type="button" id="mpClear">Limpar</button>
+            <span id="mpMsg" class="hint" aria-live="polite"></span>
+        </div>
+    </form>
+
+    <!-- Coluna: prévia -->
+    
+</section>

@@ -22,6 +22,7 @@ switch ($path) {
   case '/api/reset':
     (new AuthController)->reset();
     break;
+    
 
   // FALTANDO: /api/forgot e /api/reset
 

@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Vitrine dos Links — Design Tokens (v2)
+   ========================================================================== */
+:root {
+    /* Marca */
+    --brand-dark: #0F365A;
+    --brand: #179FDA;
+    --accent: #17C9C3;
+
+    /* Neutros */
+    --gray-900: #0b1e2d;
+    --gray-800: #113248;
+    --gray-700: #184463;
+    --gray-600: #376280;
+    --gray-500: #6e879a;
+    --gray-400: #a4b6c3;
+    --gray-300: #cfdee8;
+    --gray-200: #DFE8F1;
+    --gray-100: #EEF3F8;
+    --gray-050: #F6F8FB;
+
+    /* Texto/superfície */
+    --text-1: #0f2430;
+    --text-2: #4b5a66;
+    --bg: var(--gray-050);
+    --card: #FFFFFF;
+    --line: #E5ECF2;
+
+    /* Estados */
+    --success: #16C172;
+    --warning: #FFB020;
+    --danger: #FF5A5F;
+
+    /* Foco */
+    --focus: color-mix(in srgb, var(--brand) 26%, transparent);
+
+    /* Layout */
+    --navbar-h: 64px;
+    --sidebar-w: 272px;
+    --radius: 12px;
+
+    /* Sombras */
+    --shadow-sm: 0 6px 16px rgba(6, 20, 32, .18);
+    --shadow-md: 0 10px 24px rgba(6, 20, 32, .22);
+
+    /* Chrome */
+    --chrome-top: #114463;
+    --chrome-bot: #0B2E48;
+    --chrome-line: #1A5B83;
+
+    /* Chip (link público) */
+    --chip-bg: #0F3E63;
+    --chip-line: #1A5B83;
+    --chip-cta: #134C74;
+
+    /* Sidebar */
+    --side-top: #0E3149;
+    --side-bot: #0B2437;
+    --side-line: #103752;
+    --side-hover: #113A55;
+    --side-active: #13445F;
+    --side-marker: var(--accent);
+}
