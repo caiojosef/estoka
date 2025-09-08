@@ -52,7 +52,7 @@ form.addEventListener('submit', async (e) => {
             storage.setItem('estoka_token_expires', out.expires_at);
 
             alertMsg('success', 'Login efetuado! Redirecionando…');
-            setTimeout(() => window.location.href = './app.html', 600);
+            setTimeout(() => window.location.href = './spa/app.html', 600);
         } else {
             if (out?.errors) Object.entries(out.errors).forEach(([k, v]) => setErr(k, v));
             const msg = out?.message || `Erro HTTP ${res.status} — ${String(raw || '').slice(0, 200)}`;

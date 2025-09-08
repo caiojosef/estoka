@@ -1,0 +1,53 @@
+:root {
+    /* Marca */
+    --brand-dark: #0F365A;
+    /* azul-marinho p/ títulos/links */
+    --brand: #179FDA;
+    /* azul médio (apoio) */
+    --accent: #17C9C3;
+    /* turquesa principal */
+
+    /* Texto e superfícies */
+    --text-1: #0f2430;
+    /* texto principal */
+    --text-2: #4b5a66;
+    /* texto secundário */
+    --bg: #F6F8FB;
+    /* fundo da aplicação */
+    --card: #FFFFFF;
+    /* cartões / superfícies */
+    --line: #E5ECF2;
+    /* linhas/bordas leves */
+    --focus: rgba(23, 159, 218, .22);
+    /* foco acessível */
+
+    /* Layout base */
+    --navbar-h: 64px;
+    --sidebar-w: 268px;
+    --radius: 12px;
+
+    /* Sombras (suaves) */
+    --shadow-sm: 0 4px 10px rgba(15, 54, 90, .05);
+    --shadow-md: 0 8px 20px rgba(15, 54, 90, .08);
+
+    /* NAVBAR (antes: #0c2a3f / #12364e / #0e314a / #114463) */
+    --nav-bg: #134a6b;
+    /* azul marinho suavizado */
+    --nav-line: #1b5e84;
+    /* linha um tom acima */
+    --chip-bg: #175a81;
+    /* fundo do chip/link */
+    --chip-line: #20749f;
+    --chip-cta: #19638f;
+
+    /* SIDEBAR (antes: #0b2030 / #102b40 / #102a3b / #133247) */
+    --side-bg: #103652;
+    /* corpo da sidebar mais claro */
+    --side-line: #154462;
+    --side-hover: #15415e;
+    /* hover sutil */
+    --side-active: #19506f;
+    /* ativo com contraste leve */
+    --side-marker: var(--accent);
+    /* continua turquesa */
+}

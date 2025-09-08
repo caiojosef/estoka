@@ -788,7 +788,7 @@ section h2 {
 
 /* título e subtítulo mais enxutos */
 .brand.brand--sm {
-    text-align: center;
+    text-align: -webkit-center;
     margin: 0;
 }
 
