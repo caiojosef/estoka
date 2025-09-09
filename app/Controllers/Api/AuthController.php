@@ -276,4 +276,6 @@ class AuthController
     Response::ok(['ok' => true, 'page_type' => $type]);
   }
 
+  
+
 }

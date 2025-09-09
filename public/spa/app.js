@@ -1,180 +1,141 @@
-/* =========
-   SPA Shell
-   - Navbar + Sidebar fixos
-   - Router + Loader com páginas em /public/spa-pages/pages/<rota>/
-   - Suporte a init()/destroy() por página
-   ========= */
+// /public/spa/app.js — SPA com CSS/JS declarados por rota
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
-const VERSION = 'v1'; // troque no deploy para bust de cache
+  // ===== Rotas =====
+  // css/js aceitam string ou array. São relativos à pasta ./pages/<folder>/
+  const routes = {
+    '#/inicio': {
+      folder: 'dashboard',
+      file: 'index',
+      title: 'Página Inicial',
+      css: ['index.css'],
+      js: ['index.js']
+    },
+    '#/minha-pagina': {
+      folder: 'minha-pagina',
+      file: 'index',
+      title: 'Minha Página',
+      css: ['index.css'],
+      js: ['index.js']
+    },
+    '#/minha-pagina/form-loja': {
+      folder: 'minha-pagina',
+      file: 'form-loja',
+      title: 'Loja',
+      css: ['index.css'],   // <- compartilhado
+      js: ['forms.js']     // <- compartilhado
+    },
+    '#/minha-pagina/form-prestador': {
+      folder: 'minha-pagina',
+      file: 'form-prestador',
+      title: 'Prestador',
+      css: ['index.css'],   // <- compartilhado
+      js: ['forms.js']     // <- compartilhado
+    },
+  };
 
-// ---- Navbar/Sidebar
-const btnSidebar = document.getElementById('btnSidebar');
-const sidebar = document.getElementById('sidebar');
-const backdrop = document.getElementById('sidebarBackdrop');
-const view = document.getElementById('view');
+  let destroyFns = [];     // destroys da página atual
+  let styleEls = [];       // <link>s do CSS da página atual
 
-function openSidebar() { sidebar.classList.add('is-open'); backdrop.hidden = false; btnSidebar.setAttribute('aria-expanded', 'true'); }
-function closeSidebar() { sidebar.classList.remove('is-open'); backdrop.hidden = true; btnSidebar.setAttribute('aria-expanded', 'false'); }
-function toggleSidebar() { sidebar.classList.contains('is-open') ? closeSidebar() : openSidebar(); }
-
-btnSidebar.addEventListener('click', toggleSidebar);
-backdrop.addEventListener('click', closeSidebar);
-window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
-
-// Chip copiar link
-const chipTextEl = document.getElementById('chipLinkText');
-document.getElementById('btnCopy').addEventListener('click', async () => {
-  const text = chipTextEl.textContent.trim();
-  try { await navigator.clipboard.writeText(text); flashCopy(); } catch (_) { }
-});
-function flashCopy() {
-  const btn = document.getElementById('btnCopy');
-  const old = btn.textContent; btn.textContent = 'Copiado!';
-  setTimeout(() => btn.textContent = old, 900);
-}
-
-// Logout simples (integre com sua API depois)
-document.getElementById('btnLogout').addEventListener('click', () => {
-  sessionStorage.clear(); localStorage.clear();
-  location.href = '/public/login.html';
-});
-
-// ---- Router config (rota → pasta)
-const ROUTES = {
-  '/inicio': 'dashboard',
-  '/minha-pagina': 'minha-pagina'
-};
-
-// ---- Estado simples (ex.: slug para o chip)
-const store = {
-  user: { email: localStorage.getItem('vl_email') || '', name: localStorage.getItem('vl_name') || '' },
-  slug: localStorage.getItem('vl_slug') || 'seunome'
-};
-updateChipSlug(store.slug);
-function updateChipSlug(slug) {
-  const s = (slug || 'seunome').toLowerCase();
-  const text = `vitrinedoslinks.com.br/${s}`;
-  chipTextEl.innerHTML = text.replace(s, `<b>${s}</b>`);
-}
-
-// ---- API helper (placeholder; adapte ao seu backend)
-const api = {
-  async get(path, opts = {}) { return fetch(path, { ...opts, headers: { 'Accept': 'application/json', ...(opts.headers || {}) } }); },
-  async post(path, body, opts = {}) { return fetch(path, { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } }); }
-};
-
-// ---- Loader com init/destroy + AbortController por navegação
-let currentCleanup = null;
-let currentAbort = null;
-const htmlCache = new Map();
-const cssLoaded = new Set();
-
-function parseRoute() {
-  const h = (location.hash || '#/inicio').replace(/^#/, '');
-  return ROUTES[h] ? h : '/inicio';
-}
-function setActiveLink() {
-  const curr = '#' + parseRoute();
-  document.querySelectorAll('.side__link').forEach(a => a.classList.toggle('active', a.getAttribute('href') === curr));
-}
-
-// injeta CSS da página uma única vez
-function ensurePageCSS(dir) {
-  const href = `/public/spa/pages/${dir}/index.css`;
-  if (cssLoaded.has(href)) return;
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = href + `?${VERSION}`;
-  link.onerror = () => link.remove(); // se não existir, segue sem
-  document.head.appendChild(link);
-  cssLoaded.add(href);
-}
-
-// carrega HTML (com cache simples)
-async function loadPageHTML(dir, signal) {
-  const url = `/public/spa/pages/${dir}/index.html`;
-  if (htmlCache.has(url)) return htmlCache.get(url);
-  const res = await fetch(url, { signal, cache: 'no-store' });
-  if (!res.ok) throw new Error('HTML not found');
-  const html = await res.text();
-  htmlCache.set(url, html);
-  return html;
-}
-
-// importa módulo JS da página
-async function loadPageModule(dir) {
-  try {
-    const mod = await import(`/public/spa/pages/${dir}/index.js?${VERSION}`);
-    return mod || {};
-  } catch (_) {
-    return {}; // sem JS da página, segue só com HTML
+  function setActiveLink() {
+    const hash = location.hash || '#/inicio';
+    $$('.menu__link').forEach(a => {
+      const href = a.getAttribute('href');
+      const isMyPage = hash.startsWith('#/minha-pagina') && href === '#/minha-pagina';
+      a.classList.toggle('is-active', href === hash || isMyPage);
+    });
   }
-}
 
-async function navigate() {
-  // limpar rota anterior
-  if (typeof currentCleanup === 'function') { try { currentCleanup(); } catch (_) { } }
-  if (currentAbort) { currentAbort.abort(); }
-  currentAbort = new AbortController();
+  function clearCurrent() {
+    try { destroyFns.forEach(fn => fn()); } catch (e) { console.error('Erro no destroy:', e); }
+    destroyFns = [];
+    styleEls.forEach(l => l.remove());
+    styleEls = [];
+  }
 
-  // estado de navegação
-  setActiveLink();
-  view.setAttribute('aria-busy', 'true');
+  async function loadHTML(route, view) {
+    const url = `./pages/${route.folder}/${route.file}.html`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText} (${url})`);
+    view.innerHTML = await res.text();
+  }
 
-  // descobre pasta da rota
-  const route = parseRoute();
-  const dir = ROUTES[route];
+  function toArray(x) { return Array.isArray(x) ? x : (x ? [x] : []); }
 
-  // tenta carregar assets
-  try {
-    ensurePageCSS(dir);
-    const [html, mod] = await Promise.all([
-      loadPageHTML(dir, currentAbort.signal),
-      loadPageModule(dir)
-    ]);
+  function loadCSS(route) {
+    const list = toArray(route.css);
+    list.forEach(name => {
+      const href = `./pages/${route.folder}/${name}?v=${Date.now()}`;
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      document.head.appendChild(link);
+      styleEls.push(link);
+    });
+  }
 
-    // render e foco
-    view.innerHTML = html;
-    view.focus({ preventScroll: true });
-    view.scrollTo({ top: 0, behavior: 'instant' });
-
-    // init da página
-    if (typeof mod.init === 'function') {
-      const cleanup = mod.init({
-        el: view,
-        params: {},          // se precisar ler query/hash, parse aqui
-        store,
-        api,
-        abort: currentAbort
-      });
-      currentCleanup = (typeof cleanup === 'function') ? cleanup : (mod.destroy || null);
-    } else {
-      currentCleanup = (typeof mod.destroy === 'function') ? mod.destroy : null;
+  async function loadJS(route, view, hashKey) {
+    const list = toArray(route.js);
+    for (const name of list) {
+      const url = `./pages/${route.folder}/${name}?v=${Date.now()}`;
+      try {
+        const mod = await import(url);
+        if (typeof mod.init === 'function') {
+          const ctx = { el: view, route: { key: hashKey, ...route }, navigate };
+          const maybe = mod.init(ctx);
+          if (typeof maybe === 'function') destroyFns.push(maybe);
+          else if (typeof mod.destroy === 'function') destroyFns.push(() => mod.destroy(ctx));
+        }
+      } catch (e) {
+        console.warn('Falha ao importar', url, e);
+      }
     }
-  } catch (err) {
-    // fallback 404 simples
-    view.innerHTML = `
-      <section class="card">
-        <h1 class="h1">Página não encontrada</h1>
-        <p class="sub">Crie a pasta <code>/public/spa/pages/${dir}/</code> com <code>index.html</code>.</p>
-        <p><a class="btn btn--secondary btn--sm" href="#/minha-pagina">Ir para Minha Página</a></p>
-      </section>`;
-    currentCleanup = null;
-  } finally {
-    view.removeAttribute('aria-busy');
-    // fecha drawer em telas pequenas
-    if (window.matchMedia('(max-width: 980px)').matches) closeSidebar();
   }
-}
 
-// click nos links da sidebar fecha drawer (mobile)
-document.querySelectorAll('.side__link').forEach(a => {
-  a.addEventListener('click', () => {
-    if (window.matchMedia('(max-width: 980px)').matches) closeSidebar();
-  });
-});
+  async function loadPage(hash) {
+    const route = routes[hash] || routes['#/inicio'];
+    const view = $('#view');
 
-window.addEventListener('hashchange', navigate);
-if (!location.hash) location.hash = '#/inicio';  // força iniciar no dashboard
-setActiveLink();
-navigate();
+    document.title = `Painel — ${route.title}`;
+    setActiveLink();
+    clearCurrent();
+
+    view.innerHTML = `<section class="card"><p class="muted">Carregando ${route.title}…</p></section>`;
+
+    try {
+      await loadHTML(route, view);
+      loadCSS(route);
+      await loadJS(route, view, hash);
+    } catch (err) {
+      console.error(err);
+      view.innerHTML = `<section class="card"><p class="muted">Não foi possível carregar a página.</p></section>`;
+    }
+  }
+
+  function navigate(hash) {
+    if (location.hash !== hash) location.hash = hash;
+    else loadPage(hash); // recarrega mesma rota
+  }
+
+  // ===== Sidebar (mobile) =====
+  const btnMenu = $('#btnMenu');
+  const backdrop = $('#backdrop');
+  function toggleSidebar() {
+    const open = !document.body.classList.contains('sidebar-open');
+    document.body.classList.toggle('sidebar-open', open);
+    btnMenu?.setAttribute('aria-expanded', String(open));
+    backdrop?.toggleAttribute('hidden', !open);
+  }
+  btnMenu?.addEventListener('click', toggleSidebar);
+  backdrop?.addEventListener('click', toggleSidebar);
+  $$('.menu__link').forEach(a => a.addEventListener('click', () => {
+    if (matchMedia('(max-width: 980px)').matches) toggleSidebar();
+  }));
+
+  // ===== Navegação =====
+  window.addEventListener('hashchange', () => loadPage(location.hash || '#/inicio'));
+  if (!location.hash) location.hash = '#/inicio';
+  loadPage(location.hash);
+})();

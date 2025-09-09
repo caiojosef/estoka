@@ -1,67 +1,75 @@
+<!-- =============================
+app.html — SPA mínima (navbar + sidebar internos)
+Rotas: #/inicio e #/minha-pagina (sem lógica adicional)
+============================== -->
 <!doctype html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vitrine dos Links — Painel</title>
+    <title>Painel — Vitrine dos Links</title>
 
-    <!-- CSS globais -->
-    <link rel="stylesheet" href="/public/assets/css/tokens.css">
-    <link rel="stylesheet" href="/public/assets/css/base.css">
+    <!-- Herda identidade visual existente -->
+    <link rel="stylesheet" href="../assets/css/tokens.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
 
-    <!-- CSS do shell do SPA -->
+    <!-- Estilos da SPA -->
     <link rel="stylesheet" href="./app.css">
 </head>
 
 <body>
-    <!-- NAVBAR fixa -->
-    <header class="navbar" role="banner">
-        <button class="nav__burger" id="btnSidebar" aria-controls="sidebar" aria-expanded="false"
-            aria-label="Abrir menu">
-            <span></span><span></span><span></span>
-        </button>
+    <div id="app">
+        <header class="topbar" role="banner">
+            <div class="topbar__left">
+                <button id="btnMenu" class="btn btn--ghost" aria-label="Abrir menu" aria-expanded="false">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                </button>
+                <div class="brand">
+                    <div class="brand__logo" aria-hidden="true">VL</div>
+                    <span class="brand__name">Vitrine dos Links</span>
+                </div>
+            </div>
+            <div class="topbar__right">
+                <div class="avatar" aria-hidden="true">CA</div>
+            </div>
+        </header>
 
-        <a class="nav__brand" href="/public/index.html" aria-label="Vitrine dos Links — início">
-            <img src="/public/assets/images/logo.png" alt="Vitrine dos Links">
-        </a>
+        <div class="shell">
+            <aside class="sidebar" role="navigation" aria-label="Navegação lateral">
+                <nav class="menu">
+                    <a class="menu__link" href="#/inicio" data-route>
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M3 10.75 12 4l9 6.75V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.25Z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                        <span>Página Inicial</span>
+                    </a>
+                    <a class="menu__link" href="#/minha-pagina" data-route>
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 1 1 18 0v1H3v-1Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <span>Minha Página</span>
+                    </a>
+                </nav>
+            </aside>
 
-        <!-- Chip com link público (pode ser atualizado pela página "minha-pagina") -->
-        <div class="nav__chip" id="chipLink" title="Seu link público">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor"
-                    d="M3.9 12a4.1 4.1 0 0 1 4.1-4.1h3a1 1 0 1 1 0 2h-3a2.1 2.1 0 1 0 0 4.2h3a1 1 0 1 1 0 2h-3A4.1 4.1 0 0 1 3.9 12Zm12-5.1h-3a1 1 0 1 0 0 2h3a2.1 2.1 0 1 1 0 4.2h-3a1 1 0 1 0 0 2h3a4.1 4.1 0 0 0 0-8.2Z" />
-            </svg>
-            <span id="chipLinkText">vitrinedoslinks.com.br/<b>seunome</b></span>
-            <button class="chip__copy" id="btnCopy" aria-label="Copiar link">Copiar</button>
+            <main id="main" class="main" role="main">
+                <div id="view" class="view" tabindex="-1" aria-live="polite"></div>
+            </main>
         </div>
 
-        <div class="nav__spacer"></div>
+        <div class="backdrop" id="backdrop" hidden></div>
+    </div>
 
-        <nav aria-label="Ações do usuário" class="nav__actions">
-            <a class="btn btn--secondary btn--sm" href="/public/index.html" target="_blank" rel="noopener">Ver site</a>
-            <button class="btn btn--ghost btn--sm" id="btnLogout">Sair</button>
-        </nav>
-    </header>
+    
 
-    <!-- SIDEBAR fixa (drawer no mobile) -->
-    <aside id="sidebar" class="sidebar" aria-label="Navegação lateral">
-        <nav class="side__nav">
-            <a class="side__link" href="#/inicio" data-route><span class="ico">🏠</span> Início</a>
-            <a class="side__link" href="#/minha-pagina" data-route><span class="ico">🏷️</span> Minha Página</a>
-        </nav>
-    </aside>
-    <div id="sidebarBackdrop" class="sidebar__backdrop" hidden></div>
-
-    <!-- CONTEÚDO -->
-    <main id="view" class="view" role="main" tabindex="-1" aria-busy="true">
-        <section class="card">
-            <p>Carregando…</p>
-        </section>
-    </main>
-
-    <!-- Core do SPA -->
-    <script type="module" src="./app.js"></script>
+    <!-- Scripts da SPA -->
+    <script src="./app.js" defer></script>
 </body>
 
 </html>

@@ -1,60 +1,56 @@
-<section class="card">
-    <h1 class="h1">Minha Página</h1>
-    <p class="sub">Configure sua página pública.</p>
+<!-- /public/spa/pages/minha-pagina/index.html -->
+<section class="mp card">
+    <header class="mp-head">
+        <div class="eyebrow badge">Configuração</div>
+        <h1 class="mp-h1">Minha Página</h1>
+        <p class="sub">Defina como sua página pública irá funcionar.</p>
+    </header>
 
-    <div id="typeChooser">
-        <h2 class="h2">Como você quer usar sua página?</h2>
+    <div class="mp-section">
+        <h2 class="mp-title">Como você quer usar sua página?</h2>
 
-        <div class="grid-2 gap-12">
-            <button class="choice" data-type="loja">
-                <div class="ico">🏪</div>
-                <h3>Quero abrir uma <b>Loja</b></h3>
-                <p>Cadastre produtos e mostre sua vitrine.</p>
+        <div class="mp-options" role="group" aria-label="Escolha o tipo da sua página">
+            <!-- Mantive a classe .choice para compatibilidade com o JS -->
+            <button class="option choice" data-type="loja" type="button" aria-pressed="false">
+                <span class="option-icon" aria-hidden="true">
+                    <!-- ícone Loja -->
+                    <svg viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true">
+                        <path d="M4 10h16l-1 10H5L4 10Zm16-4H4l1-2h14l1 2Z" stroke="currentColor" stroke-width="2"
+                            stroke-linejoin="round" />
+                    </svg>
+                </span>
+                <span class="option-body">
+                    <strong class="option-title">Quero abrir uma Loja</strong>
+                    <span class="option-desc">Cadastre produtos e mostre sua vitrine.</span>
+                </span>
+                <span class="option-check" aria-hidden="true">✓</span>
             </button>
 
-            <button class="choice" data-type="prestador">
-                <div class="ico">🧰</div>
-                <h3>Sou <b>Prestador</b> de serviços</h3>
-                <p>Monte um perfil profissional completo.</p>
+            <button class="option choice" data-type="prestador" type="button" aria-pressed="false">
+                <span class="option-icon" aria-hidden="true">
+                    <!-- ícone Prestador -->
+                    <svg viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true">
+                        <path d="M6 20v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3M12 5a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </span>
+                <span class="option-body">
+                    <strong class="option-title">Sou Prestador de serviços</strong>
+                    <span class="option-desc">Monte um perfil profissional completo.</span>
+                </span>
+                <span class="option-check" aria-hidden="true">✓</span>
             </button>
         </div>
 
-        <div id="chooseActions" class="actions" hidden>
-            <button type="button" id="btnCancel" class="btn btn--secondary">Cancelar</button>
-            <button type="button" id="btnConfirm" class="btn btn--primary">Continuar</button>
+        <p class="mp-note" role="note">            
+            Após salvar, o tipo escolhido não poderá ser alterado.
+        </p>
+
+        <div class="mp-actions">
+            <button id="btnSalvar" class="btn btn--brand btn--xl" type="button" disabled>Salvar
+            </button>
         </div>
+
+        
     </div>
 </section>
-
-<style>
-    .grid-2 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 12px
-    }
-
-    .choice {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: var(--card);
-        text-align: left;
-        cursor: pointer
-    }
-
-    .choice:hover {
-        box-shadow: var(--shadow-sm)
-    }
-
-    .choice.selected {
-        outline: 3px solid var(--brand, #179FDA);
-        box-shadow: 0 0 0 3px #179fda22
-    }
-
-    .ico {
-        font-size: 24px
-    }
-</style>

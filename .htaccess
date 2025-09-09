@@ -2,16 +2,27 @@
 Options -Indexes
 RewriteEngine On
 
-# /api → index.php
+# --- GARANTE QUE O HEADER Authorization CHEGUE AO PHP ---
+# (necessário em muitos ambientes Apache/Windows)
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule ^ - [E=HTTP_AUTHORIZATION:%1]
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+CGIPassAuth On
+
+# --- API -> front controller (index.php) ---
 RewriteRule ^api(/.*)?$ index.php [QSA,L]
 
-# raiz → /public/index.html
+# --- Raiz -> /public/index.html ---
 RewriteRule ^$ public/index.html [L]
 RewriteRule ^public/?$ public/index.html [L]
 
-# servir arquivos/pastas de /public se existirem
+# --- Servir arquivos/pastas de /public se existirem ---
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteCond %{REQUEST_URI} !^/api
 RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
 RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
 RewriteRule ^(.*)$ public/$1 [L]
+
+# (opcional) Fallback SPA para deep-links fora de /api e sem arquivo real:
+# RewriteCond %{REQUEST_URI} !^/api
+# RewriteRule ^.*$ public/index.html [L]
