@@ -24,15 +24,20 @@ class AuthController
     // validações
     $required = ['email', 'password', 'cpf', 'cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
     $errors = Validator::required($payload, $required);
-    if (!empty($payload['email']) && !Validator::email($payload['email'])) $errors['email'] = 'E-mail inválido';
+    if (!empty($payload['email']) && !Validator::email($payload['email']))
+      $errors['email'] = 'E-mail inválido';
     if (!empty($payload['password'])) {
-      $pw = (string)$payload['password'];
+      $pw = (string) $payload['password'];
       $ok = strlen($pw) >= 6 && preg_match('/[A-Z]/', $pw) && preg_match('/[a-z]/', $pw) && preg_match('/[!@#$*]/', $pw);
-      if (!$ok) $errors['password'] = 'Senha deve ter 6+ caracteres, 1 maiúscula, 1 minúscula e 1 especial (!@#$*).';
+      if (!$ok)
+        $errors['password'] = 'Senha deve ter 6+ caracteres, 1 maiúscula, 1 minúscula e 1 especial (!@#$*).';
     }
-    if (!empty($payload['cpf']) && !Validator::cpf($payload['cpf'])) $errors['cpf'] = 'CPF inválido';
-    if (!empty($payload['cep']) && !Validator::cep($payload['cep'])) $errors['cep'] = 'CEP inválido';
-    if (!empty($payload['estado']) && !Validator::uf($payload['estado'])) $errors['estado'] = 'UF inválida';
+    if (!empty($payload['cpf']) && !Validator::cpf($payload['cpf']))
+      $errors['cpf'] = 'CPF inválido';
+    if (!empty($payload['cep']) && !Validator::cep($payload['cep']))
+      $errors['cep'] = 'CEP inválido';
+    if (!empty($payload['estado']) && !Validator::uf($payload['estado']))
+      $errors['estado'] = 'UF inválida';
 
     if ($errors) {
       Response::json(['ok' => false, 'message' => 'Erros de validação', 'errors' => $errors], 422);
@@ -68,7 +73,7 @@ class AuthController
 
     $in = json_decode(file_get_contents('php://input'), true) ?? [];
     $email = trim($in['email'] ?? '');
-    $password = (string)($in['password'] ?? '');
+    $password = (string) ($in['password'] ?? '');
     $remember = !empty($in['remember']);
 
     $user = User::findByEmail($email);
@@ -79,8 +84,8 @@ class AuthController
 
     $ttl = $remember ? 60 * 60 * 24 * 30 : 60 * 60 * 2;
     try {
-      [$token, $expiresAt] = TokenService::issueToken((int)$user['id'], $ttl, $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['HTTP_USER_AGENT'] ?? '');
-      Response::json(['ok' => true, 'message' => 'Login efetuado', 'token' => $token, 'expires_at' => $expiresAt, 'user' => ['id' => (int)$user['id'], 'email' => $user['email']]]);
+      [$token, $expiresAt] = TokenService::issueToken((int) $user['id'], $ttl, $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['HTTP_USER_AGENT'] ?? '');
+      Response::json(['ok' => true, 'message' => 'Login efetuado', 'token' => $token, 'expires_at' => $expiresAt, 'user' => ['id' => (int) $user['id'], 'email' => $user['email']]]);
     } catch (Throwable $e) {
       Response::json(['ok' => false, 'message' => 'Erro ao gerar token', 'detail' => $e->getMessage()], 500);
     }
@@ -107,7 +112,7 @@ class AuthController
       $devResetUrl = null;
 
       if ($user) {
-        list($token, $expiresAt) = TokenService::issueResetToken((int)$user['id'], 3600);
+        list($token, $expiresAt) = TokenService::issueResetToken((int) $user['id'], 3600);
 
         // Em DEV, devolvemos um link de teste
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
@@ -130,32 +135,43 @@ class AuthController
   public function reset(): void
   {
     $this->headers();
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); return; }
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      http_response_code(405);
+      return;
+    }
 
     $in = json_decode(file_get_contents('php://input'), true) ?? [];
-    $token    = (string)($in['token'] ?? '');
-    $password = (string)($in['password'] ?? '');
-    $confirm  = (string)($in['confirm'] ?? '');
+    $token = (string) ($in['token'] ?? '');
+    $password = (string) ($in['password'] ?? '');
+    $confirm = (string) ($in['confirm'] ?? '');
 
     // Simples: 6+ caracteres e confirmação
     $errors = [];
-    if (strlen($password) < 6) $errors['password'] = 'Mín. 6 caracteres.';
-    if ($confirm !== $password) $errors['confirm'] = 'Senhas não conferem';
-    if ($errors) { Response::json(['ok'=>false,'errors'=>$errors], 422); return; }
+    if (strlen($password) < 6)
+      $errors['password'] = 'Mín. 6 caracteres.';
+    if ($confirm !== $password)
+      $errors['confirm'] = 'Senhas não conferem';
+    if ($errors) {
+      Response::json(['ok' => false, 'errors' => $errors], 422);
+      return;
+    }
 
     try {
       $row = TokenService::validateResetToken($token);
-      if (!$row) { Response::json(['ok'=>false,'message'=>'Token inválido ou expirado'], 400); return; }
+      if (!$row) {
+        Response::json(['ok' => false, 'message' => 'Token inválido ou expirado'], 400);
+        return;
+      }
 
       $pwdHash = password_hash($password, PASSWORD_DEFAULT);
-      Database::query("UPDATE users SET password_hash=?, updated_at=NOW() WHERE id=?", [$pwdHash, (int)$row['user_id']]);
+      Database::query("UPDATE users SET password_hash=?, updated_at=NOW() WHERE id=?", [$pwdHash, (int) $row['user_id']]);
 
       TokenService::consumeResetToken($token);
-      Database::query("UPDATE auth_tokens SET is_revoked=1 WHERE user_id=?", [(int)$row['user_id']]); // força logout
+      Database::query("UPDATE auth_tokens SET is_revoked=1 WHERE user_id=?", [(int) $row['user_id']]); // força logout
 
-      Response::json(['ok'=>true,'message'=>'Senha alterada com sucesso']);
+      Response::json(['ok' => true, 'message' => 'Senha alterada com sucesso']);
     } catch (Throwable $e) {
-      Response::json(['ok'=>false,'message'=>'Falha interna','detail'=>$e->getMessage()], 500);
+      Response::json(['ok' => false, 'message' => 'Falha interna', 'detail' => $e->getMessage()], 500);
     }
   }
 
@@ -181,7 +197,8 @@ class AuthController
       $all = getallheaders();
       $h = $all['Authorization'] ?? '';
     }
-    if (preg_match('/Bearer\s+(\S+)/i', $h, $m)) return $m[1];
+    if (preg_match('/Bearer\s+(\S+)/i', $h, $m))
+      return $m[1];
     return $_SERVER['HTTP_X_AUTH_TOKEN'] ?? null;
   }
 
@@ -198,14 +215,65 @@ class AuthController
       Response::json(['ok' => false, 'message' => 'Sessão expirada ou inválida'], 401);
       return;
     }
-    Response::json(['ok' => true, 'user' => ['id' => (int)$row['uid'], 'email' => $row['email']], 'expires_at' => $row['expires_at']]);
+    Response::json(['ok' => true, 'user' => ['id' => (int) $row['uid'], 'email' => $row['email']], 'expires_at' => $row['expires_at']]);
   }
 
   public function logout(): void
   {
     $this->headers();
     $token = $this->bearerToken();
-    if ($token) TokenService::revoke($token);
+    if ($token)
+      TokenService::revoke($token);
     Response::json(['ok' => true, 'message' => 'Logout efetuado']);
   }
+
+  public function getPageType(): void
+  {
+    $this->headers(); // inclui CORS + OPTIONS
+    $token = $this->bearerToken();
+    if (!$token)
+      Response::unauthorized();
+    $row = TokenService::validateToken($token);
+    if (!$row)
+      Response::unauthorized();
+
+    $uid = (int) $row['uid'];
+    $pdo = Database::conn();
+    $st = $pdo->prepare("SELECT page_type FROM users WHERE id=?");
+    $st->execute([$uid]);
+    $type = $st->fetchColumn() ?: null;
+
+    Response::ok(['page_type' => $type]);
+  }
+
+  public function setPageType(): void
+  {
+    $this->headers(); // trata OPTIONS também
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+      http_response_code(204);
+      return;
+    }
+
+    $token = $this->bearerToken();
+    if (!$token)
+      Response::unauthorized();
+    $row = TokenService::validateToken($token);
+    if (!$row)
+      Response::unauthorized();
+
+    $uid = (int) $row['uid'];
+    $in = json_decode(file_get_contents('php://input'), true) ?: [];
+    $type = $in['page_type'] ?? null;
+    if (!in_array($type, ['loja', 'prestador'], true)) {
+      Response::badRequest('Tipo inválido. Use "loja" ou "prestador".');
+    }
+
+    $pdo = Database::conn();
+    $ok = $pdo->prepare("UPDATE users SET page_type=? WHERE id=?")->execute([$type, $uid]);
+    if (!$ok)
+      Response::error('Falha ao atualizar tipo');
+
+    Response::ok(['ok' => true, 'page_type' => $type]);
+  }
+
 }

@@ -1,0 +1,52 @@
+<section class="card">
+  <h1 class="h1">Perfil do Prestador</h1>
+
+  <form id="formPrestador" class="form-grid">
+    <label>Nome público
+      <input type="text" id="pr_nome" maxlength="100" required>
+    </label>
+
+    <label>Bio
+      <textarea id="pr_bio" rows="4"></textarea>
+    </label>
+
+    <label>Especialidades (separe por ponto e vírgula)
+      <input type="text" id="pr_esp">
+    </label>
+
+    <label>Preço médio (ex.: “A partir de R$ 150”)
+      <input type="text" id="pr_preco" maxlength="50">
+    </label>
+
+    <label><input type="checkbox" id="pr_online"> Atendo online</label>
+
+    <label>Endereço de atendimento (se presencial)
+      <input type="text" id="pr_end">
+    </label>
+
+    <label>WhatsApp de contato
+      <input type="text" id="pr_zap" maxlength="20" placeholder="55DDDXXXXXXXXX">
+    </label>
+
+    <label>Link de agendamento (Calendly/Agenda)
+      <input type="url" id="pr_link">
+    </label>
+
+    <label>Imagem de perfil (URL)
+      <input type="url" id="pr_perfil">
+    </label>
+
+    <label>Imagem de capa (URL)
+      <input type="url" id="pr_capa">
+    </label>
+
+    <label>Cor de destaque (ex.: #17C9C3)
+      <input type="text" id="pr_cor" maxlength="7" placeholder="#17C9C3">
+    </label>
+
+    <div class="actions">
+      <button type="submit" class="btn btn--primary">Salvar dados do prestador</button>
+      <span id="pr_msg" class="form-msg" hidden></span>
+    </div>
+  </form>
+</section>

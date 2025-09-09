@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/../app/Controllers/Api/AuthController.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 switch ($path) {
@@ -22,7 +25,23 @@ switch ($path) {
   case '/api/reset':
     (new AuthController)->reset();
     break;
-    
+  case '/api/page-type':
+    (new AuthController)->getPageType();
+    break;
+
+  case '/api/page-type/set':
+    (new AuthController)->setPageType();
+    break;
+  case '/api/loja':
+    require_once __DIR__ . '/../app/Controllers/Api/LojaController.php';
+    (new LojaController())->handle();
+    break;
+
+  case '/api/prestador':
+    require_once __DIR__ . '/../app/Controllers/Api/PrestadorController.php';
+    (new PrestadorController())->handle();
+    break;
+
 
   // FALTANDO: /api/forgot e /api/reset
 

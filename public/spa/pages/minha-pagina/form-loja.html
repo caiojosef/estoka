@@ -1,0 +1,46 @@
+<section class="card">
+    <h1 class="h1">Dados da Loja</h1>
+
+    <form id="formLoja" class="form-grid">
+        <label>Nome fantasia
+            <input type="text" id="lj_nome" maxlength="100" required>
+        </label>
+
+        <label>Descrição
+            <textarea id="lj_desc" rows="4"></textarea>
+        </label>
+
+        <label>Categoria
+            <input type="text" id="lj_cat" maxlength="80">
+        </label>
+
+        <label>Link externo (site/Instagram)
+            <input type="url" id="lj_link" maxlength="255">
+        </label>
+
+        <label>WhatsApp de contato
+            <input type="text" id="lj_zap" maxlength="20" placeholder="55DDDXXXXXXXXX">
+        </label>
+
+        <label>CNPJ (opcional)
+            <input type="text" id="lj_cnpj" maxlength="20">
+        </label>
+
+        <label>Imagem de capa (URL)
+            <input type="url" id="lj_capa">
+        </label>
+
+        <label>Logo (URL)
+            <input type="url" id="lj_logo">
+        </label>
+
+        <label>Cor de destaque (ex.: #179FDA)
+            <input type="text" id="lj_cor" maxlength="7" placeholder="#179FDA">
+        </label>
+
+        <div class="actions">
+            <button type="submit" class="btn btn--primary">Salvar dados da loja</button>
+            <span id="lj_msg" class="form-msg" hidden></span>
+        </div>
+    </form>
+</section>
