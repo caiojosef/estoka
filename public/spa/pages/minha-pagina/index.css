@@ -245,3 +245,135 @@
         transition: none;
     }
 }
+
+/* === Base visual clara e suave (herda seus tokens) === */
+:root {
+    --brand: var(--primary, #2563eb);
+    --bg-elev: var(--surface-0, #fff);
+    --bg-hover: var(--surface-100, #f1f4fa);
+    --border: var(--surface-200, #e6ebf3);
+    --text: var(--gray-900, #0f172a);
+    --text-2: var(--gray-600, #475569);
+    --radius: 14px;
+    --shadow-sm: 0 1px 2px rgba(2, 6, 23, .06);
+    --shadow-md: 0 10px 30px rgba(2, 6, 23, .08);
+}
+
+.form-card {
+    padding: 18px 18px 16px;
+}
+
+.form-head .sub {
+    margin: 4px 0 0;
+    color: var(--text-2);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+@media (max-width: 800px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field.span-2 {
+    grid-column: span 2;
+}
+
+.field>label {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.hint {
+    color: var(--text-2);
+    font-size: .92rem;
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+}
+
+textarea {
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: color-mix(in oklab, var(--text-2) 80%, #fff);
+}
+
+input:focus,
+textarea:focus {
+    outline: 3px solid color-mix(in oklab, var(--brand) 28%, transparent);
+    border-color: color-mix(in oklab, var(--brand) 45%, var(--border));
+    background: #fff;
+}
+
+/* Checkbox em linha */
+.checkline {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkline input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--brand);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in oklab, var(--brand) 35%, var(--border));
+    background: linear-gradient(180deg, color-mix(in oklab, var(--brand) 12%, #fff 88%), #fff);
+    color: color-mix(in oklab, var(--brand) 60%, #000);
+    cursor: pointer;
+}
+
+.btn[disabled] {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.form-msg {
+    font-size: .95rem;
+}
+
+.form-msg.ok {
+    color: #0d9488;
+}
+
+.form-msg.error {
+    color: #dc2626;
+}

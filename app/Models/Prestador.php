@@ -1,58 +1,79 @@
 <?php
-// app/Models/Prestador.php
+namespace App\Models;
+
+use PDO;
+
+// app/Prestador.php  (apenas os métodos que importam)
 class Prestador
 {
     private PDO $pdo;
-    public function __construct(PDO $pdo)
+
+    public function __construct(Database $db)
     {
-        $this->pdo = $pdo;
+        $this->pdo = $db->pdo();
     }
 
-    public function getByUserId(int $userId): ?array
+    public function getByUser(int $userId): ?array
     {
-        $st = $this->pdo->prepare("SELECT * FROM prestadores WHERE user_id = ?");
-        $st->execute([$userId]);
+        $sql = "SELECT id, user_id, nome_publico, bio, especialidades, preco_medio, atendimento_online,
+                       endereco_atendimento, whatsapp_contato, link_agendamento,
+                       imagem_perfil, imagem_capa, cor_destaque, criado_em
+                  FROM prestadores
+                 WHERE user_id = :uid
+                 LIMIT 1";
+        $st = $this->pdo->prepare($sql);
+        $st->execute([':uid' => $userId]);
         $row = $st->fetch(PDO::FETCH_ASSOC);
         return $row ?: null;
     }
 
-    public function upsert(int $userId, array $d): array
+    // ← AQUI acontece o INSERT/UPDATE
+    public function upsertByUser(int $userId, array $d): bool
     {
-        $exists = $this->getByUserId($userId);
+        $exists = $this->getByUser($userId) !== null;
+
         if ($exists) {
+            // UPDATE (colunas iguais às que você mostrou no phpMyAdmin)
             $sql = "UPDATE prestadores SET
-                nome_publico = :nome,
-                bio = :bio,
-                especialidades = :esp,
-                preco_medio = :preco,
-                atendimento_online = :online,
-                endereco_atendimento = :end,
-                whatsapp_contato = :zap,
-                link_agendamento = :link,
-                imagem_perfil = :perfil,
-                imagem_capa = :capa,
-                cor_destaque = :cor
-            WHERE user_id = :uid";
+                        nome_publico         = :nome_publico,
+                        bio                  = :bio,
+                        especialidades       = :especialidades,
+                        preco_medio          = :preco_medio,
+                        atendimento_online   = :atendimento_online,
+                        endereco_atendimento = :endereco_atendimento,
+                        whatsapp_contato     = :whatsapp_contato,
+                        link_agendamento     = :link_agendamento,
+                        imagem_perfil        = :imagem_perfil,
+                        imagem_capa          = :imagem_capa,
+                        cor_destaque         = :cor_destaque
+                    WHERE user_id = :uid";
         } else {
-            $sql = "INSERT INTO prestadores
-                (user_id, nome_publico, bio, especialidades, preco_medio, atendimento_online, endereco_atendimento, whatsapp_contato, link_agendamento, imagem_perfil, imagem_capa, cor_destaque)
-                VALUES (:uid, :nome, :bio, :esp, :preco, :online, :end, :zap, :link, :perfil, :capa, :cor)";
+            // INSERT (sua tabela tem `criado_em`; não há `updated_at`)
+            $sql = "INSERT INTO prestadores (
+                        user_id, nome_publico, bio, especialidades, preco_medio, atendimento_online,
+                        endereco_atendimento, whatsapp_contato, link_agendamento,
+                        imagem_perfil, imagem_capa, cor_destaque, criado_em
+                    ) VALUES (
+                        :uid, :nome_publico, :bio, :especialidades, :preco_medio, :atendimento_online,
+                        :endereco_atendimento, :whatsapp_contato, :link_agendamento,
+                        :imagem_perfil, :imagem_capa, :cor_destaque, NOW()
+                    )";
         }
 
-        $ok = $this->pdo->prepare($sql)->execute([
+        $st = $this->pdo->prepare($sql);
+        return $st->execute([
             ':uid' => $userId,
-            ':nome' => trim($d['nome_publico'] ?? ''),
-            ':bio' => trim($d['bio'] ?? ''),
-            ':esp' => trim($d['especialidades'] ?? ''),
-            ':preco' => trim($d['preco_medio'] ?? ''),
-            ':online' => !empty($d['atendimento_online']) ? 1 : 0,
-            ':end' => trim($d['endereco_atendimento'] ?? ''),
-            ':zap' => trim($d['whatsapp_contato'] ?? ''),
-            ':link' => trim($d['link_agendamento'] ?? ''),
-            ':perfil' => trim($d['imagem_perfil'] ?? ''),
-            ':capa' => trim($d['imagem_capa'] ?? ''),
-            ':cor' => strtoupper(trim($d['cor_destaque'] ?? ''))
+            ':nome_publico' => $d['nome_publico'] ?? null,
+            ':bio' => $d['bio'] ?? null,
+            ':especialidades' => $d['especialidades'] ?? null,
+            ':preco_medio' => $d['preco_medio'] ?? null,
+            ':atendimento_online' => isset($d['atendimento_online']) ? (int) !!$d['atendimento_online'] : 0,
+            ':endereco_atendimento' => $d['endereco_atendimento'] ?? null,
+            ':whatsapp_contato' => $d['whatsapp_contato'] ?? null,
+            ':link_agendamento' => $d['link_agendamento'] ?? null,
+            ':imagem_perfil' => $d['imagem_perfil'] ?? null,
+            ':imagem_capa' => $d['imagem_capa'] ?? null,
+            ':cor_destaque' => $d['cor_destaque'] ?? null,
         ]);
-        return $ok ? ['ok' => true, 'data' => $this->getByUserId($userId)] : ['ok' => false];
     }
 }

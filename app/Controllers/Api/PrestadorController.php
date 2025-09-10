@@ -1,51 +1,121 @@
 <?php
 // app/Controllers/Api/PrestadorController.php
+require_once __DIR__ . '/../../../core/Response.php';
+require_once __DIR__ . '/../../../core/Validator.php';
+require_once __DIR__ . '/../../../core/Database.php';
+require_once __DIR__ . '/../../../app/Models/User.php';
+require_once __DIR__ . '/../../../app/Services/TokenService.php';
+
 class PrestadorController
 {
+    private $db;
+    private $model;
+    private $tokens;
+
+    public function __construct()
+    {
+        $this->db = new Database();
+        $this->tokens = new TokenService();
+
+        // se o model aceitar $db no construtor usa; senão tenta sem
+        try {
+            $this->model = new \Prestador($this->db);
+        } catch (\ArgumentCountError $e) {
+            $this->model = new \Prestador();
+        }
+    }
+
     public function handle(): void
     {
-        header('Content-Type: application/json; charset=utf-8');
+        $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+        if ($method === 'GET') {
+            $this->get();
+            return;
+        }
+        if ($method === 'POST') {
+            $this->save();
+            return;
+        }
+        Response::error('Method Not Allowed', 405);
+    }
+
+    private function getAuthHeader(): ?string
+    {
+        if (!empty($_SERVER['HTTP_AUTHORIZATION']))
+            return $_SERVER['HTTP_AUTHORIZATION'];
+        if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION']))
+            return $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+        if (function_exists('getallheaders')) {
+            foreach (getallheaders() as $k => $v) {
+                if (strcasecmp($k, 'Authorization') === 0)
+                    return $v;
+            }
+        }
+        return null;
+    }
+
+    private function authUserId(): int
+    {
+        $hdr = $this->getAuthHeader();
+        if (!$hdr || !preg_match('/Bearer\s+(.+)/i', $hdr, $m)) {
+            Response::error('Unauthorized', 401);
+            exit;
+        }
+
+        $payload = $this->tokens->validate($m[1]);
+        if (empty($payload['user_id'])) {
+            Response::error('Unauthorized', 401);
+            exit;
+        }
+        return (int) $payload['user_id'];
+    }
+
+    // GET /api/prestador
+    public function get(): void
+    {
+        $userId = $this->authUserId();
+        $row = $this->model->getByUser($userId); // null ou array/obj
+
+        // Quando não houver dados, devolve 200 com objeto vazio
+        Response::ok(['data' => $row ?: new \stdClass()]);
+    }
+
+    // POST /api/prestador
+    private function save(): void
+    {
+        $uid = $this->authUserId();
+        $body = json_decode(file_get_contents('php://input'), true) ?? [];
+
+        $data = [
+            'nome_publico' => trim((string) ($body['nome_publico'] ?? '')),
+            'bio' => trim((string) ($body['bio'] ?? '')),
+            'especialidades' => trim((string) ($body['especialidades'] ?? '')),
+            'preco_medio' => trim((string) ($body['preco_medio'] ?? '')),
+            'atendimento_online' => !empty($body['atendimento_online']) ? 1 : 0,
+            'endereco_atendimento' => trim((string) ($body['endereco_atendimento'] ?? '')),
+            'whatsapp_contato' => trim((string) ($body['whatsapp_contato'] ?? '')),
+            'link_agendamento' => trim((string) ($body['link_agendamento'] ?? '')),
+            'imagem_perfil' => trim((string) ($body['imagem_perfil'] ?? '')),
+            'imagem_capa' => trim((string) ($body['imagem_capa'] ?? '')),
+            'cor_destaque' => trim((string) ($body['cor_destaque'] ?? '')),
+        ];
+
+        if (strlen($data['nome_publico']) > 120) {
+            Response::error('nome_publico muito longo (máx 120)', 422);
+            return;
+        }
 
         try {
-            $ROOT = dirname(__DIR__, 3);
-            require_once $ROOT . '/core/Database.php';
-            require_once $ROOT . '/core/Response.php';
-            require_once $ROOT . '/app/Models/User.php';
-            require_once $ROOT . '/app/Models/Prestador.php';
-            require_once $ROOT . '/app/Services/TokenService.php';
-
-            $db = (new Database())->connect();
-            $auth = new TokenService();
-            $userId = $auth->getUserIdFromToken();
-            if (!$userId) {
-                Response::unauthorized();
+            $ok = $this->model->upsertByUser($uid, $data);
+            if (!$ok) {
+                Response::error('Falha ao salvar', 500);
+                return;
             }
-
-            $user = new User($db);
-            if ($user->getPageType($userId) !== 'prestador') {
-                Response::badRequest('Perfil atual não é "prestador".');
-            }
-
-            $repo = new Prestador($db);
-            $method = $_SERVER['REQUEST_METHOD'];
-
-            if ($method === 'GET') {
-                Response::ok(['data' => $repo->getByUserId($userId)]);
-            }
-
-            if (in_array($method, ['POST', 'PUT', 'PATCH'], true)) {
-                $payload = json_decode(file_get_contents('php://input'), true) ?: [];
-                $out = $repo->upsert($userId, $payload);
-                if (empty($out['ok']))
-                    Response::error('Falha ao salvar dados do prestador.');
-                Response::ok($out);
-            }
-
-            Response::methodNotAllowed();
-
-        } catch (\Throwable $e) {
-            http_response_code(500);
-            echo json_encode(['ok' => false, 'message' => 'Erro interno', 'hint' => $e->getMessage()]);
+            $this->model->upsertByUser($uid, $data);
+            $fresh = $this->model->getByUser($uid) ?: new stdClass();
+            Response::ok($fresh);
+        } catch (Throwable $e) {
+            Response::error('Erro ao salvar', 500, ['detail' => $e->getMessage()]);
         }
     }
 }

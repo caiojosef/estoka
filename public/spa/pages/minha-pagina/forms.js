@@ -1,142 +1,160 @@
 // /public/spa/pages/minha-pagina/forms.js
-// Objetivo: fazer GET nos endpoints e imprimir/preencher os dados nos forms.
-// - Loja:      GET /api/loja
-// - Prestador: GET /api/prestador
-// Regras:
-// 1) Usa o token 'estoka_token' do localStorage/sessionStorage
-// 2) Usa window.SPA.fetch se existir (pra mostrar seu loader global)
-// 3) Preenche inputs por atributo name=, e elementos de visualização por [data-bind] ou [data-src]
-// 4) Não altera IDs. É "básico pra funcionar". Depois refinamos UX/mensagens.
+export function init(ctx) {
+    const routeKey = ctx?.route?.key || location.hash || '';
+    const isLoja = routeKey.includes('/form-loja');
+    const tipo = isLoja ? 'loja' : 'prestador';
+    const endpoint = `/api/${tipo}`;
+    const el = ctx.el;
 
-function getToken() {
-    return localStorage.getItem('estoka_token') || sessionStorage.getItem('estoka_token');
-}
+    const token =
+        localStorage.getItem('estoka_token') ||
+        sessionStorage.getItem('estoka_token');
 
-function authFetch(url, opts = {}) {
-    const F = (window.SPA && window.SPA.fetch) ? window.SPA.fetch : fetch;
-    const token = getToken();
-    if (!token) {
-        location.href = '/public/login.html?from=app';
-        return Promise.reject(new Error('Sem token'));
+    if (!token) { location.href = '/public/login.html?from=app'; return; }
+
+    const F = (window.SPA?.fetch) || fetch;
+
+    // ===== Helpers HTTP e UI =====
+    async function debugGet(path) {
+        const res = await F(path, {
+            headers: { Accept: 'application/json', Authorization: 'Bearer ' + token },
+            cache: 'no-store'
+        });
+        const raw = await res.clone().text();
+        let json = null; try { json = JSON.parse(raw); } catch { }
+        console.group(`[forms] GET ${path}`); console.log('status:', res.status, 'json:', json); console.groupEnd();
+        if (!res.ok) throw new Error(json?.message || json?.error || raw || `GET ${path} falhou (${res.status})`);
+        return json;
     }
-    const headers = Object.assign(
-        { Accept: 'application/json', Authorization: 'Bearer ' + token },
-        opts.headers || {}
-    );
-    return F(url, Object.assign({}, opts, { headers, cache: 'no-store' }));
-}
 
-async function getJSON(url) {
-    const res = await authFetch(url);
-    const raw = await res.text();
-    let json = null;
-    try { json = JSON.parse(raw); } catch (e) { }
-    if (!res.ok) {
-        const msg = json?.message || json?.error || `Erro ${res.status}`;
-        throw new Error(msg);
+    async function postJSON(url, data) {
+        const res = await F(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(data || {})
+        });
+        const raw = await res.text();
+        let json = null; try { json = JSON.parse(raw); } catch { }
+        console.group(`[forms] POST ${url}`); console.log('payload:', data); console.log('resp:', json || raw); console.groupEnd();
+        if (!res.ok) throw new Error(json?.message || json?.error || 'Erro ao salvar');
+        return json;
     }
-    // Compat: alguns controllers retornam { ok, data: {exists, data} } ou { ok, data }
-    const payload = json?.data ?? json;
-    const exists = (typeof payload?.exists !== 'undefined')
-        ? !!payload.exists
-        : !!payload?.data;
 
-    const record = (payload && typeof payload === 'object' && 'data' in payload)
-        ? payload.data
-        : payload;
+    function showMsg(span, type, text) {
+        if (!span) return;
+        span.hidden = false;
+        span.className = 'form-msg ' + type; // ok | error
+        span.textContent = text;
+        setTimeout(() => { span.hidden = true; }, 2600);
+    }
 
-    return { exists, record: record || null, raw: json };
-}
+    // ===== Utils DOM (sem optional chaining em LHS) =====
+    const q = (s) => el.querySelector(s);
+    const setVal = (sel, val) => { const n = q(sel); if (n) n.value = val ?? ''; };
+    const setChk = (sel, on) => { const n = q(sel); if (n) n.checked = !!on; };
 
-// Preenche inputs/selects/textarea por name, e elementos com data-bind / data-src
-function fillForm(root, record) {
-    if (!record) return;
+    // ===== Prestador: snapshot/fill/watch =====
+    function snapshotPrestador() {
+        return {
+            nome_publico: (q('#pr_nome')?.value || '').trim(),
+            bio: (q('#pr_bio')?.value || '').trim(),
+            especialidades: (q('#pr_esp')?.value || '').trim(),
+            preco_medio: (q('#pr_preco')?.value || '').trim(),
+            atendimento_online: !!q('#pr_online')?.checked,
+            endereco_atendimento: (q('#pr_end')?.value || '').trim(),
+            whatsapp_contato: (q('#pr_zap')?.value || '').trim(),
+            link_agendamento: (q('#pr_link')?.value || '').trim(),
+            imagem_perfil: (q('#pr_perfil')?.value || '').trim(),
+            imagem_capa: (q('#pr_capa')?.value || '').trim(),
+            cor_destaque: (q('#pr_cor')?.value || '').trim()
+        };
+    }
 
-    // Inputs, selects e textareas
-    Object.entries(record).forEach(([key, val]) => {
-        const els = root.querySelectorAll(`[name="${key}"]`);
-        els.forEach(el => {
-            if (el.type === 'checkbox') {
-                el.checked = !!Number(val || 0) || val === true;
-            } else if (el.type === 'radio') {
-                if (String(el.value) === String(val)) el.checked = true;
-            } else {
-                el.value = (val ?? '');
+    function fillPrestador(data = {}) {
+        setVal('#pr_nome', data.nome_publico);
+        setVal('#pr_bio', data.bio);
+        setVal('#pr_esp', data.especialidades);
+        setVal('#pr_preco', data.preco_medio);
+        setChk('#pr_online', data.atendimento_online);
+        setVal('#pr_end', data.endereco_atendimento);
+        setVal('#pr_zap', data.whatsapp_contato);
+        setVal('#pr_link', data.link_agendamento);
+        setVal('#pr_perfil', data.imagem_perfil);
+        setVal('#pr_capa', data.imagem_capa);
+        setVal('#pr_cor', data.cor_destaque);
+    }
+
+    function bindDirtyWatcherPrestador() {
+        const form = q('#formPrestador');
+        if (!form) return;
+        const btn = q('#btnPrestSave') || form.querySelector('button[type="submit"]');
+        const span = q('#pr_msg');
+
+        let base = JSON.stringify(snapshotPrestador());
+
+        const updateDirty = () => {
+            const now = JSON.stringify(snapshotPrestador());
+            const dirty = now !== base;
+            if (btn) btn.disabled = !dirty;
+        };
+
+        form.querySelectorAll('input, textarea, select').forEach(ctrl => {
+            ctrl.addEventListener('input', updateDirty);
+            ctrl.addEventListener('change', updateDirty);
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = snapshotPrestador();
+            try {
+                if (btn) btn.disabled = true;
+                await postJSON('/api/prestador', payload);
+                showMsg(span, 'ok', 'Dados salvos!');
+                base = JSON.stringify(snapshotPrestador());
+                updateDirty();
+            } catch (err) {
+                const m = String(err?.message || err);
+                showMsg(span, 'error', m);
+                if (btn) btn.disabled = false;
+                if (m.toLowerCase().includes('unauthorized')) {
+                    location.href = '/public/login.html?from=app';
+                }
             }
         });
-    });
 
-    // Texto "readonly" visual
-    Object.entries(record).forEach(([key, val]) => {
-        const bindEls = root.querySelectorAll(`[data-bind="${key}"]`);
-        bindEls.forEach(el => { el.textContent = (val ?? ''); });
-    });
-
-    // Imagens
-    Object.entries(record).forEach(([key, val]) => {
-        const imgEls = root.querySelectorAll(`[data-src="${key}"]`);
-        imgEls.forEach(el => { if (val) el.setAttribute('src', val); });
-    });
-}
-
-// Mostra erro simples na página (ou alert fallback)
-function showError(root, message) {
-    const box = root.querySelector('.form-alert, [data-alert]');
-    if (box) {
-        box.textContent = message;
-        box.style.display = 'block';
-    } else {
-        alert(message);
+        updateDirty();
     }
+
+    // ===== Fluxo principal =====
+    (async () => {
+        try {
+            const out = await debugGet(endpoint);
+            const data = out?.data ?? out ?? {};
+            console.log(`[forms] ${tipo} extraído =>`, data);
+
+            if (!isLoja) {
+                fillPrestador(data);
+                bindDirtyWatcherPrestador();
+                if (!data || Object.keys(data).length === 0) {
+                    console.info('[forms] prestador: sem dados (primeiro acesso).');
+                }
+            } else {
+                console.info('[forms] rota atual é form-loja — form HTML ainda não implementado neste arquivo.');
+            }
+        } catch (e) {
+            console.error(`[forms] erro ao buscar ${tipo}:`, e?.message || e);
+            if (!isLoja) {
+                fillPrestador({});
+                bindDirtyWatcherPrestador();
+            }
+        }
+    })();
+
+    return () => { };
 }
 
-// Mostra um estado vazio, se existir (ex.: <div data-empty>…</div>)
-function toggleEmptyState(root, on) {
-    const empty = root.querySelector('[data-empty]');
-    if (empty) empty.style.display = on ? 'block' : 'none';
-}
-
-// --------- INITS ---------
-
-export async function initLoja(ctx) {
-    const root = ctx?.el || document;
-    try {
-        const { exists, record, raw } = await getJSON('/api/loja');
-        console.group('[forms] GET /api/loja');
-        console.log('exists:', exists);
-        console.log('record:', record);
-        console.log('raw:', raw);
-        console.groupEnd();
-
-        toggleEmptyState(root, !exists);
-        fillForm(root, record);
-
-        // Se quiser imprimir JSON em algum <pre data-bind="debug">
-        const dbg = root.querySelector('pre[data-bind="debug"]');
-        if (dbg) dbg.textContent = JSON.stringify(record || {}, null, 2);
-    } catch (e) {
-        console.error('[forms] loja erro:', e?.message || e);
-        showError(root, e?.message || 'Falha ao carregar dados da loja.');
-    }
-}
-
-export async function initPrestador(ctx) {
-    const root = ctx?.el || document;
-    try {
-        const { exists, record, raw } = await getJSON('/api/prestador');
-        console.group('[forms] GET /api/prestador');
-        console.log('exists:', exists);
-        console.log('record:', record);
-        console.log('raw:', raw);
-        console.groupEnd();
-
-        toggleEmptyState(root, !exists);
-        fillForm(root, record);
-
-        const dbg = root.querySelector('pre[data-bind="debug"]');
-        if (dbg) dbg.textContent = JSON.stringify(record || {}, null, 2);
-    } catch (e) {
-        console.error('[forms] prestador erro:', e?.message || e);
-        showError(root, e?.message || 'Falha ao carregar dados do prestador.');
-    }
-}
+export function destroy() { /* noop */ }

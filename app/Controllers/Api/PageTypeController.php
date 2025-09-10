@@ -1,5 +1,6 @@
 <?php
 // app/Controllers/Api/PageTypeController.php
+require_once __DIR__ . '/../../../bootstrap.php';
 class PageTypeController
 {
     public function handle(): void
