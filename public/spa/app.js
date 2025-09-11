@@ -32,7 +32,7 @@
       file: 'form-prestador',
       title: 'Prestador',
       css: ['index.css'],   // <- compartilhado
-      js: ['forms.js']     // <- compartilhado
+      js: ['forms-prestador-render.js']     // <- compartilhado
     },
   };
 

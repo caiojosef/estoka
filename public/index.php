@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../app/Controllers/Api/AuthController.php';
+require_once __DIR__ . '/../app/Controllers/Api/PrestadorController.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -46,35 +47,11 @@ switch ($path) {
   case '/api/page-type/set':
     (new AuthController)->setPageType();
     break;
-  case '/api/loja':
-    require_once __DIR__ . '/../app/Controllers/Api/LojaController.php';
-    (new LojaController())->handle();
-    break;
-
   case '/api/prestador':
-    require_once __DIR__ . '/../app/Controllers/Api/PrestadorController.php';
     (new PrestadorController())->handle();
     break;
 
-  case '/api/loja':
-    if ($method === 'GET')
-      \App\Controllers\Api\LojaController::show();
-    elseif ($method === 'POST')
-      \App\Controllers\Api\LojaController::save();
-    else
-      \Core\Response::error('Método não permitido.', 405);
-    break;
-
-  case '/api/prestador':
-    if ($method === 'GET')
-      \App\Controllers\Api\PrestadorController::show();
-    elseif ($method === 'POST')
-      \App\Controllers\Api\PrestadorController::save();
-    else
-      \Core\Response::error('Método não permitido.', 405);
-    break;
-
-
+  
   // FALTANDO: /api/forgot e /api/reset
 
   default:

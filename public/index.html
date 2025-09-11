@@ -4,179 +4,386 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vitrine dos Links — Encontre lojas e prestadores perto de você</title>
+    <title>Vitrine dos Links | Crie seu link profissional de produtos e serviços</title>
     <meta name="description"
-        content="Busque vitrines de produtos e serviços por categoria, cidade e avaliação. Modelo OLX-like, rápido e responsivo.">
-    <link rel="icon" href="./assets/images/favicon.png">
+        content="Crie seu link vitrinedoslinks.com.br/seunome e publique anúncios de produtos e serviços com foto, preço e descrição. Simples de montar, fácil de compartilhar. 10 dias grátis.">
+
+    <!-- SEO / Social -->
+    <link rel="canonical" href="https://vitrinedoslinks.com.br/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Vitrine dos Links">
+    <meta property="og:description"
+        content="Sua página em um link. Produtos e serviços com contato direto. 10 dias grátis.">
+    <meta property="og:url" content="https://vitrinedoslinks.com.br/">
+    <meta property="og:image" content="/public/assets/images/page-inicial.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vitrine dos Links">
+    <meta name="twitter:description" content="Crie seu link profissional de produtos e serviços.">
+    <meta name="twitter:image" content="/public/assets/images/page-inicial.png">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- seu CSS base -->
     <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- CSS desta página -->
-    <link rel="stylesheet" href="./assets/css/directory.css">
+    <link rel="icon" href="./assets/images/favicon.png">
 </head>
 
 <body>
-    <!-- TOP BAR -->
-    <header class="topbar">
-        <div class="wrap">
-            <a class="brand" href="/public/index.html" aria-label="Vitrine dos Links — Início">
-                <img src="./assets/images/logo.png" alt="Vitrine dos Links">
+    <!-- Topbar (mantido) -->
+    <header class="site-header pro-nav">
+        <div class="container nav__wrap">
+            <a class="brand" href="/public/index.html" aria-label="Vitrine dos Links — início">
+                <img src="/public/assets/images/logo.png" alt="Vitrine dos Links">
             </a>
 
-            <div class="top-actions">
-                <a class="btn btn--ghost" href="/public/login.html">Entrar</a>
-                <a class="btn btn--primary" href="/public/cadastro.html?from=home">Criar conta</a>
+            <button class="nav__toggle" id="navToggle" aria-controls="navMenu" aria-expanded="false"
+                aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav__menu" id="navMenu">
+                <nav class="nav__links">
+                    <a href="#recursos" class="nav__link">Recursos</a>
+                    <a href="#para-quem" class="nav__link">Para quem é</a>
+                    <a href="#preco" class="nav__link">Preço</a>
+                </nav>
+                <div class="nav__actions">
+                    <a class="btn btn--nav btn--secondary" href="/public/login.html">Entrar</a>
+                    <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Criar Conta</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- SEARCH PILL -->
-    <section class="searchband" id="explorar">
-        <div class="wrap">
-            <div class="pill" role="search" aria-label="Buscar vitrines">
-                <input id="q" type="search" placeholder="O que você procura? (ex.: eletrônicos, beleza, mecânica…)"
-                    aria-label="Buscar" />
-                <div class="divider"></div>
-                <select id="tipo" aria-label="Tipo">
-                    <option value="all">Produtos e Serviços</option>
-                    <option value="produtos">Produtos</option>
-                    <option value="servicos">Serviços</option>
-                </select>
-                <div class="divider"></div>
-                <select id="estado" aria-label="Estado (UF)">
-                    <option value="all">Todos os estados</option>
-                </select>
-                <select id="cidade" aria-label="Cidade">
-                    <option value="all">Todas as cidades</option>
-                </select>
-                <button id="btnBuscar" class="btn btn--primary">Buscar</button>
+    <!-- Hero sério e direto -->
+    <section class="hero">
+        <div class="container hero__grid">
+            <div class="hero__text">
+                <h1>Seu link profissional para <span>produtos</span> e <span>serviços</span>.</h1>
+                <p>
+                    Crie <strong>vitrinedoslinks.com.br/seunome</strong>, publique cartões com foto, título, preço e
+                    descrição
+                    e compartilhe com seus clientes. Sem complicação, com visual limpo e pronto para uso.
+                </p>
+                <div class="hero__cta">
+                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Criar meu link (10 dias
+                        grátis)</a>
+                    <a class="btn btn--lg btn--secondary" href="#preview">Ver exemplos</a>
+                </div>
             </div>
 
-            <div class="search-tools">
-                <div class="chips" id="chipsSugestoes"></div>
-                <div class="right-tools">
-                    <button id="btnGeo" class="btn btn--ghost btn--sm">📍 Detectar</button>
-                    <label class="toggle">
-                        <input id="onlyUF" type="checkbox">
-                        <span>Somente do meu estado <small id="geoUFLabel"></small></span>
-                    </label>
-                </div>
+            <div class="hero__art" aria-hidden="true">
+                <picture>
+                    <img class="hero-img" src="./assets/images/hero-vitrinedoslinks.png" alt="" role="presentation"
+                        loading="eager" fetchpriority="high" decoding="async" width="1200" height="1200">
+                </picture>
             </div>
         </div>
     </section>
 
-    <!-- CATEGORIES -->
-    <section class="section">
-        <div class="wrap">
-            <div class="section-head">
-                <h2>Categorias</h2>
-                <a class="link" href="#resultados">Ver resultados</a>
+    <!-- Para quem é (objetivo e sem floreio) -->
+    <section id="para-quem" class="who">
+        <div class="container">
+            <h2>Para quem é</h2>
+            <div class="cards">
+                <article class="card">
+                    <h3>Quem está começando</h3>
+                    <p>Monte seu link em minutos e mostre o que você vende ou faz em um só lugar.</p>
+                </article>
+                <article class="card">
+                    <h3>Lojas e profissionais</h3>
+                    <p>Apresente produtos e serviços com preços claros e contato direto.</p>
+                </article>
+                <article class="card">
+                    <h3>Quem divulga nas redes</h3>
+                    <p>Um link único na bio com tudo organizado e fácil de navegar.</p>
+                </article>
             </div>
-            <div class="cat-grid" id="cats"></div>
         </div>
     </section>
 
-    <!-- LIST + FILTERS (OLX-LIKE) -->
-    <main class="section" id="resultados">
-        <div class="wrap layout">
-            <!-- Filters (left) -->
-            <aside class="filters" id="filters">
-                <div class="filters__head">
-                    <h3>Filtros</h3>
-                    <button class="filters__close" id="closeFilters" aria-label="Fechar filtros">✕</button>
-                </div>
+    <!-- Exemplos e fluxo (id=preview) -->
+    <section id="preview" class="announce">
+        <div class="container announce__grid">
+            <div class="announce__text">
+                <span class="pill">Como funciona</span>
+                <h2>Do cadastro ao link, em 3 passos</h2>
+                <ul class="announce__list">
+                    <li><strong>Crie sua conta</strong> e escolha seu endereço: <b>vitrinedoslinks.com.br/seunome</b>.
+                    </li>
+                    <li><strong>Adicione seus anúncios</strong> com foto, título, preço e descrição breve.</li>
+                    <li><strong>Compartilhe o link</strong> com seus clientes. Simples e profissional.</li>
+                </ul>
 
-                <div class="f-block">
-                    <label class="f-label">Tipo</label>
-                    <div class="seg seg--full" id="segTipo">
-                        <button class="seg__btn" data-tipo="all" aria-pressed="true">Todos</button>
-                        <button class="seg__btn" data-tipo="produtos" aria-pressed="false">Produtos</button>
-                        <button class="seg__btn" data-tipo="servicos" aria-pressed="false">Serviços</button>
+                <div class="announce__cta">
+                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Criar Conta</a>
+                    <a class="btn btn--lg btn--ghost" href="#preco">Ver detalhes do plano</a>
+                </div>
+                <small class="muted">Dica: use fotos nítidas e leves para abrir rápido no celular.</small>
+            </div>
+
+            <!-- Cartões de exemplo (produto e serviço) -->
+            <aside class="announce__card" aria-label="Exemplos de anúncios">
+                <div class="card__head">
+                    <img src="/public/assets/images/favicon.png" alt="" class="card__logo">
+                    <div>
+                        <strong>Exemplos de cartões</strong>
+                        <div class="muted">vitrinedoslinks.com.br/seunome</div>
                     </div>
                 </div>
 
-                <div class="f-block">
-                    <label class="f-label">Ordenar por</label>
-                    <select id="sort">
-                        <option value="views">Mais acessados</option>
-                        <option value="rating">Melhores avaliados</option>
-                        <option value="recent">Mais recentes</option>
-                    </select>
-                </div>
+                <div class="card__body">
+                    <!-- Produto -->
+                    <div class="catalog__item">
+                        <div class="catalog__thumb">IMG</div>
+                        <div class="catalog__info">
+                            <div class="catalog__title">Tênis casual branco <span class="pill">Promoção</span></div>
+                            <div class="catalog__price">R$ 159,90</div>
+                            <div class="muted">Confortável para o dia a dia.</div>
+                        </div>
+                        <button class="btn btn--sm btn--secondary">Entrar em contato</button>
+                    </div>
+                    <!-- Produto -->
+                    <div class="catalog__item">
+                        <div class="catalog__thumb">IMG</div>
+                        <div class="catalog__info">
+                            <div class="catalog__title">Camiseta preta básica</div>
+                            <div class="catalog__price">R$ 49,90</div>
+                            <div class="muted">Algodão, do P ao GG.</div>
+                        </div>
+                        <button class="btn btn--sm btn--secondary">Entrar em contato</button>
+                    </div>
+                    <!-- Serviço -->
+                    <div class="catalog__item">
+                        <div class="catalog__thumb">IMG</div>
+                        <div class="catalog__info">
+                            <div class="catalog__title">Conserto de notebook</div>
+                            <div class="catalog__price">A partir de R$ 89</div>
+                            <div class="muted">Limpeza e configuração.</div>
+                        </div>
+                        <button class="btn btn--sm btn--secondary">Solicitar atendimento</button>
+                    </div>
+                    <!-- Serviço -->
+                    <div class="catalog__item">
+                        <div class="catalog__thumb">IMG</div>
+                        <div class="catalog__info">
+                            <div class="catalog__title">Ensaio fotográfico</div>
+                            <div class="catalog__price">A partir de R$ 150</div>
+                            <div class="muted">Sessão rápida com edição básica.</div>
+                        </div>
+                        <button class="btn btn--sm btn--secondary">Solicitar orçamento</button>
+                    </div>
 
-                <div class="f-block">
-                    <label class="f-label">Avaliação mínima</label>
-                    <input id="minRating" type="range" min="0" max="5" step="0.5" value="0">
-                    <div class="muted"><span id="minRatingVal">0.0</span> ★</div>
-                </div>
+                    <div class="cart__row">
+                        <div class="muted">Seu link: vitrinedoslinks.com.br/seunome</div>
+                        <a class="btn btn--sm btn--primary" href="#" aria-label="Copiar link">Copiar link</a>
+                    </div>
 
-                <div class="f-block">
-                    <label class="f-label">Estado</label>
-                    <select id="estadoSide"></select>
-                </div>
-
-                <div class="f-block">
-                    <label class="f-label">Cidade</label>
-                    <select id="cidadeSide"></select>
-                </div>
-
-                <div class="f-block">
-                    <label class="f-label">Categorias populares</label>
-                    <div class="chips chips--wrap" id="chipsFiltro"></div>
-                </div>
-
-                <div class="f-cta">
-                    <button id="applyFilters" class="btn btn--primary">Aplicar filtros</button>
-                    <button id="clearFilters" class="btn">Limpar</button>
+                    <div class="whats__preview">
+                        <div class="muted">Mensagem sugerida para enviar aos clientes:</div>
+                        <pre>Olá! Meu link com o que vendo e faço:
+vitrinedoslinks.com.br/seunome</pre>
+                    </div>
                 </div>
             </aside>
-
-            <!-- Results -->
-            <section class="results">
-                <div class="tools-bar">
-                    <div class="left">
-                        <button class="btn btn--ghost btn--sm" id="openFilters">☰ Filtros</button>
-                        <small class="muted" id="resultInfo">—</small>
-                    </div>
-                    <div class="right">
-                        <div class="seg seg--sm" id="viewSeg">
-                            <button class="seg__btn" data-view="grid" aria-pressed="true" title="Grade">▦</button>
-                            <button class="seg__btn" data-view="list" aria-pressed="false" title="Lista">≣</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Destaques -->
-                <div class="promo" id="destaques"></div>
-
-                <!-- Items -->
-                <div id="resultGrid" class="grid"></div>
-
-                <div class="load">
-                    <button id="btnMais" class="btn">Carregar mais</button>
-                </div>
-            </section>
         </div>
-    </main>
+    </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="wrap">
-            <p>© <span id="year"></span> Vitrine dos Links</p>
-            <p class="muted">
-                <a href="/public/privacidade.html">Privacidade</a> •
-                <a href="/public/termos.html">Termos</a> •
-                <a href="/public/cookies.html">Cookies</a>
-            </p>
+    <!-- Recursos (foco em página/link, sem estoque) -->
+    <section id="recursos" class="features">
+        <div class="container">
+            <h2>Recursos principais</h2>
+            <div class="grid">
+                <div class="feature">
+                    <div class="ico">🔗</div>
+                    <h4>Link com seu nome</h4>
+                    <p>vitrinedoslinks.com.br/<b>seunome</b> para enviar em qualquer canal.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">🖼️</div>
+                    <h4>Cartões claros</h4>
+                    <p>Foto, título, preço e descrição curta. Sem ruído visual.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">🎛️</div>
+                    <h4>Organização simples</h4>
+                    <p>Ordene, destaque e mantenha sua página sempre atualizada.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">💬</div>
+                    <h4>Contato direto</h4>
+                    <p>Botões para o cliente falar com você rapidamente.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">⚡</div>
+                    <h4>Página leve</h4>
+                    <p>Carrega rápido e funciona bem no celular.</p>
+                </div>
+                <div class="feature">
+                    <div class="ico">🎯</div>
+                    <h4>Destaques e promoções</h4>
+                    <p>Realce o que importa e conduza o cliente ao contato.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos enxutos -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Casos de uso</h2>
+            <div class="t__grid">
+                <figure class="t__card">
+                    <blockquote>“Passei a enviar um único link com tudo organizado. Ficou mais profissional.”
+                    </blockquote>
+                    <figcaption>Dayanna — Vendas de acessórios</figcaption>
+                </figure>
+                <figure class="t__card">
+                    <blockquote>“Coloquei meus serviços com preço a partir de e o cliente já chama direto.”</blockquote>
+                    <figcaption>Lucas — Assistência técnica</figcaption>
+                </figure>
+                <figure class="t__card">
+                    <blockquote>“Atualizo fotos e preços em minutos. Minha página fica sempre certa.”</blockquote>
+                    <figcaption>Marcela — Ateliê de costura</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preço objetivo -->
+    <section id="preco" class="pricing">
+        <div class="container">
+            <h2>Plano</h2>
+            <div class="price-card">
+                <div class="price">
+                    <strong>Vitrine dos Links</strong>
+                    <span>R$ 50/mês</span>
+                </div>
+                <ul>
+                    <li>10 dias grátis</li>
+                    <li>Link com seu nome</li>
+                    <li>Publicação de produtos e serviços</li>
+                    <li>Cartões com foto, preço e descrição</li>
+                    <li>Página rápida e responsiva</li>
+                    <li>Suporte por e-mail</li>
+                </ul>
+                <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Criar meu link</a>
+                <small class="muted">Cancele quando quiser.</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA final concisa -->
+    <section class="cta">
+        <div class="container cta__row">
+            <h3>Pronto para publicar seu link?</h3>
+            <div class="cta__actions">
+                <a class="btn btn--nav btn--primary" href="/public/cadastro.html?from=index">Começar grátis (10
+                    dias)</a>
+                <a class="btn btn--ghost" href="./public/login.html">Entrar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="site-footer">
+        <div class="container footer__grid">
+            <div class="footer__brand">
+                <a class="footer__logo" href="/public/index.html" aria-label="Vitrine dos Links — Início">
+                    <img src="/public/assets/images/logo.png" alt="Vitrine dos Links">
+                </a>
+                <p class="footer__tagline">Seu link profissional de produtos e serviços.</p>
+
+                <div class="footer__social">
+                    <a href="#" aria-label="Instagram" class="social">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3a6 6 0 110 12 6 6 0 010-12zm0 2.2a3.8 3.8 0 100 7.6 3.8 3.8 0 000-7.6zM18 6.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M20.45 20.45h-3.55v-5.6c0-1.34-.02-3.06-1.86-3.06-1.86 0-2.14 1.45-2.14 2.96v5.7H9.35V9h3.4v1.56h.05c.47-.89 1.62-1.83 3.33-1.83 3.56 0 4.22 2.34 4.22 5.39v6.33zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.11 20.45H3.57V9h3.54v11.45z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="GitHub" class="social">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M12 .5a12 12 0 00-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.54-1.37-1.32-1.74-1.32-1.74-1.08-.74.08-.73.08-.73 1.2.09 1.84 1.23 1.84 1.23 1.06 1.82 2.77 1.29 3.44.99.11-.77.42-1.29.77-1.59-2.66-.31-5.46-1.33-5.46-5.92 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.55.12-3.23 0 0 1.01-.32 3.3 1.23a11.4 11.4 0 016 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.68.25 2.93.12 3.23.77.84 1.24 1.91 1.24 3.22 0 4.6-2.8 5.6-5.47 5.91.43.37.82 1.1.82 2.23v3.3c0 .32.21.7.83.58A12 12 0 0012 .5z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Colunas de links -->
+            <nav class="footer__cols">
+                <div class="footer__col">
+                    <h4 class="footer__title">Produto</h4>
+                    <ul class="footer__list">
+                        <li><a href="/#recursos">Recursos</a></li>
+                        <li><a href="/#para-quem">Para quem é</a></li>
+                        <li><a href="/#preco">Preço</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Conta</h4>
+                    <ul class="footer__list">
+                        <li><a href="/public/login.html">Login</a></li>
+                        <li><a href="/public/cadastro.html">Criar conta</a></li>
+                        <li><a href="/public/forgot.html">Esqueci a senha</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Suporte</h4>
+                    <ul class="footer__list">
+                        <li><a href="#">Central de ajuda</a></li>
+                        <li><a href="mailto:contato@vitrinedoslinks.com.br">contato@vitrinedoslinks.com.br</a></li>
+                        <li><a href="#">Status do serviço</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="footer__bottom">
+            <div class="container footer__bottom-row">
+                <p class="footer__copy">© <span id="year"></span> Vitrine dos Links</p>
+                <nav class="footer__legal">
+                    <a href="/public/privacidade.html">Privacidade</a>
+                    <span aria-hidden="true">•</span>
+                    <a href="/public/termos.html">Termos</a>
+                    <span aria-hidden="true">•</span>
+                    <a href="/public/cookies.html">Cookies</a>
+                </nav>
+            </div>
         </div>
     </footer>
 
-    <noscript>
-        <div class="noscript">Ative o JavaScript para usar busca, filtros e geolocalização.</div>
-    </noscript>
-    <script type="module" src="./assets/js/directory.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Menu mobile (mantido)
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', () => {
+            const open = navMenu.classList.toggle('is-open');
+            navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        navMenu.addEventListener('click', (e) => {
+            if (e.target.matches('a')) {
+                navMenu.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) {
+                navMenu.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
 </body>
 
 </html>

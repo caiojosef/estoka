@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vitrine dos Links — Encontre lojas e prestadores perto de você</title>
+    <meta name="description"
+        content="Busque vitrines de produtos e serviços por categoria, cidade e avaliação. Modelo OLX-like, rápido e responsivo.">
+    <link rel="icon" href="./assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- seu CSS base -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- CSS desta página -->
+    <link rel="stylesheet" href="./assets/css/directory.css">
+</head>
+
+<body>
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="wrap">
+            <a class="brand" href="/public/index.html" aria-label="Vitrine dos Links — Início">
+                <img src="./assets/images/logo.png" alt="Vitrine dos Links">
+            </a>
+
+            <div class="top-actions">
+                <a class="btn btn--ghost" href="/public/login.html">Entrar</a>
+                <a class="btn btn--primary" href="/public/cadastro.html?from=home">Criar conta</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH PILL -->
+    <section class="searchband" id="explorar">
+        <div class="wrap">
+            <div class="pill" role="search" aria-label="Buscar vitrines">
+                <input id="q" type="search" placeholder="O que você procura? (ex.: eletrônicos, beleza, mecânica…)"
+                    aria-label="Buscar" />
+                <div class="divider"></div>
+                <select id="tipo" aria-label="Tipo">
+                    <option value="all">Produtos e Serviços</option>
+                    <option value="produtos">Produtos</option>
+                    <option value="servicos">Serviços</option>
+                </select>
+                <div class="divider"></div>
+                <select id="estado" aria-label="Estado (UF)">
+                    <option value="all">Todos os estados</option>
+                </select>
+                <select id="cidade" aria-label="Cidade">
+                    <option value="all">Todas as cidades</option>
+                </select>
+                <button id="btnBuscar" class="btn btn--primary">Buscar</button>
+            </div>
+
+            <div class="search-tools">
+                <div class="chips" id="chipsSugestoes"></div>
+                <div class="right-tools">
+                    <button id="btnGeo" class="btn btn--ghost btn--sm">📍 Detectar</button>
+                    <label class="toggle">
+                        <input id="onlyUF" type="checkbox">
+                        <span>Somente do meu estado <small id="geoUFLabel"></small></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="section">
+        <div class="wrap">
+            <div class="section-head">
+                <h2>Categorias</h2>
+                <a class="link" href="#resultados">Ver resultados</a>
+            </div>
+            <div class="cat-grid" id="cats"></div>
+        </div>
+    </section>
+
+    <!-- LIST + FILTERS (OLX-LIKE) -->
+    <main class="section" id="resultados">
+        <div class="wrap layout">
+            <!-- Filters (left) -->
+            <aside class="filters" id="filters">
+                <div class="filters__head">
+                    <h3>Filtros</h3>
+                    <button class="filters__close" id="closeFilters" aria-label="Fechar filtros">✕</button>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Tipo</label>
+                    <div class="seg seg--full" id="segTipo">
+                        <button class="seg__btn" data-tipo="all" aria-pressed="true">Todos</button>
+                        <button class="seg__btn" data-tipo="produtos" aria-pressed="false">Produtos</button>
+                        <button class="seg__btn" data-tipo="servicos" aria-pressed="false">Serviços</button>
+                    </div>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Ordenar por</label>
+                    <select id="sort">
+                        <option value="views">Mais acessados</option>
+                        <option value="rating">Melhores avaliados</option>
+                        <option value="recent">Mais recentes</option>
+                    </select>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Avaliação mínima</label>
+                    <input id="minRating" type="range" min="0" max="5" step="0.5" value="0">
+                    <div class="muted"><span id="minRatingVal">0.0</span> ★</div>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Estado</label>
+                    <select id="estadoSide"></select>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Cidade</label>
+                    <select id="cidadeSide"></select>
+                </div>
+
+                <div class="f-block">
+                    <label class="f-label">Categorias populares</label>
+                    <div class="chips chips--wrap" id="chipsFiltro"></div>
+                </div>
+
+                <div class="f-cta">
+                    <button id="applyFilters" class="btn btn--primary">Aplicar filtros</button>
+                    <button id="clearFilters" class="btn">Limpar</button>
+                </div>
+            </aside>
+
+            <!-- Results -->
+            <section class="results">
+                <div class="tools-bar">
+                    <div class="left">
+                        <button class="btn btn--ghost btn--sm" id="openFilters">☰ Filtros</button>
+                        <small class="muted" id="resultInfo">—</small>
+                    </div>
+                    <div class="right">
+                        <div class="seg seg--sm" id="viewSeg">
+                            <button class="seg__btn" data-view="grid" aria-pressed="true" title="Grade">▦</button>
+                            <button class="seg__btn" data-view="list" aria-pressed="false" title="Lista">≣</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destaques -->
+                <div class="promo" id="destaques"></div>
+
+                <!-- Items -->
+                <div id="resultGrid" class="grid"></div>
+
+                <div class="load">
+                    <button id="btnMais" class="btn">Carregar mais</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="wrap">
+            <p>© <span id="year"></span> Vitrine dos Links</p>
+            <p class="muted">
+                <a href="/public/privacidade.html">Privacidade</a> •
+                <a href="/public/termos.html">Termos</a> •
+                <a href="/public/cookies.html">Cookies</a>
+            </p>
+        </div>
+    </footer>
+
+    <noscript>
+        <div class="noscript">Ative o JavaScript para usar busca, filtros e geolocalização.</div>
+    </noscript>
+    <script type="module" src="./assets/js/directory.js"></script>
+</body>
+
+</html>

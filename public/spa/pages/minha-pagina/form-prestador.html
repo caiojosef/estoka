@@ -1,70 +1,8 @@
-<section class="card form-card">
-  <header class="form-head">
-    <h1 class="h1">Perfil do Prestador</h1>
-    <p class="sub">Preencha seu perfil profissional. Você pode atualizar sempre que precisar.</p>
+<section class="page page-prestador">
+  <header class="page-header">
+    <h1>Prestador</h1>
+    <p class="muted">Gerencie as informações públicas do seu perfil.</p>
   </header>
 
-  <form id="formPrestador" class="form-grid">
-    <div class="field">
-      <label for="pr_nome">Nome público</label>
-      <input type="text" id="pr_nome" maxlength="100" required placeholder="Ex.: Ana Silva • Psicóloga">
-    </div>
-
-    <div class="field span-2">
-      <label for="pr_bio">Bio</label>
-      <textarea id="pr_bio" rows="4" placeholder="Conte um pouco sobre você, sua abordagem e experiência."></textarea>
-      <small class="hint">Dica: 2–3 frases objetivas funcionam bem.</small>
-    </div>
-
-    <div class="field">
-      <label for="pr_esp">Especialidades (separe por ponto e vírgula)</label>
-      <input type="text" id="pr_esp" placeholder="Ex.: Massoterapia; Acupuntura; Quiropraxia">
-    </div>
-
-    <div class="field">
-      <label for="pr_preco">Preço médio</label>
-      <input type="text" id="pr_preco" maxlength="50" placeholder="Ex.: A partir de R$ 150">
-    </div>
-
-    <div class="field checkline">
-      <input type="checkbox" id="pr_online">
-      <label for="pr_online">Atendo online</label>
-    </div>
-
-    <div class="field span-2">
-      <label for="pr_end">Endereço de atendimento (se presencial)</label>
-      <input type="text" id="pr_end" placeholder="Rua, número, bairro, cidade">
-    </div>
-
-    <div class="field">
-      <label for="pr_zap">WhatsApp de contato</label>
-      <input type="text" id="pr_zap" maxlength="20" placeholder="55DDDXXXXXXXXX">
-    </div>
-
-    <div class="field">
-      <label for="pr_link">Link de agendamento (Calendly/Agenda)</label>
-      <input type="url" id="pr_link" placeholder="https://...">
-    </div>
-
-    <div class="field">
-      <label for="pr_perfil">Imagem de perfil (URL)</label>
-      <input type="url" id="pr_perfil" placeholder="https://.../perfil.jpg">
-    </div>
-
-    <div class="field">
-      <label for="pr_capa">Imagem de capa (URL)</label>
-      <input type="url" id="pr_capa" placeholder="https://.../capa.jpg">
-    </div>
-
-    <div class="field">
-      <label for="pr_cor">Cor de destaque</label>
-      <input type="text" id="pr_cor" maxlength="7" placeholder="#17C9C3">
-      <small class="hint">Use um hex válido (ex.: #17C9C3).</small>
-    </div>
-
-    <div class="actions span-2">
-      <button type="submit" id="btnPrestSave" class="btn btn--primary" disabled>Salvar alterações</button>
-      <span id="pr_msg" class="form-msg" hidden></span>
-    </div>
-  </form>
+  <div id="prestadorRoot"></div>
 </section>
