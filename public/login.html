@@ -24,7 +24,7 @@
                         <img class="brand__logo" src="/public/assets/images/logo.png" alt="Vitrine dos Links">
                     </a>
 
-                    
+
                     <p>Faça login para continuar e gerenciar seus produtos.</p>
                 </div>
 
@@ -40,9 +40,17 @@
 
                         <div class="field">
                             <label for="lpassword">Senha</label>
-                            <input id="lpassword" name="password" type="password" autocomplete="current-password"
-                                required placeholder="••••••••">
+                            <div class="pw-input">
+                                <input id="lpassword" name="password" type="password" autocomplete="current-password"
+                                    required placeholder="••••••••">
+                                <button type="button" id="toggleSenhaLogin" class="btn-eye" aria-label="Mostrar senha"
+                                    tabindex="-1">
+                                    <img id="eyeIconLogin" src="/public/assets/images/olho-fechado.svg"
+                                        alt="Mostrar senha" width="20" height="20">
+                                </button>
+                            </div>
                         </div>
+
 
                         <div class="field field--row between">
                             <label class="checkbox">

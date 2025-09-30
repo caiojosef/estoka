@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vitrine dos Links | Crie seu link profissional de produtos e serviços</title>
+    <title>Vitrine dos Links | Crie seu link profissional de produtos </title>
     <meta name="description"
-        content="Crie seu link vitrinedoslinks.com.br/seunome e publique anúncios de produtos e serviços com foto, preço e descrição. Simples de montar, fácil de compartilhar. 10 dias grátis.">
+        content="Crie seu link vitrinedoslinks.com.br/seunome e publique anúncios de produtos com foto, preço e descrição. Simples de montar, fácil de compartilhar. 10 dias grátis.">
 
     <!-- SEO / Social -->
     <link rel="canonical" href="https://vitrinedoslinks.com.br/">
@@ -58,24 +58,24 @@
     <section class="hero">
         <div class="container hero__grid">
             <div class="hero__text">
-                <h1>Seu link profissional para <span>produtos</span> e <span>serviços</span>.</h1>
-                <p>
-                    Crie <strong>vitrinedoslinks.com.br/seunome</strong>, publique cartões com foto, título, preço e
-                    descrição
-                    e compartilhe com seus clientes. Sem complicação, com visual limpo e pronto para uso.
-                </p>
-                <div class="hero__cta">
-                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Criar meu link (10 dias
-                        grátis)</a>
-                    <a class="btn btn--lg btn--secondary" href="#preview">Ver exemplos</a>
+                <div class="hero__card">
+                    <h1>Seu link profissional para <span>produtos</span>.</h1>
+                    <p>Crie <strong>seu link profissional</strong>, publique cartões com foto, preço e descrição...</p>
+                    <div class="hero__cta">
+                        <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Criar meu link (10
+                            dias grátis)</a>
+                        <a class="btn btn--lg btn--secondary" href="#preview">Ver exemplos</a>
+                    </div>
+                    <div class="trust-strip" aria-label="Provas sociais">
+                        <span class="trust-chip">Carregamento rápido</span>
+                        <span class="trust-chip">WhatsApp integrado</span>
+                        <span class="trust-chip">Link único para compartilhar</span>
+                    </div>
                 </div>
             </div>
-
             <div class="hero__art" aria-hidden="true">
-                <picture>
-                    <img class="hero-img" src="./assets/images/hero-vitrinedoslinks.png" alt="" role="presentation"
-                        loading="eager" fetchpriority="high" decoding="async" width="1200" height="1200">
-                </picture>
+                <img class="hero-img" src="./assets/images/hero-vitrinedoslinks.png" alt="" width="1200" height="1200"
+                    loading="eager" fetchpriority="high">
             </div>
         </div>
     </section>
@@ -102,91 +102,104 @@
     </section>
 
     <!-- Exemplos e fluxo (id=preview) -->
-    <section id="preview" class="announce">
+    <section id="preview" class="announce announce--hero">
         <div class="container announce__grid">
+
+            <!-- Lado esquerdo: passo a passo com destaque -->
             <div class="announce__text">
-                <span class="pill">Como funciona</span>
-                <h2>Do cadastro ao link, em 3 passos</h2>
-                <ul class="announce__list">
-                    <li><strong>Crie sua conta</strong> e escolha seu endereço: <b>vitrinedoslinks.com.br/seunome</b>.
+                <span class="pill pill--soft">Como funciona</span>
+                <h2 class="h-spotlight">
+                    Do cadastro ao link, em <span>3 passos</span>
+                </h2>
+
+                <ol class="steps">
+                    <li class="step">
+                        <span class="step__num">1</span>
+                        <div class="step__body">
+                            <strong>Crie sua conta</strong>
+                            <p>Defina seu endereço: <b>vitrinedoslinks.com.br/seunome</b>.</p>
+                        </div>
                     </li>
-                    <li><strong>Adicione seus anúncios</strong> com foto, título, preço e descrição breve.</li>
-                    <li><strong>Compartilhe o link</strong> com seus clientes. Simples e profissional.</li>
-                </ul>
+                    <li class="step">
+                        <span class="step__num">2</span>
+                        <div class="step__body">
+                            <strong>Cadastre seus produtos</strong>
+                            <p>Foto, preço e descrição curta — pronto em minutos.</p>
+                        </div>
+                    </li>
+                    <li class="step">
+                        <span class="step__num">3</span>
+                        <div class="step__body">
+                            <strong>Compartilhe o link</strong>
+                            <p>Envie no WhatsApp/Instagram e receba pedidos.</p>
+                        </div>
+                    </li>
+                </ol>
 
                 <div class="announce__cta">
-                    <a class="btn btn--lg btn--primary" href="/public/cadastro.html?from=index">Criar Conta</a>
+                    <a class="btn btn--lg" href="/public/cadastro.html?from=index">Criar Conta</a>
                     <a class="btn btn--lg btn--ghost" href="#preco">Ver detalhes do plano</a>
                 </div>
-                <small class="muted">Dica: use fotos nítidas e leves para abrir rápido no celular.</small>
             </div>
 
-            <!-- Cartões de exemplo (produto e serviço) -->
+            <!-- Lado direito: cartão “vitrine” com clima de app -->
             <aside class="announce__card" aria-label="Exemplos de anúncios">
                 <div class="card__head">
-                    <img src="/public/assets/images/favicon.png" alt="" class="card__logo">
+                    <div class="badge-icon" aria-hidden="true">🔗</div>
                     <div>
-                        <strong>Exemplos de cartões</strong>
+                        <strong>Exemplo de vitrine</strong>
                         <div class="muted">vitrinedoslinks.com.br/seunome</div>
                     </div>
                 </div>
 
                 <div class="card__body">
-                    <!-- Produto -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">IMG</div>
+
+                    <!-- Produto 1 -->
+                    <article class="catalog__item catalog__item--pop">
+                        <div class="catalog__thumb">
+                            <span>IMG</span>
+                        </div>
                         <div class="catalog__info">
-                            <div class="catalog__title">Tênis casual branco <span class="pill">Promoção</span></div>
+                            <div class="catalog__title">
+                                Tênis casual branco
+                                <span class="ribbon">Promoção</span>
+                            </div>
                             <div class="catalog__price">R$ 159,90</div>
                             <div class="muted">Confortável para o dia a dia.</div>
                         </div>
-                        <button class="btn btn--sm btn--secondary">Entrar em contato</button>
-                    </div>
-                    <!-- Produto -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">IMG</div>
+                        <button class="btn btn--sm btn--secondary">Adicionar</button>
+                    </article>
+
+                    <!-- Produto 2 -->
+                    <article class="catalog__item">
+                        <div class="catalog__thumb"><span>IMG</span></div>
                         <div class="catalog__info">
                             <div class="catalog__title">Camiseta preta básica</div>
                             <div class="catalog__price">R$ 49,90</div>
                             <div class="muted">Algodão, do P ao GG.</div>
                         </div>
-                        <button class="btn btn--sm btn--secondary">Entrar em contato</button>
-                    </div>
-                    <!-- Serviço -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">IMG</div>
-                        <div class="catalog__info">
-                            <div class="catalog__title">Conserto de notebook</div>
-                            <div class="catalog__price">A partir de R$ 89</div>
-                            <div class="muted">Limpeza e configuração.</div>
-                        </div>
-                        <button class="btn btn--sm btn--secondary">Solicitar atendimento</button>
-                    </div>
-                    <!-- Serviço -->
-                    <div class="catalog__item">
-                        <div class="catalog__thumb">IMG</div>
-                        <div class="catalog__info">
-                            <div class="catalog__title">Ensaio fotográfico</div>
-                            <div class="catalog__price">A partir de R$ 150</div>
-                            <div class="muted">Sessão rápida com edição básica.</div>
-                        </div>
-                        <button class="btn btn--sm btn--secondary">Solicitar orçamento</button>
-                    </div>
+                        <button class="btn btn--sm btn--secondary">Adicionar</button>
+                    </article>
 
+                    <!-- Link + copiar -->
                     <div class="cart__row">
-                        <div class="muted">Seu link: vitrinedoslinks.com.br/seunome</div>
-                        <a class="btn btn--sm btn--primary" href="#" aria-label="Copiar link">Copiar link</a>
+                        <div class="muted">Seu link: <code id="demoLink">vitrinedoslinks.com.br/seunome</code></div>
+
                     </div>
 
+                    <!-- Prévia WhatsApp estilo “balão” -->
                     <div class="whats__preview">
-                        <div class="muted">Mensagem sugerida para enviar aos clientes:</div>
-                        <pre>Olá! Meu link com o que vendo e faço:
-vitrinedoslinks.com.br/seunome</pre>
+                        <div class="muted">Mensagem sugerida:</div>
+                        <div class="bubble">
+                            Olá! Minha vitrine está aqui:
+                            <br><b>vitrinedoslinks.com.br/seunome</b>
+                        </div>
                     </div>
                 </div>
             </aside>
         </div>
     </section>
+
 
     <!-- Recursos (foco em página/link, sem estoque) -->
     <section id="recursos" class="features">

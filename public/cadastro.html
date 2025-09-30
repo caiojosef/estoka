@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Estoka — Criar conta</title>
+    <title>Vitrine dos Links - Criar Conta</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/auth.css">
-    
+
     <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-icon">
 </head>
 
@@ -16,9 +16,9 @@
     <main class="auth-shell">
         <header class="brand">
             <a class="brand__logo-link logo-back" href="/public/index.html">
-                <img class="brand__logo" src="/public/assets/images/logo.png" alt="Estoka">
+                <img class="brand__logo" src="/public/assets/images/logo.png" alt="Vitrine dos Links">
             </a>
-            <p class="brand__subtitle">Gestão de estoque simples, rápida e confiável.</p>
+            <p class="brand__subtitle">Sua vitrine online, simples e pronta para compartilhar.</p>
         </header>
         <section class="card">
             <p class="back-hint" hidden>
@@ -45,8 +45,12 @@
                         <label for="password">Senha</label>
                         <div class="pw-input">
                             <input id="password" name="password" type="password" autocomplete="new-password" required>
-                            <button type="button" class="pw-toggle" aria-label="Mostrar/ocultar senha"
-                                tabindex="-1">👁️</button>
+                            <button type="button" id="toggleSenha" class="btn-eye" aria-label="Mostrar senha"
+                                tabindex="-1">
+                                <img id="eyeIcon" src="/assets/images/olho-fechado.svg" alt="Mostrar senha" width="20"
+                                    height="20">
+                            </button>
+
                         </div>
 
                         <!-- Checklist bonito e responsivo -->
@@ -63,10 +67,18 @@
 
                     <div class="field">
                         <label for="password2">Confirmar senha</label>
-                        <input id="password2" name="password2" type="password" autocomplete="new-password" minlength="6"
-                            required>
+                        <div class="pw-input">
+                            <input id="password2" name="password2" type="password" autocomplete="new-password"
+                                minlength="6" required>
+                            <button type="button" id="toggleSenha2" class="btn-eye" aria-label="Mostrar senha"
+                                tabindex="-1">
+                                <img id="eyeIcon2" src="/public/assets/images/olho-fechado.svg" alt="Mostrar senha"
+                                    width="20" height="20">
+                            </button>
+                        </div>
                         <small class="error" data-error-for="password2"></small>
                     </div>
+
 
 
 

@@ -1,75 +1,59 @@
-<!-- =============================
-app.html — SPA mínima (navbar + sidebar internos)
-Rotas: #/inicio e #/minha-pagina (sem lógica adicional)
-============================== -->
 <!doctype html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Painel — Vitrine dos Links</title>
-
-    <!-- Herda identidade visual existente -->
-    <link rel="stylesheet" href="../assets/css/tokens.css">
-    <link rel="stylesheet" href="../assets/css/base.css">
-
-    <!-- Estilos da SPA -->
+    <title>Vitrine dos Links — Painel</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="/public/assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./app.css">
 </head>
 
 <body>
-    <div id="app">
-        <header class="topbar" role="banner">
-            <div class="topbar__left">
-                <button id="btnMenu" class="btn btn--ghost" aria-label="Abrir menu" aria-expanded="false">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" />
-                    </svg>
-                </button>
-                <div class="brand">
-                    <div class="brand__logo" aria-hidden="true">VL</div>
-                    <span class="brand__name">Vitrine dos Links</span>
-                </div>
+    <div class="layout">
+        <!-- SIDEBAR FIXO -->
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="/public/assets/images/logo.png" alt="Vitrine dos Links" class="brand-logo">
             </div>
-            <div class="topbar__right">
-                <div class="avatar" aria-hidden="true">CA</div>
-            </div>
-        </header>
 
-        <div class="shell">
-            <aside class="sidebar" role="navigation" aria-label="Navegação lateral">
-                <nav class="menu">
-                    <a class="menu__link" href="#/inicio" data-route>
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M3 10.75 12 4l9 6.75V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.25Z"
-                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                        </svg>
-                        <span>Página Inicial</span>
-                    </a>
-                    <a class="menu__link" href="#/minha-pagina" data-route>
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-9 9a9 9 0 1 1 18 0v1H3v-1Z"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                        <span>Minha Página</span>
-                    </a>
-                </nav>
-            </aside>
+            <nav class="menu">
+                <a class="menu-link" href="#/inicio">
+                    <span class="menu-dot"></span> Tela inicial
+                </a>
+                <a class="menu-link" href="#/minha-pagina">
+                    <span class="menu-dot"></span> Minha Página
+                </a>
 
-            <main id="main" class="main" role="main">
-                <div id="view" class="view" tabindex="-1" aria-live="polite"></div>
-            </main>
-        </div>
+                <div class="menu-sep"></div>
 
-        <div class="backdrop" id="backdrop" hidden></div>
+                <a class="menu-link" href="#/cadastrar-produto" data-disabled>
+                    <span class="menu-dot"></span> Cadastrar Produto
+                </a>
+                <a class="menu-link" href="#/listar-produtos" data-disabled>
+                    <span class="menu-dot"></span> Listar Produtos
+                </a>
+            </nav>
+
+            <button id="btnLogout" class="btn-logout" type="button">Sair</button>
+        </aside>
+
+        <!-- CONTEÚDO -->
+        <main class="content">
+            <header class="topbar">
+                <h1 id="pageTitle">Carregando…</h1>
+                <div class="userpill" id="userEmail" aria-live="polite"></div>
+            </header>
+
+            <section id="view" class="view" aria-live="polite" aria-busy="true">
+                <!-- O HTML da rota entra aqui -->
+            </section>
+        </main>
     </div>
 
-    
-
-    <!-- Scripts da SPA -->
-    <script src="./app.js" defer></script>
+    <script type="module" src="./app.js"></script>
 </body>
 
 </html>

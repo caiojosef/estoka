@@ -15,6 +15,72 @@
     /* pouco arredondado */
 }
 
+input[readonly],
+select:disabled {
+    background: #f7fafc;
+    cursor: not-allowed;
+}
+
+/* Botão do “olho” com imagem (substitui o .pw-toggle antigo) */
+.pw-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pw-input input {
+    padding-right: 44px;
+}
+
+.btn-eye {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-eye:hover {
+    background: rgba(23, 201, 195, .06);
+}
+
+.btn-eye img {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+/* Remover ícones nativos de revelar/limpar senha */
+
+/* Edge (Legacy) e IE */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* WebKit (alguns builds colocam botões internos) */
+input[type="password"]::-webkit-textfield-decoration-container,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+
+.btn-eye:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--focus);
+}
+
+
+
 * {
     box-sizing: border-box;
 }

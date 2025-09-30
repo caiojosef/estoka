@@ -227,55 +227,7 @@ class AuthController
     Response::json(['ok' => true, 'message' => 'Logout efetuado']);
   }
 
-  public function getPageType(): void
-  {
-    $this->headers(); // inclui CORS + OPTIONS
-    $token = $this->bearerToken();
-    if (!$token)
-      Response::unauthorized();
-    $row = TokenService::validateToken($token);
-    if (!$row)
-      Response::unauthorized();
-
-    $uid = (int) $row['uid'];
-    $pdo = Database::conn();
-    $st = $pdo->prepare("SELECT page_type FROM users WHERE id=?");
-    $st->execute([$uid]);
-    $type = $st->fetchColumn() ?: null;
-
-    Response::ok(['page_type' => $type]);
-  }
-
-  public function setPageType(): void
-  {
-    $this->headers(); // trata OPTIONS também
-    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-      http_response_code(204);
-      return;
-    }
-
-    $token = $this->bearerToken();
-    if (!$token)
-      Response::unauthorized();
-    $row = TokenService::validateToken($token);
-    if (!$row)
-      Response::unauthorized();
-
-    $uid = (int) $row['uid'];
-    $in = json_decode(file_get_contents('php://input'), true) ?: [];
-    $type = $in['page_type'] ?? null;
-    if (!in_array($type, ['loja', 'prestador'], true)) {
-      Response::badRequest('Tipo inválido. Use "loja" ou "prestador".');
-    }
-
-    $pdo = Database::conn();
-    $ok = $pdo->prepare("UPDATE users SET page_type=? WHERE id=?")->execute([$type, $uid]);
-    if (!$ok)
-      Response::error('Falha ao atualizar tipo');
-
-    Response::ok(['ok' => true, 'page_type' => $type]);
-  }
-
+  
 
 
 }

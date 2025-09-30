@@ -10,4 +10,8 @@ return [
     'charset' => 'utf8mb4',
   ],
   'cors_allowed_origin' => '*',
+
+
+
+
 ];

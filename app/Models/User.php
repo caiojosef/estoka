@@ -49,17 +49,6 @@ class User
   }
 
   // app/Models/User.php
-  public function getPageType($userId): ?string
-  {
-    $stmt = $this->pdo->prepare("SELECT page_type FROM users WHERE id = ?");
-    $stmt->execute([$userId]);
-    return $stmt->fetchColumn() ?: null;
-  }
 
-  public function setPageType($userId, $type): bool
-  {
-    $stmt = $this->pdo->prepare("UPDATE users SET page_type = ? WHERE id = ?");
-    return $stmt->execute([$type, $userId]);
-  }
 
 }

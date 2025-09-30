@@ -1,141 +1,167 @@
-// /public/spa/app.js — SPA com CSS/JS declarados por rota
-(() => {
-  const $ = (s, el = document) => el.querySelector(s);
-  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-
-  // ===== Rotas =====
-  // css/js aceitam string ou array. São relativos à pasta ./pages/<folder>/
-  const routes = {
-    '#/inicio': {
-      folder: 'dashboard',
-      file: 'index',
-      title: 'Página Inicial',
-      css: ['index.css'],
-      js: ['index.js']
-    },
-    '#/minha-pagina': {
-      folder: 'minha-pagina',
-      file: 'index',
-      title: 'Minha Página',
-      css: ['index.css'],
-      js: ['index.js']
-    },
-    '#/minha-pagina/form-loja': {
-      folder: 'minha-pagina',
-      file: 'form-loja',
-      title: 'Loja',
-      css: ['index.css'],   // <- compartilhado
-      js: ['forms.js']     // <- compartilhado
-    },
-    '#/minha-pagina/form-prestador': {
-      folder: 'minha-pagina',
-      file: 'form-prestador',
-      title: 'Prestador',
-      css: ['index.css'],   // <- compartilhado
-      js: ['forms-prestador-render.js']     // <- compartilhado
-    },
-  };
-
-  let destroyFns = [];     // destroys da página atual
-  let styleEls = [];       // <link>s do CSS da página atual
-
-  function setActiveLink() {
-    const hash = location.hash || '#/inicio';
-    $$('.menu__link').forEach(a => {
-      const href = a.getAttribute('href');
-      const isMyPage = hash.startsWith('#/minha-pagina') && href === '#/minha-pagina';
-      a.classList.toggle('is-active', href === hash || isMyPage);
-    });
+/* SPA Shell + Auth Guard (token cifrado) */
+const routes = {
+  '#/inicio': {
+    folder: 'dashboard',
+    file: 'index',
+    title: 'Página Inicial',
+    css: ['index.css'],
+    js: ['index.js']
+  },
+  '#/minha-pagina': {
+    folder: 'minha-pagina',
+    file: 'index',
+    title: 'Minha Página',
+    css: ['index.css'],
+    js: ['index.js']
   }
+};
 
-  function clearCurrent() {
-    try { destroyFns.forEach(fn => fn()); } catch (e) { console.error('Erro no destroy:', e); }
-    destroyFns = [];
-    styleEls.forEach(l => l.remove());
-    styleEls = [];
-  }
+const $ = (s, c = document) => c.querySelector(s);
+const view = $('#view');
+const pageTitle = $('#pageTitle');
 
-  async function loadHTML(route, view) {
-    const url = `./pages/${route.folder}/${route.file}.html`;
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`${res.status} ${res.statusText} (${url})`);
-    view.innerHTML = await res.text();
-  }
+/* =================== CRYPTO (AES-GCM) — leitura do pacote cifrado =================== */
+const textToBytes = (txt) => new TextEncoder().encode(txt);
+const bytesToBase64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const base64ToBytes = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
 
-  function toArray(x) { return Array.isArray(x) ? x : (x ? [x] : []); }
+function clearStoredTokens() {
+  sessionStorage.removeItem('estoka_token');
+  sessionStorage.removeItem('estoka_token_expires');
+  localStorage.removeItem('estoka_token');
+  localStorage.removeItem('estoka_token_expires');
 
-  function loadCSS(route) {
-    const list = toArray(route.css);
-    list.forEach(name => {
-      const href = `./pages/${route.folder}/${name}?v=${Date.now()}`;
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      document.head.appendChild(link);
-      styleEls.push(link);
-    });
-  }
+  sessionStorage.removeItem('estoka_k');
+  sessionStorage.removeItem('estoka_auth');
+  localStorage.removeItem('estoka_k');
+  localStorage.removeItem('estoka_auth');
+}
+function hasRemembered() { return !!localStorage.getItem('estoka_auth'); }
 
-  async function loadJS(route, view, hashKey) {
-    const list = toArray(route.js);
-    for (const name of list) {
-      const url = `./pages/${route.folder}/${name}?v=${Date.now()}`;
-      try {
-        const mod = await import(url);
-        if (typeof mod.init === 'function') {
-          const ctx = { el: view, route: { key: hashKey, ...route }, navigate };
-          const maybe = mod.init(ctx);
-          if (typeof maybe === 'function') destroyFns.push(maybe);
-          else if (typeof mod.destroy === 'function') destroyFns.push(() => mod.destroy(ctx));
-        }
-      } catch (e) {
-        console.warn('Falha ao importar', url, e);
-      }
+async function decryptAuth(remember) {
+  const storage = remember ? localStorage : sessionStorage;
+  const keyB64 = storage.getItem('estoka_k');
+  const authJson = storage.getItem('estoka_auth');
+  if (!keyB64 || !authJson) return null;
+
+  const { iv, cipher } = JSON.parse(authJson);
+  const key = await crypto.subtle.importKey('raw', base64ToBytes(keyB64), 'AES-GCM', false, ['decrypt']);
+  try {
+    const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: base64ToBytes(iv) }, key, base64ToBytes(cipher));
+    return JSON.parse(new TextDecoder().decode(plainBuf)); // { token, exp }
+  } catch { return null; }
+}
+
+async function getAuth() { return await decryptAuth(hasRemembered()); }
+
+/* =================== API helper: anexa Bearer se existir =================== */
+async function apiFetch(url, options = {}) {
+  const auth = await getAuth(); // { token, exp } ou null
+  const headers = new Headers(options.headers || {});
+  if (auth?.token) {
+    const tNow = Date.now();
+    const tExp = Date.parse(auth.exp);
+    if (Number.isFinite(tExp) && tNow > tExp - 10_000) {
+      // expirado ou perto de expirar: limpa e volta pro login
+      clearStoredTokens();
+      window.location.href = '/public/index.html';
+      return new Response(null, { status: 401 });
     }
+    headers.set('Authorization', 'Bearer ' + auth.token);
   }
+  return fetch(url, { ...options, headers });
+}
 
-  async function loadPage(hash) {
-    const route = routes[hash] || routes['#/inicio'];
-    const view = $('#view');
-
-    document.title = `Painel — ${route.title}`;
-    setActiveLink();
-    clearCurrent();
-
-    view.innerHTML = `<section class="card"><p class="muted">Carregando ${route.title}…</p></section>`;
-
-    try {
-      await loadHTML(route, view);
-      loadCSS(route);
-      await loadJS(route, view, hash);
-    } catch (err) {
-      console.error(err);
-      view.innerHTML = `<section class="card"><p class="muted">Não foi possível carregar a página.</p></section>`;
+/* =================== Auth guard (toda troca de rota) =================== */
+async function ensureAuth() {
+  const auth = await getAuth();
+  if (!auth || !auth.token) {
+    clearStoredTokens();
+    window.location.href = '/public/index.html';
+    throw new Error('unauthorized');
+  }
+  // opcional: mostrar email do usuário (se /api/me existir)
+  try {
+    const r = await apiFetch('/api/me');
+    if (r.ok) {
+      const j = await r.json();
+      const email = j?.user?.email || '';
+      if (email) $('#userEmail').textContent = email;
     }
+  } catch { }
+}
+
+/* =================== Router =================== */
+let currentLinks = []; // para remover CSS/JS da página anterior
+
+function removeCurrentAssets() {
+  currentLinks.forEach(el => el.remove());
+  currentLinks = [];
+}
+
+async function loadRoute(hash) {
+  const r = routes[hash] || routes['#/inicio'];
+  pageTitle.textContent = r.title;
+  view.setAttribute('aria-busy', 'true');
+
+  // remove assets da página anterior
+  removeCurrentAssets();
+
+  // CSS da rota
+  for (const css of (r.css || [])) {
+    const href = `./pages/${r.folder}/${css}`;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = href; link.dataset.pageAsset = '1';
+    document.head.appendChild(link);
+    currentLinks.push(link);
   }
 
-  function navigate(hash) {
-    if (location.hash !== hash) location.hash = hash;
-    else loadPage(hash); // recarrega mesma rota
+  // HTML da rota
+  try {
+    const htmlUrl = `./pages/${r.folder}/${r.file}.html`;
+    const resp = await fetch(htmlUrl, { cache: 'no-store' });
+    const html = await resp.text();
+    view.innerHTML = html;
+  } catch {
+    view.innerHTML = `<div class="card">Falha ao carregar a rota.</div>`;
   }
 
-  // ===== Sidebar (mobile) =====
-  const btnMenu = $('#btnMenu');
-  const backdrop = $('#backdrop');
-  function toggleSidebar() {
-    const open = !document.body.classList.contains('sidebar-open');
-    document.body.classList.toggle('sidebar-open', open);
-    btnMenu?.setAttribute('aria-expanded', String(open));
-    backdrop?.toggleAttribute('hidden', !open);
+  // JS da rota (como módulo para isolar escopo)
+  for (const js of (r.js || [])) {
+    const src = `./pages/${r.folder}/${js}`;
+    const s = document.createElement('script');
+    s.type = 'module'; s.src = src + `?t=${Date.now()}`; // bust cache no dev
+    s.dataset.pageAsset = '1';
+    document.body.appendChild(s);
+    currentLinks.push(s);
   }
-  btnMenu?.addEventListener('click', toggleSidebar);
-  backdrop?.addEventListener('click', toggleSidebar);
-  $$('.menu__link').forEach(a => a.addEventListener('click', () => {
-    if (matchMedia('(max-width: 980px)').matches) toggleSidebar();
-  }));
 
-  // ===== Navegação =====
-  window.addEventListener('hashchange', () => loadPage(location.hash || '#/inicio'));
-  if (!location.hash) location.hash = '#/inicio';
-  loadPage(location.hash);
-})();
+  // marca item ativo
+  document.querySelectorAll('.menu-link').forEach(a => {
+    a.setAttribute('aria-current', a.getAttribute('href') === hash ? 'page' : 'false');
+  });
+
+  view.removeAttribute('aria-busy');
+}
+
+async function navigate() {
+  try {
+    await ensureAuth();
+    await loadRoute(location.hash || '#/inicio');
+  } catch (e) {
+    // já redirecionado no ensureAuth
+  }
+}
+
+/* =================== Logout =================== */
+$('#btnLogout').addEventListener('click', () => {
+  clearStoredTokens();
+  window.location.href = '/public/index.html';
+});
+
+/* Boot */
+window.addEventListener('hashchange', navigate);
+window.addEventListener('DOMContentLoaded', navigate);
+
+/* Exporta helpers para páginas (se quiser usar) */
+window.SPA = { apiFetch };

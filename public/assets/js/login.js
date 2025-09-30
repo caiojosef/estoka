@@ -18,6 +18,98 @@ function alertMsg(type, text) {
     msg.hidden = false;
 }
 
+// ====== CRYPTO HELPERS (AES-GCM 256) ======
+const textToBytes = (txt) => new TextEncoder().encode(txt);
+const bytesToBase64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const base64ToBytes = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+
+async function importOrCreateKey(storage, keyName) {
+    const existing = storage.getItem(keyName);
+    if (existing) {
+        const raw = base64ToBytes(existing);
+        return crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['encrypt', 'decrypt']);
+    }
+    const key = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
+    const raw = await crypto.subtle.exportKey('raw', key);
+    storage.setItem(keyName, bytesToBase64(raw));
+    return key;
+}
+
+// Cifra um OBJETO { token, exp } e devolve { iv, cipher } em base64
+async function encryptAuth(authObj, remember) {
+    const storage = remember ? localStorage : sessionStorage;
+    const key = await importOrCreateKey(storage, 'estoka_k');
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const data = textToBytes(JSON.stringify(authObj));
+    const cipherBuf = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, data);
+    return { iv: bytesToBase64(iv), cipher: bytesToBase64(cipherBuf) };
+}
+
+// Descriptografa e devolve OBJETO { token, exp } ou null
+async function decryptAuth(remember) {
+    const storage = remember ? localStorage : sessionStorage;
+    const keyB64 = storage.getItem('estoka_k');
+    const authJson = storage.getItem('estoka_auth');
+    if (!keyB64 || !authJson) return null;
+
+    const { iv, cipher } = JSON.parse(authJson);
+    const key = await crypto.subtle.importKey('raw', base64ToBytes(keyB64), 'AES-GCM', false, ['encrypt', 'decrypt']);
+    try {
+        const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: base64ToBytes(iv) }, key, base64ToBytes(cipher));
+        return JSON.parse(new TextDecoder().decode(plainBuf));
+    } catch {
+        return null;
+    }
+}
+
+// Mostrar/ocultar senha com ícone reutilizável
+function setupPasswordEye(inputEl, btnId, imgId) {
+    const btn = document.getElementById(btnId);
+    const img = document.getElementById(imgId);
+    if (!inputEl || !btn || !img) return;
+
+    let visivel = false;
+    btn.addEventListener('click', () => {
+        visivel = !visivel;
+        inputEl.type = visivel ? 'text' : 'password';
+        img.src = visivel
+            ? '/public/assets/images/olho-aberto.svg'
+            : '/public/assets/images/olho-fechado.svg';
+        const label = visivel ? 'Ocultar senha' : 'Mostrar senha';
+        img.alt = label;
+        btn.setAttribute('aria-label', label);
+    });
+}
+
+// aplica no campo de login
+setupPasswordEye(document.getElementById('lpassword'), 'toggleSenhaLogin', 'eyeIconLogin');
+
+
+// Limpa qualquer formato antigo e o novo
+function clearStoredTokens() {
+    // antigos (texto puro)
+    sessionStorage.removeItem('estoka_token');
+    sessionStorage.removeItem('estoka_token_expires');
+    localStorage.removeItem('estoka_token');
+    localStorage.removeItem('estoka_token_expires');
+    // novos (cifrado)
+    sessionStorage.removeItem('estoka_k');
+    sessionStorage.removeItem('estoka_auth');
+    localStorage.removeItem('estoka_k');
+    localStorage.removeItem('estoka_auth');
+}
+
+// helpers para detectar onde está salvo
+function hasRemembered() {
+    return !!localStorage.getItem('estoka_auth');
+}
+async function getAuth() {
+    const remember = hasRemembered();
+    return await decryptAuth(remember); // { token, exp } ou null
+}
+
+
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
@@ -41,15 +133,12 @@ form.addEventListener('submit', async (e) => {
         try { out = await res.json(); } catch (_) { raw = await res.text(); }
 
         if (res.ok && out?.ok) {
-            // limpa qualquer resquício para evitar conflito
-            sessionStorage.removeItem('estoka_token');
-            sessionStorage.removeItem('estoka_token_expires');
-            localStorage.removeItem('estoka_token');
-            localStorage.removeItem('estoka_token_expires');
+            clearStoredTokens();
 
-            const storage = remember ? localStorage : sessionStorage; // << NOVO
-            storage.setItem('estoka_token', out.token);
-            storage.setItem('estoka_token_expires', out.expires_at);
+            const storage = remember ? localStorage : sessionStorage;
+            // ciframos token + exp juntos
+            const enc = await encryptAuth({ token: out.token, exp: out.expires_at }, remember);
+            storage.setItem('estoka_auth', JSON.stringify(enc));
 
             alertMsg('success', 'Login efetuado! Redirecionando…');
             setTimeout(() => window.location.href = './spa/app.html', 600);

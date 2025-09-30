@@ -1036,7 +1036,7 @@ button.btn {
 
 /* ========== FOOTER PRO ========= */
 .site-footer {
-    margin-top: 48px;
+
     background:
         radial-gradient(1200px 200px at 50% -80px, rgba(23, 201, 195, .08), transparent),
         #f7fafc;
@@ -1616,3 +1616,451 @@ button.btn {
     margin-top: 6px;
 }
 
+/* Caixa inteira com clima de “seção destaque” */
+.announce--hero {
+    position: relative;
+    background:
+        radial-gradient(1200px 300px at -10% 0%, #dffaf7 0%, rgba(223, 250, 247, 0) 50%),
+        radial-gradient(800px 240px at 110% 30%, #e6f3fe 0%, rgba(230, 243, 254, 0) 60%);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding-top: 36px;
+}
+
+/* Título com spotlight */
+.h-spotlight {
+    font-size: 28px;
+    margin: 6px 0 10px;
+}
+
+.h-spotlight span {
+    color: var(--brand-accent);
+    background: linear-gradient(90deg, #1fe0d9, #7fd4fb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Passos numerados */
+.steps {
+    list-style: none;
+    margin: 14px 0 18px;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.step__num {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: #f2fffd;
+    color: #0a3b3a;
+    border: 1px solid rgba(23, 201, 195, .45);
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(23, 201, 195, .18);
+}
+
+.step__body p {
+    margin: 2px 0 0;
+    color: var(--text-2);
+}
+
+/* Cartão de exemplo com aura */
+.announce__card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 14px 40px rgba(15, 54, 90, .12);
+    overflow: hidden;
+}
+
+.card__head {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    background: #fbffff;
+}
+
+.badge-icon {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #f2fffd;
+    border: 1px solid rgba(23, 201, 195, .45);
+}
+
+/* Itens do catálogo com micro-interação */
+.catalog__item {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    margin-bottom: 10px;
+    transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+}
+
+.catalog__item:hover {
+    transform: translateY(-1px);
+    border-color: rgba(23, 201, 195, .55);
+    box-shadow: 0 10px 24px rgba(23, 201, 195, .18);
+}
+
+.catalog__item--pop {
+    position: relative;
+}
+
+.catalog__item--pop::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 12px;
+    box-shadow: 0 0 0 3px rgba(23, 201, 195, .14);
+    pointer-events: none;
+}
+
+.catalog__thumb {
+    width: 72px;
+    height: 72px;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    color: var(--text-2);
+    background: #f9fbff;
+}
+
+.catalog__title {
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.catalog__price {
+    font-weight: 800;
+    color: #0a3b3a;
+}
+
+.ribbon {
+    margin-left: 8px;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #f2fffd;
+    color: #0a3b3a;
+    border: 1px solid rgba(23, 201, 195, .45);
+}
+
+/* Copiar link + balão WhatsApp */
+.cart__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.cart__row code {
+    background: #f7fafc;
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.btn--ghost {
+    background: #fff;
+    color: var(--brand-dark);
+    border: 1px dashed var(--line);
+    box-shadow: none;
+}
+
+.btn--ghost:hover {
+    border-style: solid;
+    border-color: var(--brand-accent);
+    background: rgba(23, 201, 195, .06);
+}
+
+.whats__preview {
+    margin-top: 12px;
+}
+
+.bubble {
+    margin-top: 6px;
+    display: inline-block;
+    background: #e6fff9;
+    border: 1px solid rgba(23, 201, 195, .35);
+    padding: 10px 12px;
+    border-radius: 12px 12px 12px 4px;
+    box-shadow: 0 6px 16px rgba(15, 54, 90, .06);
+}
+
+/* Botões grandes coerentes com o restante */
+.btn--lg {
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+/* ====== Design tokens extras ====== */
+:root {
+    --radius-lg: 16px;
+    --shadow-soft: 0 6px 18px rgba(15, 54, 90, .08);
+    --shadow-float: 0 14px 40px rgba(15, 54, 90, .12);
+    --grad-cta: linear-gradient(90deg, var(--brand-accent), #26e0d9);
+    --grad-hero: radial-gradient(1200px 600px at 10% -10%, rgba(23, 201, 195, .10), transparent 60%),
+        radial-gradient(800px 600px at 120% 20%, rgba(17, 128, 185, .10), transparent 60%);
+}
+
+/* ====== Layout & tipografia melhores ====== */
+h1,
+.h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -.2px
+}
+
+h2,
+.h2 {
+    font-size: clamp(22px, 3.4vw, 30px);
+    line-height: 1.2
+}
+
+.section {
+    padding: clamp(36px, 6vw, 64px) 0
+}
+
+.container {
+    max-width: 1140px
+}
+
+/* ====== Botões premium ====== */
+.btn {
+    transition: transform .18s ease, box-shadow .22s ease, background .22s ease
+}
+
+.btn--primary,
+.btn:not(.btn--secondary):not(.btn--ghost) {
+    background: var(--grad-cta);
+    color: #05222a;
+    font-weight: 700;
+    border: none;
+}
+
+.btn--primary:hover,
+.btn:not(.btn--secondary):not(.btn--ghost):hover {
+    transform: translateY(-1px);
+    background: linear-gradient(90deg, #1fe0d9, #7fd4fb);
+    box-shadow: 0 14px 32px rgba(23, 159, 218, .28);
+}
+
+.btn--ghost {
+    background: #fff;
+    color: var(--brand-dark);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--focus), var(--shadow-soft)
+}
+
+/* ====== HERO com fundo sutil ====== */
+.hero {
+    position: relative;
+    background: var(--grad-hero);
+}
+
+.hero__card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    box-shadow: var(--shadow-soft);
+}
+
+/* faixa de confiança */
+.trust-strip {
+    margin-top: 14px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    color: var(--text-2);
+    font-size: 13px;
+}
+
+.trust-chip {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 12px;
+}
+
+/* ====== Passos mais elegantes ====== */
+.h-spotlight span {
+    color: var(--brand-accent)
+}
+
+.steps {
+    display: grid;
+    gap: 12px;
+    margin: 14px 0 18px;
+    counter-reset: step
+}
+
+.step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 10px;
+    align-items: start;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow-soft);
+}
+
+.step__num {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: #f2fffd;
+    color: #0a3b3a;
+    border: 1px solid rgba(23, 201, 195, .45);
+    font-weight: 700;
+}
+
+/* ====== Card de exemplo “glass” ====== */
+.announce__card {
+    position: relative;
+    background: rgba(255, 255, 255, .86);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-float);
+    backdrop-filter: saturate(1.1) blur(6px);
+}
+
+.card__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line)
+}
+
+.badge-icon {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #0f365a;
+    color: #fff;
+    box-shadow: inset 0 -2px 0 rgba(255, 255, 255, .15);
+}
+
+.card__body {
+    padding: 14px 16px
+}
+
+/* Itens do catálogo */
+.catalog__item {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    padding: 12px;
+    margin-bottom: 12px;
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.catalog__item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+    border-color: #dfe7ee
+}
+
+.catalog__item--pop {
+    border-color: rgba(23, 201, 195, .45);
+    box-shadow: 0 8px 22px rgba(23, 201, 195, .14)
+}
+
+.catalog__thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    border: 1px dashed var(--line);
+    display: grid;
+    place-items: center;
+    color: var(--text-2);
+    background: #fbfeff;
+}
+
+/* Título com “ribbon” */
+.catalog__title {
+    font-weight: 700;
+    margin-bottom: 4px
+}
+
+.ribbon {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    border-radius: 999px;
+    background: #f2fffd;
+    color: #0a3b3a;
+    border: 1px solid rgba(23, 201, 195, .45);
+}
+
+/* Balão de WhatsApp */
+.whats__preview .bubble {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #e7fdfb;
+    color: #0a3b3a;
+    border: 1px solid rgba(23, 201, 195, .35);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .6);
+}
+
+/* CTA dentro da seção */
+.announce__cta .btn {
+    min-width: 220px
+}
+
+/* ====== Melhor responsivo desta área ====== */
+@media (max-width: 980px) {
+    .announce__grid {
+        grid-template-columns: 1fr;
+        gap: 18px
+    }
+
+    .announce__card {
+        order: 2
+    }
+
+    .announce__text {
+        order: 1
+    }
+}

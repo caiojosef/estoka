@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../app/Controllers/Api/AuthController.php';
-require_once __DIR__ . '/../app/Controllers/Api/PrestadorController.php';
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -40,19 +40,9 @@ switch ($path) {
   case '/api/reset':
     (new AuthController)->reset();
     break;
-  case '/api/page-type':
-    (new AuthController)->getPageType();
-    break;
-
-  case '/api/page-type/set':
-    (new AuthController)->setPageType();
-    break;
-  case '/api/prestador':
-    (new PrestadorController())->handle();
-    break;
+ 
 
   
-  // FALTANDO: /api/forgot e /api/reset
 
   default:
     if (str_starts_with($path, '/api/')) {

@@ -23,22 +23,51 @@ const fields = {
 };
 const cepLoader = $('#cepLoader');
 
-$('#year').textContent = new Date().getFullYear();
+// Bloqueia os campos que o CEP preenche (somente leitura)
+function lockAddressFields(lock = true) {
+  fields.logradouro.readOnly = lock;
+  fields.bairro.readOnly = lock;
+  fields.cidade.readOnly = lock;
+  // select não tem readOnly — usamos disabled
+  fields.estado.disabled = lock;
+}
+lockAddressFields(true);
 
-// exibição de mensagens
+$('#year') && ($('#year').textContent = new Date().getFullYear());
 
-// Regras de senha: 6+, 1 maiúscula, 1 minúscula, 1 especial (!@#$*)
+// -----------------------------
+// Mensagens / erros
+// -----------------------------
+function showAlert(type, message) {
+  formMsg.className = `alert ${type}`;
+  formMsg.textContent = message;
+  formMsg.hidden = false;
+}
+function clearAlert() { formMsg.hidden = true; }
+
+function setFieldError(name, message) {
+  const el = $(`[data-error-for="${name}"]`);
+  if (el) el.textContent = message || '';
+}
+function clearErrors() {
+  Object.keys(fields).forEach(k => setFieldError(k, ''));
+  clearAlert();
+}
+
+// -----------------------------
+// Regras de senha
+// -----------------------------
 function passwordComplex(pw) {
-  if (!pw) return false;
+  if (typeof pw !== 'string') pw = '';
   const hasLen = pw.length >= 6;
   const hasUpper = /[A-Z]/.test(pw);
   const hasLower = /[a-z]/.test(pw);
-  const hasSpecial = /[!@#$*]/.test(pw);   // ajuste o conjunto se quiser
+  const hasSpecial = /[!@#$*]/.test(pw);
   return { hasLen, hasUpper, hasLower, hasSpecial, ok: hasLen && hasUpper && hasLower && hasSpecial };
 }
 
 function updatePwChecklist() {
-  const req = passwordComplex(fields.password.value);
+  const req = passwordComplex(fields.password.value || '');
   const map = {
     len: req.hasLen,
     upper: req.hasUpper,
@@ -50,29 +79,28 @@ function updatePwChecklist() {
     if (li) li.classList.toggle('ok', !!v);
   });
 }
-// mostrar/ocultar senha
-document.querySelector('.pw-toggle')?.addEventListener('click', () => {
-  const t = fields.password.type === 'password' ? 'text' : 'password';
-  fields.password.type = t;
-});
 
+function setupPasswordEye(inputEl, btnId, imgId) {
+  const btn = document.getElementById(btnId);
+  const img = document.getElementById(imgId);
+  if (!inputEl || !btn || !img) return;
 
-function showAlert(type, message) {
-  formMsg.className = `alert ${type}`;
-  formMsg.textContent = message;
-  formMsg.hidden = false;
+  let visivel = false;
+  btn.addEventListener('click', () => {
+    visivel = !visivel;
+    inputEl.type = visivel ? 'text' : 'password';
+    img.src = visivel
+      ? '/public/assets/images/olho-aberto.svg'
+      : '/public/assets/images/olho-fechado.svg';
+    const label = visivel ? 'Ocultar senha' : 'Mostrar senha';
+    img.alt = label;
+    btn.setAttribute('aria-label', label);
+  });
 }
-function clearAlert() { formMsg.hidden = true; }
 
-// erro por campo
-function setFieldError(name, message) {
-  const el = $(`[data-error-for="${name}"]`);
-  if (el) el.textContent = message || '';
-}
-function clearErrors() {
-  Object.keys(fields).forEach(k => setFieldError(k, ''));
-  clearAlert();
-}
+// aplica nos dois campos
+setupPasswordEye(fields.password, 'toggleSenha', 'eyeIcon');
+setupPasswordEye(fields.password2, 'toggleSenha2', 'eyeIcon2');
 
 // -----------------------------
 // Máscaras & validações
@@ -110,41 +138,89 @@ function maskCEP(v) {
 // contador complemento
 fields.complemento.addEventListener('input', () => {
   const len = fields.complemento.value.length;
-  $('#complementoCounter').textContent = `${len}/40`;
+  const el = $('#complementoCounter');
+  if (el) el.textContent = `${len}/40`;
 });
 
 // aplica máscaras durante digitação
 fields.cpf.addEventListener('input', e => e.target.value = maskCPF(e.target.value));
-fields.cep.addEventListener('input', e => e.target.value = maskCEP(e.target.value));
 fields.password.addEventListener('input', updatePwChecklist);
 fields.password.addEventListener('focus', updatePwChecklist);
 
-// CEP → ViaCEP
-fields.cep.addEventListener('blur', async () => {
-  const cep = onlyDigits(fields.cep.value);
-  if (cep.length !== 8) return;
+// -----------------------------
+// CEP: máscara + auto-busca ao digitar (com debounce)
+// -----------------------------
+function debounce(fn, wait = 250) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+let lastCepFetched = ''; // evita refetch com o mesmo CEP
+
+async function fetchCEP(cepDigits) {
+  if (cepDigits.length !== 8) return;
+
+  if (cepDigits === lastCepFetched) return; // mesma consulta, ignora
+  lastCepFetched = cepDigits;
 
   try {
     cepLoader.hidden = false;
-    const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const r = await fetch(`https://viacep.com.br/ws/${cepDigits}/json/`);
     const j = await r.json();
 
     if (j.erro) {
       setFieldError('cep', 'CEP não encontrado');
+      fields.logradouro.value = '';
+      fields.bairro.value = '';
+      fields.cidade.value = '';
+      fields.estado.value = '';
       return;
     }
+
     fields.logradouro.value = j.logradouro || '';
     fields.bairro.value = j.bairro || '';
     fields.cidade.value = j.localidade || '';
     fields.estado.value = j.uf || '';
-    setFieldError('cep', ''); // ok
+
+    setFieldError('cep', '');
   } catch (err) {
     setFieldError('cep', 'Falha ao consultar CEP');
   } finally {
     cepLoader.hidden = true;
   }
+}
+
+const debouncedCepFetch = debounce(fetchCEP, 250);
+
+// um único listener de input: mascara + dispara busca quando completar 8 dígitos
+fields.cep.addEventListener('input', e => {
+  const masked = maskCEP(e.target.value);
+  if (e.target.value !== masked) e.target.value = masked;
+
+  const digits = onlyDigits(masked);
+  if (digits.length === 8) {
+    debouncedCepFetch(digits);
+  } else {
+    lastCepFetched = '';
+    fields.logradouro.value = '';
+    fields.bairro.value = '';
+    fields.cidade.value = '';
+    fields.estado.value = '';
+  }
 });
 
+// também dispara ao colar ou alterar programaticamente
+fields.cep.addEventListener('change', () => {
+  const digits = onlyDigits(fields.cep.value);
+  if (digits.length === 8) debouncedCepFetch(digits);
+});
+
+// -----------------------------
+// Redirect overlay
+// -----------------------------
 function startRedirect(seconds = 4, url = '/public/login.html') {
   const overlay = document.getElementById('redirectOverlay');
   const bar = document.getElementById('redirBar');
@@ -153,14 +229,16 @@ function startRedirect(seconds = 4, url = '/public/login.html') {
 
   let elapsed = 0;
   const total = seconds * 1000;
-  const step = 100; // ms
+  const step = 100;
 
   const timer = setInterval(() => {
     elapsed += step;
     const pct = Math.min(100, Math.round((elapsed / total) * 100));
-    bar.style.width = pct + '%';
-    const left = Math.ceil((total - elapsed) / 1000);
-    count.textContent = left < 0 ? 0 : left;
+    if (bar) bar.style.width = pct + '%';
+    if (count) {
+      const left = Math.ceil((total - elapsed) / 1000);
+      count.textContent = left < 0 ? 0 : left;
+    }
     if (elapsed >= total) {
       clearInterval(timer);
       window.location.href = url;
@@ -168,7 +246,9 @@ function startRedirect(seconds = 4, url = '/public/login.html') {
   }, step);
 }
 
-// validação rápida no submit
+// -----------------------------
+// Validação no submit
+// -----------------------------
 function clientValidate() {
   const data = {
     email: fields.email.value.trim(),
@@ -189,14 +269,9 @@ function clientValidate() {
   if (!data.email) errors.email = 'Informe o e-mail';
   else if (!/^\S+@\S+\.\S+$/.test(data.email)) errors.email = 'E-mail inválido';
 
-  if (!data.password) {
-    errors.password = 'Informe a senha';
-  } else {
-    const r = passwordComplex(data.password);
-    if (!r.ok) {
-      errors.password = 'Senha deve ter 6+ caracteres, 1 maiúscula, 1 minúscula e 1 especial (!@#$*).';
-    }
-  }
+  const r = passwordComplex(data.password || '');
+  if (!data.password) errors.password = 'Informe a senha';
+  else if (!r.ok) errors.password = 'Senha deve ter 6+ caracteres, 1 maiúscula, 1 minúscula e 1 especial (!@#$*).';
 
   if (!data.password2) errors.password2 = 'Confirme a senha';
   else if (data.password2 !== data.password) errors.password2 = 'Senhas não conferem';
@@ -254,12 +329,11 @@ form.addEventListener('submit', async (e) => {
     let out = null, raw = null;
     try { out = await res.json(); } catch (_) { raw = await res.text(); }
 
-    if (res.ok && out.ok) {
+    if (res.ok && out?.ok) {
       form.reset();
-      $('#complementoCounter').textContent = '0/40';
+      const cc = $('#complementoCounter'); if (cc) cc.textContent = '0/40';
       startRedirect(4, '/public/login.html');
       return;
-
     } else {
       if (out?.errors) Object.entries(out.errors).forEach(([k, v]) => setFieldError(k, v));
       const msg = out?.message || `Erro HTTP ${res.status} — ${String(raw || '').slice(0, 200)}`;
