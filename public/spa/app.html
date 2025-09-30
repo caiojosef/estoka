@@ -53,6 +53,52 @@
         </main>
     </div>
 
+    <!-- Gate obrigatório de slug (fica presente em TODO o SPA) -->
+    <div id="slugLock" class="slug-lock" aria-hidden="true">
+        <div class="slug-lock__backdrop"></div>
+
+        <section class="slug-lock__modal" role="dialog" aria-modal="true" aria-labelledby="slugLockTitle">
+            <header class="slug-lock__header">
+                <img src="/public/assets/images/logo.png" alt="Vitrine dos Links" class="slug-lock__logo" />
+                <h2 id="slugLockTitle">Bem-vindo! Defina o link da sua página</h2>
+                <p class="slug-lock__subtitle">Este nome será parte do seu endereço e <strong>não poderá ser
+                        alterado</strong> depois.</p>
+            </header>
+
+            <form id="slugForm" class="slug-lock__form" novalidate>
+                <label for="slugInput" class="slug-lock__label">Escolha seu nome (apenas minúsculas, números e
+                    “-”)</label>
+                <div class="slug-lock__inputrow">
+                    <span class="slug-lock__prefix">vitrinedoslinks.com.br/</span>
+                    <input id="slugInput" name="slug" inputmode="lowercase" placeholder="seu-nome" autocomplete="off"
+                        required />
+                </div>
+                <small id="slugHint" class="slug-lock__hint">Ex.: <code>loja-do-joao</code>,
+                    <code>maria-doces</code></small>
+                <small id="slugError" class="slug-lock__error" aria-live="polite"></small>
+
+                <div class="slug-lock__actions">
+                    <button type="button" id="slugCancel" class="btn btn--ghost">Agora não</button>
+                    <button type="submit" id="slugSubmit" class="btn btn--primary">Confirmar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Confirmação (segunda etapa) -->
+        <section id="slugConfirm" class="slug-confirm" role="dialog" aria-modal="true"
+            aria-labelledby="slugConfirmTitle" hidden>
+            <div class="slug-confirm__card">
+                <h3 id="slugConfirmTitle">Confirmar nome da página?</h3>
+                <p>Deseja usar <strong id="slugConfirmValue"></strong> como o nome permanente da sua página?</p>
+                <div class="slug-confirm__actions">
+                    <button type="button" id="slugBack" class="btn btn--ghost">Voltar</button>
+                    <button type="button" id="slugYes" class="btn btn--primary">Sim, confirmar</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="./slug-lock.js"></script>
     <script type="module" src="./app.js"></script>
 </body>
 

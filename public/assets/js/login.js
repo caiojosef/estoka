@@ -126,22 +126,40 @@ form.addEventListener('submit', async (e) => {
         const res = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password, remember }) // << NOVO
+            body: JSON.stringify({ email, password, remember })
         });
 
         let out = null, raw = null;
         try { out = await res.json(); } catch (_) { raw = await res.text(); }
 
         if (res.ok && out?.ok) {
+            // limpeza
             clearStoredTokens();
 
             const storage = remember ? localStorage : sessionStorage;
-            // ciframos token + exp juntos
-            const enc = await encryptAuth({ token: out.token, exp: out.expires_at }, remember);
+
+            // cifra token + exp (AES-GCM)
+            const enc = await encryptAuth(
+                { token: out.token, exp: out.expires_at },
+                remember
+            );
             storage.setItem('estoka_auth', JSON.stringify(enc));
 
+            // guarda dados não sensíveis para o SPA decidir o fluxo
+            const user = {
+                id: out.user?.id ?? null,
+                email: out.user?.email ?? null,
+                slug: out.user?.slug ?? null,
+                primeiro_login: Number(out.user?.primeiro_login ?? 0),
+            };
+            storage.setItem('estoka_user', JSON.stringify(user));
+
+            // 🔸 Importante: SEM redirecionar para outra página no primeiro login.
+            // O SPA (app.html) vai ler estoka_user.primeiro_login === 1 e abrir o onboarding
+            // para escolher o slug. Depois o SPA fará o POST /api/slug e marcará primeiro_login = 0.
             alertMsg('success', 'Login efetuado! Redirecionando…');
-            setTimeout(() => window.location.href = './spa/app.html', 600);
+            setTimeout(() => { window.location.href = './spa/app.html#/inicio'; }, 600);
+
         } else {
             if (out?.errors) Object.entries(out.errors).forEach(([k, v]) => setErr(k, v));
             const msg = out?.message || `Erro HTTP ${res.status} — ${String(raw || '').slice(0, 200)}`;
@@ -152,6 +170,8 @@ form.addEventListener('submit', async (e) => {
     } finally {
         btn.disabled = false; btn.textContent = 'Entrar';
     }
+
+
 });
 
 

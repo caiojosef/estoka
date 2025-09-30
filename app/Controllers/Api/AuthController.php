@@ -76,20 +76,51 @@ class AuthController
     $password = (string) ($in['password'] ?? '');
     $remember = !empty($in['remember']);
 
+    // Busca usuário pelo e-mail
     $user = User::findByEmail($email);
     if (!$user || !password_verify($password, $user['password_hash'])) {
-      Response::json(['ok' => false, 'message' => 'Credenciais inválidas', 'errors' => ['email' => 'ou senha incorretos']], 401);
+      Response::json([
+        'ok' => false,
+        'message' => 'Credenciais inválidas',
+        'errors' => ['email' => 'ou senha incorretos']
+      ], 401);
       return;
     }
 
+    // Tempo do token (2h padrão ou 30 dias)
     $ttl = $remember ? 60 * 60 * 24 * 30 : 60 * 60 * 2;
+
     try {
-      [$token, $expiresAt] = TokenService::issueToken((int) $user['id'], $ttl, $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['HTTP_USER_AGENT'] ?? '');
-      Response::json(['ok' => true, 'message' => 'Login efetuado', 'token' => $token, 'expires_at' => $expiresAt, 'user' => ['id' => (int) $user['id'], 'email' => $user['email']]]);
+      [$token, $expiresAt] = TokenService::issueToken(
+        (int) $user['id'],
+        $ttl,
+        $_SERVER['REMOTE_ADDR'] ?? '',
+        $_SERVER['HTTP_USER_AGENT'] ?? ''
+      );
+
+      // Monta retorno com slug e primeiro_login
+      Response::json([
+        'ok' => true,
+        'message' => 'Login efetuado',
+        'token' => $token,
+        'expires_at' => $expiresAt,
+        'user' => [
+          'id' => (int) $user['id'],
+          'email' => $user['email'],
+          'slug' => $user['slug'] ?? null,
+          'primeiro_login' => isset($user['primeiro_login']) ? (int) $user['primeiro_login'] : 0
+        ]
+      ]);
+
     } catch (Throwable $e) {
-      Response::json(['ok' => false, 'message' => 'Erro ao gerar token', 'detail' => $e->getMessage()], 500);
+      Response::json([
+        'ok' => false,
+        'message' => 'Erro ao gerar token',
+        'detail' => $e->getMessage()
+      ], 500);
     }
   }
+
 
   public function forgot(): void
   {
@@ -227,7 +258,7 @@ class AuthController
     Response::json(['ok' => true, 'message' => 'Logout efetuado']);
   }
 
-  
+
 
 
 }
